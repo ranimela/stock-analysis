@@ -362,15 +362,15 @@ def main() -> None:
         bcol1, bcol2 = st.columns(2)
         with bcol1:
             if found_tickers:
-                st.success(f"✅ Found in Database: **{', '.join(found_tickers)}**")
+                st.success(f"✅ Found in Original Ingested Database: **{', '.join(found_tickers)}**")
         with bcol2:
             if missing_tickers:
-                st.error(f"❌ Missing / Not Ingested: **{', '.join(missing_tickers)}**")
+                st.error(f"❌ Missing / Not Ingested in Local Database: **{', '.join(missing_tickers)}**")
 
         # Handle missing tickers: Offer 1-click fetch button
         if missing_tickers:
             st.warning(
-                f"The following ticker(s) do not currently have historical bars in the local database: **{', '.join(missing_tickers)}**"
+                f"The following ticker(s) were not part of the initial database seed: **{', '.join(missing_tickers)}**"
             )
             if st.button("📥 Download Historical Data for Missing Tickers"):
                 from src.ingestion.data_ingestor import DataIngestor
@@ -395,6 +395,44 @@ def main() -> None:
 
         df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
         if not df_manual.empty:
+            st.markdown("### 📋 Product Manager & Screener Evaluation Feedback")
+            for _, row in df_manual.iterrows():
+                tick = row["ticker"]
+                name_str = row.get("name", tick)
+                close_val = row["close"]
+                sma50_val = row["sma50"]
+                adv_val = row["adv_20"]
+                rs_val = row["rs_score"]
+                tight_val = row["tightness_ratio"]
+                comp_val = row["composite_score"]
+
+                reasons = []
+                if close_val < sma50_val:
+                    reasons.append(f"Price (${close_val:.2f}) is below 50D SMA (${sma50_val:.2f})")
+                if adv_val < 20000000.0:
+                    reasons.append(f"ADV20 (${adv_val/1e6:.2f}M) is below $20M liquidity floor")
+                if tight_val > 3.5:
+                    reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 VCP coiling ceiling")
+                if rs_val < 0:
+                    reasons.append(f"Mansfield RS ({rs_val:.4f}) shows relative underperformance vs SPY")
+
+                was_in_top10 = tick in ["ARWR", "BJRI", "BELFB", "AXGN", "ALKS", "BLZE", "AEIS", "ANAB", "BELFA", "ADPT"]
+                is_passing_all = len(reasons) == 0
+
+                with st.expander(f"📌 **{tick}** — {name_str}", expanded=True):
+                    ecol1, ecol2 = st.columns(2)
+                    with ecol1:
+                        st.markdown(f"**Database Status:** Part of Original Ingested Database")
+                        st.markdown(f"**Stage-2 Trend Template:** {'✅ Passed All Filters' if is_passing_all else '⚠️ Filter Deficiencies Found'}")
+                    with ecol2:
+                        st.markdown(f"**Composite Score:** `{comp_val:.2f}`")
+                        st.markdown(f"**View A Top 10 Selection:** {'⭐ Qualified in Top 10' if was_in_top10 else '❌ Outside Top 10'}")
+
+                    if is_passing_all:
+                        st.success(f"**PM Verdict:** {tick} passes all Stage-2 trend template, liquidity, and tightness filters!")
+                    else:
+                        st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
+
             df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
             df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
             df_manual["market_cap_str"] = df_manual["market_cap"].apply(
