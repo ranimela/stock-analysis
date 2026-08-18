@@ -305,12 +305,23 @@ def main() -> None:
         )
         return
 
+    # Manual Stock Input Controls
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("➕ Manual Stock Analysis")
+    manual_input = st.sidebar.text_input(
+        "Add Ticker(s) to Analysis",
+        placeholder="e.g. NVDA, AAPL, TSLA",
+        help="Comma-separated ticker symbols to force-analyze in the screener/backtest",
+    )
+    manual_tickers = [t.strip().upper() for t in manual_input.split(",") if t.strip()] if manual_input else None
+
     view_option = st.sidebar.radio(
         "Select View:",
         [
             "View A: Live Top-10 Recommendations (T0)",
             "View B: 1-Week Backtest (T-5)",
             "View C: 1-Month Backtest (T-22)",
+            "View D: Manual Stock Analysis",
         ],
     )
 
@@ -318,7 +329,55 @@ def main() -> None:
     st.sidebar.caption("Mode: **Read-Only (Zero Write Access)**")
     st.sidebar.caption(f"Latest EOD Date: **{latest_date}**")
 
-    if view_option.startswith("View A"):
+    if view_option.startswith("View D") or manual_tickers:
+        if not manual_tickers:
+            st.warning("Please enter one or more stock tickers in the sidebar field (e.g. `NVDA, AAPL`).")
+            return
+        st.header(f"View D: Custom Analysis for {', '.join(manual_tickers)}")
+        df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=manual_tickers)
+        if not df_manual.empty:
+            df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
+            df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+            st.dataframe(
+                df_manual[
+                    ["rank", "ticker", "yahoo_url", "name", "exchange", "close", "adv_20", "rs_score", "tightness_ratio", "pct_off_52w_high", "composite_score"]
+                ].rename(
+                    columns={
+                        "rank": "Rank",
+                        "ticker": "Ticker",
+                        "yahoo_url": "Yahoo Finance",
+                        "name": "Company Name",
+                        "exchange": "Exchange",
+                        "close": "Price ($)",
+                        "adv_20": "ADV20 ($)",
+                        "rs_score": "RS Score",
+                        "tightness_ratio": "Tightness Ratio",
+                        "pct_off_52w_high": "% Off 52W High",
+                        "composite_score": "Composite Score",
+                    }
+                ).style.format(
+                    {
+                        "Price ($)": "${:.2f}",
+                        "ADV20 ($)": "${:,.0f}",
+                        "RS Score": "{:.4f}",
+                        "Tightness Ratio": "{:.2f}",
+                        "% Off 52W High": "{:+.2f}%",
+                        "Composite Score": "{:.2f}",
+                    }
+                ),
+                column_config={
+                    "Yahoo Finance": st.column_config.LinkColumn(
+                        "Yahoo Finance",
+                        help="Click to view live chart and fundamentals on Yahoo Finance",
+                        validate="^https://finance\\.yahoo\\.com/quote/",
+                        display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+                    ),
+                },
+                width="stretch",
+            )
+        else:
+            st.warning(f"No price data found in DuckDB for {', '.join(manual_tickers)}. Please run `python -m src.cli seed` or `update`.")
+    elif view_option.startswith("View A"):
         render_live_recommendations(db_manager, latest_date)
     elif view_option.startswith("View B"):
         render_backtest_view(
