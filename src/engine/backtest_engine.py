@@ -109,6 +109,13 @@ def run_point_in_time_backtest(
     position_results: list[dict[str, float | str | bool]] = []
 
     for ticker in top_tickers:
+        meta = db_manager.execute_read(
+            "SELECT COALESCE(name, ticker), market_cap FROM symbol_metadata WHERE ticker = ?;",
+            [ticker],
+        )
+        comp_name = meta[0][0] if meta else ticker
+        m_cap = meta[0][1] if meta else None
+
         bars = db_manager.execute_read(
             """
             SELECT trade_date, close, low
@@ -138,6 +145,8 @@ def run_point_in_time_backtest(
         position_results.append(
             {
                 "ticker": ticker,
+                "name": comp_name,
+                "market_cap": m_cap,
                 "entry_price": entry_price,
                 "exit_price": exit_price,
                 "return_pct": ret * 100.0,

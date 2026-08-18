@@ -78,10 +78,11 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     # Calculate % Off 52W High & Market Cap formatting helper
     df["pct_off_52w_high"] = ((df["close"] / df["high_52w"]) - 1.0) * 100.0
-    df["ticker_url"] = df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+    df["yahoo_url"] = df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
     df["market_cap_str"] = df["market_cap"].apply(
         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
     )
+    df["company_name_link"] = df.apply(lambda r: f"https://finance.yahoo.com/quote/{r['ticker']}", axis=1)
 
     # Key metrics for top recommendation
     top_row = df.iloc[0]
@@ -103,10 +104,9 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     display_df = display_df[
         [
             "rank",
-            "ticker_url",
             "name",
-            "exchange",
             "market_cap_str",
+            "exchange",
             "close",
             "adv_20",
             "rs_score",
@@ -117,10 +117,9 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     ].rename(
         columns={
             "rank": "Rank",
-            "ticker_url": "Ticker",
             "name": "Company Name",
-            "exchange": "Exchange",
             "market_cap_str": "Market Cap",
+            "exchange": "Exchange",
             "close": "Price ($)",
             "adv_20": "ADV20 ($)",
             "rs_score": "RS Score",
@@ -129,6 +128,23 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "composite_score": "Composite Score",
         }
     )
+    display_df["company_url"] = df["yahoo_url"]
+
+    # Reorder columns to put Company Name hyperlinked, then Market Cap
+    display_df = display_df[
+        [
+            "Rank",
+            "company_url",
+            "Market Cap",
+            "Exchange",
+            "Price ($)",
+            "ADV20 ($)",
+            "RS Score",
+            "Tightness Ratio",
+            "% Off 52W High",
+            "Composite Score",
+        ]
+    ].rename(columns={"company_url": "Company Name"})
 
     st.dataframe(
         display_df.style.format(
@@ -142,11 +158,11 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             }
         ),
         column_config={
-            "Ticker": st.column_config.LinkColumn(
-                "Ticker",
+            "Company Name": st.column_config.LinkColumn(
+                "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
                 validate="^https://finance\\.yahoo\\.com/quote/",
-                display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",
+                display_text=df.set_index("yahoo_url")["name"].to_dict(),
             ),
         },
         width="stretch",
@@ -157,10 +173,9 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     st.markdown(
         r"""
 - **Rank**: Priority order (#1–10) determined by the composite momentum score across passing candidates.
-- **Ticker**: Hyperlinked stock symbol trading on NYSE, NASDAQ, or AMEX (opens Yahoo Finance chart page).
-- **Company Name**: Registered corporate title of the asset.
+- **Company Name**: Hyperlinked corporate title of the asset (click to open live chart on Yahoo Finance).
+- **Market Cap**: Total dollar market capitalization of the company (placed directly after Company Name).
 - **Exchange**: Primary US listing market (NASDAQ, NYSE, or AMEX).
-- **Market Cap**: Total dollar market capitalization of the company (in Millions/Billions).
 - **Price ($)**: End-of-Day (EOD) closing price on the cutoff evaluation date.
 - **ADV20 ($)**: 20-Day Average Daily Dollar Volume ($\text{Close} \times \text{Volume}$), enforced to be $\ge \$20,000,000$ for institutional liquidity.
 - **RS Score**: Mansfield Relative Strength measuring multi-timeframe price outperformance vs the SPY benchmark (70% 63-day weight + 30% 252-day weight).
@@ -220,10 +235,18 @@ def render_backtest_view(
     st.subheader("Historical Position Performance Table")
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
-        disp_pos["ticker_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos["yahoo_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
+            lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
+        )
+        disp_pos["Company Name"] = disp_pos["yahoo_url"]
+
+        name_map = disp_pos.set_index("yahoo_url")["name"].to_dict()
+
         disp_pos = disp_pos[
             [
-                "ticker_url",
+                "Company Name",
+                "market_cap_str",
                 "entry_price",
                 "exit_price",
                 "return_pct",
@@ -234,7 +257,7 @@ def render_backtest_view(
             ]
         ].rename(
             columns={
-                "ticker_url": "Ticker",
+                "market_cap_str": "Market Cap",
                 "entry_price": "Entry Price ($)",
                 "exit_price": "Exit Price ($)",
                 "return_pct": "Return (%)",
@@ -257,11 +280,11 @@ def render_backtest_view(
                 }
             ),
             column_config={
-                "Ticker": st.column_config.LinkColumn(
-                    "Ticker",
+                "Company Name": st.column_config.LinkColumn(
+                    "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
                     validate="^https://finance\\.yahoo\\.com/quote/",
-                    display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",
+                    display_text=name_map,
                 ),
             },
             width="stretch",
@@ -275,7 +298,8 @@ def render_backtest_view(
         r"""
 - **Cutoff Date**: Historical date ($T_{-5}$ or $T_{-22}$) when screener recommendations were computed without lookahead bias.
 - **Evaluation Date**: Target date ($T_0$) up to which forward performance is tracked.
-- **Ticker**: Hyperlinked stock symbol trading on NYSE, NASDAQ, or AMEX (opens Yahoo Finance chart page).
+- **Company Name**: Hyperlinked corporate title of recommended stock (click to open live chart on Yahoo Finance).
+- **Market Cap**: Total dollar market capitalization of the company (placed directly after Company Name).
 - **Entry Price ($)**: Closing price of recommended stock on the historical Cutoff Date.
 - **Exit Price ($)**: Closing price of stock on Evaluation Date ($T_0$).
 - **Return (%)**: Total percentage price change from Entry Price to Exit Price.
@@ -383,18 +407,20 @@ def main() -> None:
         df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
         if not df_manual.empty:
             df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-            df_manual["ticker_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+            df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
             df_manual["market_cap_str"] = df_manual["market_cap"].apply(
                 lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
             )
+            df_manual["Company Name"] = df_manual["yahoo_url"]
+            m_map = df_manual.set_index("yahoo_url")["name"].to_dict()
+
             st.dataframe(
                 df_manual[
                     [
                         "rank",
-                        "ticker_url",
-                        "name",
-                        "exchange",
+                        "Company Name",
                         "market_cap_str",
+                        "exchange",
                         "close",
                         "adv_20",
                         "rs_score",
@@ -405,10 +431,8 @@ def main() -> None:
                 ].rename(
                     columns={
                         "rank": "Rank",
-                        "ticker_url": "Ticker",
-                        "name": "Company Name",
-                        "exchange": "Exchange",
                         "market_cap_str": "Market Cap",
+                        "exchange": "Exchange",
                         "close": "Price ($)",
                         "adv_20": "ADV20 ($)",
                         "rs_score": "RS Score",
@@ -427,11 +451,11 @@ def main() -> None:
                     }
                 ),
                 column_config={
-                    "Ticker": st.column_config.LinkColumn(
-                        "Ticker",
+                    "Company Name": st.column_config.LinkColumn(
+                        "Company Name",
                         help="Click to view live chart and fundamentals on Yahoo Finance",
                         validate="^https://finance\\.yahoo\\.com/quote/",
-                        display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",
+                        display_text=m_map,
                     ),
                 },
                 width="stretch",
