@@ -240,6 +240,41 @@ class DataIngestor:
                 records,
             )
 
+        # Batch update Market Cap & Name for synced tickers via fast_info / Ticker info
+        for ticker in tickers:
+            ticker_clean = ticker.strip().upper()
+            try:
+                t = yf.Ticker(ticker_clean)
+                fi = t.fast_info
+                mc = getattr(fi, "market_cap", None)
+                name = getattr(fi, "long_name", None) or getattr(fi, "short_name", None)
+                if mc is None or pd.isna(mc) or not name:
+                    inf = t.info
+                    if mc is None or pd.isna(mc):
+                        mc = inf.get("marketCap")
+                    if not name:
+                        name = inf.get("longName") or inf.get("shortName")
+
+                if (mc and not pd.isna(mc)) or name:
+                    with self.db_manager.write_cursor() as conn:
+                        if mc and not pd.isna(mc) and name:
+                            conn.execute(
+                                "UPDATE symbol_metadata SET market_cap = ?, name = ? WHERE ticker = ?;",
+                                [float(mc), str(name), ticker_clean],
+                            )
+                        elif mc and not pd.isna(mc):
+                            conn.execute(
+                                "UPDATE symbol_metadata SET market_cap = ? WHERE ticker = ?;",
+                                [float(mc), ticker_clean],
+                            )
+                        elif name:
+                            conn.execute(
+                                "UPDATE symbol_metadata SET name = ? WHERE ticker = ?;",
+                                [str(name), ticker_clean],
+                            )
+            except Exception:
+                pass
+
         return len(records)
 
     def sync_universe(
@@ -306,6 +341,7 @@ class DataIngestor:
         logger.info("Found %d tickers requiring data sync.", total_tickers)
 
         if total_tickers == 0:
+            logger.info("Universe is up-to-date. No bars to fetch.")
             return {
                 "total_tickers": len(ticker_list),
                 "synced_tickers": 0,
@@ -362,9 +398,16 @@ class DataIngestor:
         market_cap = None
         comp_name = ticker_clean
         try:
-            info = yf.Ticker(ticker_clean).info
-            market_cap = info.get("marketCap")
-            comp_name = info.get("shortName") or info.get("longName") or ticker_clean
+            t = yf.Ticker(ticker_clean)
+            fi = t.fast_info
+            market_cap = getattr(fi, "market_cap", None)
+            comp_name = getattr(fi, "long_name", None) or getattr(fi, "short_name", None)
+            if market_cap is None or pd.isna(market_cap) or not comp_name:
+                info = t.info
+                if market_cap is None or pd.isna(market_cap):
+                    market_cap = info.get("marketCap")
+                if not comp_name:
+                    comp_name = info.get("shortName") or info.get("longName") or ticker_clean
         except Exception:
             pass
 
@@ -372,7 +415,7 @@ class DataIngestor:
         self.db_manager.execute_write(
             """
             INSERT INTO symbol_metadata (ticker, name, exchange, asset_class, market_cap, is_active, first_added_date, last_updated_date)
-            VALUES (?, ?, 'NASDAQ', 'Common Stock', ?, true, CURRENT_DATE, CURRENT_DATE)
+            VALUES (?, ?, 'NASDAQ', 'Common Stock', ?, true, CURRENT_DATE(), CURRENT_DATE())
             ON CONFLICT (ticker) DO UPDATE SET
                 market_cap = COALESCE(EXCLUDED.market_cap, symbol_metadata.market_cap),
                 name = COALESCE(EXCLUDED.name, symbol_metadata.name);
