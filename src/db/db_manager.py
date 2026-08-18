@@ -52,7 +52,11 @@ class DatabaseManager:
             duckdb.DuckDBPyConnection: Opened connection instance.
         """
         effective_read_only = self.read_only if read_only is None else read_only
-        return duckdb.connect(database=str(self.db_path), read_only=effective_read_only)
+        config = {"access_mode": "READ_ONLY"} if effective_read_only else {}
+        try:
+            return duckdb.connect(database=str(self.db_path), read_only=effective_read_only, config=config)
+        except Exception:
+            return duckdb.connect(database=str(self.db_path), read_only=effective_read_only)
 
     def init_schema(self, schema_file: str | Path | None = None) -> None:
         """Initialize database schema from SQL DDL script.
