@@ -164,3 +164,31 @@ def test_invalid_cutoff_days():
 
         with pytest.raises(ValueError):
             run_point_in_time_backtest(db_mgr, cutoff_days_ago=1000)
+
+
+def test_manual_vs_screener_score_consistency():
+    """Verify that manual_sql and SCREENER_SQL compute composite_score using identical percentile ranking formulas."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        db_path = Path(tmpdir) / "test_consistency.duckdb"
+        db_mgr = DatabaseManager(db_path=db_path)
+        populate_mock_data(db_mgr, num_days=270)
+
+        dates = db_mgr.execute_read("SELECT DISTINCT trade_date FROM daily_bars ORDER BY trade_date DESC;")
+        latest_date = str(dates[0][0])
+
+        df_screener = run_screener(db_mgr, cutoff_date=latest_date)
+        assert not df_screener.empty
+
+        # Evaluate a ticker via manual_tickers
+        target_ticker = df_screener.iloc[0]["ticker"]
+        df_manual = run_screener(db_mgr, cutoff_date=latest_date, manual_tickers=[target_ticker])
+        assert not df_manual.empty
+
+        screener_row = df_screener[df_screener["ticker"] == target_ticker].iloc[0]
+        manual_row = df_manual[df_manual["ticker"] == target_ticker].iloc[0]
+
+        # Verify composite_score and rs_score match exactly
+        assert abs(screener_row["rs_score"] - manual_row["rs_score"]) < 1e-5
+        assert abs(screener_row["composite_score"] - manual_row["composite_score"]) < 1e-5
+        assert abs(manual_row["composite_score"] - (manual_row["rs_score"] * 100.0)) < 1e-5
+
