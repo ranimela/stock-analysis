@@ -201,6 +201,12 @@ def run_screener(
             FROM daily_bars
             WHERE ticker = 'SPY' AND trade_date <= (SELECT target_date FROM date_anchor)
         ),
+        ticker_dates AS (
+            SELECT ticker, MAX(trade_date) AS max_ticker_date
+            FROM daily_bars
+            WHERE ticker IN ({placeholders}) AND trade_date <= CAST(? AS DATE)
+            GROUP BY ticker
+        ),
         base_bars AS (
             SELECT
                 b.ticker,
@@ -228,8 +234,7 @@ def run_screener(
                 AVG(b.close) OVER (PARTITION BY b.ticker ORDER BY b.trade_date ROWS BETWEEN 199 PRECEDING AND CURRENT ROW) AS sma200
             FROM daily_bars b
             LEFT JOIN symbol_metadata m ON b.ticker = m.ticker
-            WHERE b.trade_date <= (SELECT target_date FROM date_anchor)
-              AND b.ticker IN ({placeholders})
+            INNER JOIN ticker_dates td ON b.ticker = td.ticker AND b.trade_date <= td.max_ticker_date
         ),
         bar_indicators AS (
             SELECT
@@ -251,7 +256,7 @@ def run_screener(
         latest_snapshot AS (
             SELECT ba.*
             FROM bar_atr ba
-            WHERE ba.trade_date = (SELECT target_date FROM date_anchor)
+            INNER JOIN ticker_dates td ON ba.ticker = td.ticker AND ba.trade_date = td.max_ticker_date
         ),
         stage_metrics AS (
             SELECT
@@ -299,7 +304,7 @@ def run_screener(
         FROM stage_metrics sm;
         """
         with db_manager.read_cursor() as conn:
-            manual_df = conn.execute(manual_sql, [cutoff_date] + manual_tickers).df()
+            manual_df = conn.execute(manual_sql, [cutoff_date] + manual_tickers + [cutoff_date]).df()
         if not manual_df.empty:
             return manual_df
 
