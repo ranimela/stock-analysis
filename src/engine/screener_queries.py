@@ -32,6 +32,12 @@ spy_bars AS (
     FROM daily_bars
     WHERE ticker = 'SPY' AND trade_date <= (SELECT target_date FROM date_anchor)
 ),
+ticker_dates AS (
+    SELECT ticker, MAX(trade_date) AS max_ticker_date
+    FROM daily_bars
+    WHERE trade_date <= (SELECT target_date FROM date_anchor)
+    GROUP BY ticker
+),
 base_bars AS (
     SELECT
         b.ticker,
@@ -59,7 +65,7 @@ base_bars AS (
         AVG(b.close) OVER (PARTITION BY b.ticker ORDER BY b.trade_date ROWS BETWEEN 199 PRECEDING AND CURRENT ROW) AS sma200
     FROM daily_bars b
     LEFT JOIN symbol_metadata m ON b.ticker = m.ticker
-    WHERE b.trade_date <= (SELECT target_date FROM date_anchor)
+    INNER JOIN ticker_dates td ON b.ticker = td.ticker AND b.trade_date <= td.max_ticker_date
 ),
 bar_indicators AS (
     SELECT
@@ -81,7 +87,7 @@ bar_atr AS (
 latest_snapshot AS (
     SELECT ba.*
     FROM bar_atr ba
-    WHERE ba.trade_date = (SELECT target_date FROM date_anchor)
+    INNER JOIN ticker_dates td ON ba.ticker = td.ticker AND ba.trade_date = td.max_ticker_date
 ),
 stage_filters AS (
     SELECT
@@ -90,7 +96,7 @@ stage_filters AS (
         sb.spy_close_63,
         sb.spy_close_252,
         CASE WHEN ls.vol_sma50 > 0 THEN CAST(ls.volume AS DOUBLE) / ls.vol_sma50 ELSE NULL END AS vdu_ratio,
-        CASE WHEN ls.atr14 > 0 THEN (ls.high_10d - ls.low_10d) / ls.atr14 ELSE NULL END AS tightness_ratio,
+        CASE WHEN ls.atr14 > 0 THEN (ls.high_10d - ls.low_10d) / ls.atr14 ELSE 0.0 END AS tightness_ratio,
         CASE
             WHEN ls.close_63 > 0 AND sb.spy_close IS NOT NULL AND sb.spy_close_63 > 0
                 THEN ((ls.close / ls.close_63) / (sb.spy_close / sb.spy_close_63)) - 1.0
@@ -108,13 +114,10 @@ stage_filters AS (
     FROM latest_snapshot ls
     LEFT JOIN spy_bars sb ON ls.trade_date = sb.trade_date
     WHERE
-        -- Asset Class Gate
         (ls.asset_class IS NULL OR ls.asset_class = 'Common Stock')
         AND ls.ticker != 'SPY'
-        -- Stage 1: Liquidity & Price Floor
         AND ls.close >= 10.0
         AND ls.adv_20 >= 20000000.0
-        -- Stage 2: Structural Trend Template
         AND ls.close > ls.sma50
         AND ls.sma50 > ls.sma150
         AND ls.sma150 > ls.sma200
@@ -122,7 +125,6 @@ stage_filters AS (
         AND ls.sma200 > ls.sma200_20d_ago
         AND ls.close >= 1.30 * ls.low_52w
         AND ls.close >= 0.75 * ls.high_52w
-        -- Stage 3: Volatility & Volume Contraction (Adaptive ranking)
         AND ls.atr14 IS NOT NULL AND ls.atr14 > 0
 ),
 composite_scoring AS (
@@ -132,7 +134,7 @@ composite_scoring AS (
         PERCENT_RANK() OVER (ORDER BY (0.70 * sf.rs_63 + 0.30 * sf.rs_252) ASC) * 100.0 AS rs_rank,
         PERCENT_RANK() OVER (ORDER BY (CASE WHEN sf.tightness_ratio > 0 THEN 1.0 / sf.tightness_ratio ELSE 0 END) ASC) * 100.0 AS tightness_rank
     FROM stage_filters sf
-    WHERE sf.tightness_ratio <= 3.5  -- Adaptive ceiling guaranteeing candidate population
+    WHERE sf.tightness_ratio <= 2.0  -- Adaptive ceiling guaranteeing candidate population
 ),
 final_ranked AS (
     SELECT
@@ -183,7 +185,6 @@ def run_screener(
         pd.DataFrame: Top recommended stocks clearing filter stages,
             ranked by composite score.
     """
-    # If manual tickers are provided, fetch their latest bar snapshot & compute metrics directly
     if manual_tickers:
         placeholders = ", ".join(["?"] * len(manual_tickers))
         manual_sql = f"""
@@ -204,7 +205,7 @@ def run_screener(
         ticker_dates AS (
             SELECT ticker, MAX(trade_date) AS max_ticker_date
             FROM daily_bars
-            WHERE ticker IN ({placeholders}) AND trade_date <= CAST(? AS DATE)
+            WHERE trade_date <= (SELECT target_date FROM date_anchor)
             GROUP BY ticker
         ),
         base_bars AS (
@@ -258,7 +259,7 @@ def run_screener(
             FROM bar_atr ba
             INNER JOIN ticker_dates td ON ba.ticker = td.ticker AND ba.trade_date = td.max_ticker_date
         ),
-        stage_metrics AS (
+        stage_filters AS (
             SELECT
                 ls.*,
                 sb.spy_close,
@@ -282,39 +283,72 @@ def run_screener(
                 END AS rs_252
             FROM latest_snapshot ls
             LEFT JOIN spy_bars sb ON ls.trade_date = sb.trade_date
+            WHERE
+                ls.ticker IN ({placeholders})
+                OR (
+                    (ls.asset_class IS NULL OR ls.asset_class = 'Common Stock')
+                    AND ls.ticker != 'SPY'
+                    AND ls.close >= 10.0
+                    AND ls.adv_20 >= 20000000.0
+                    AND ls.close > ls.sma50
+                    AND ls.sma50 > ls.sma150
+                    AND ls.sma150 > ls.sma200
+                    AND ls.sma200_20d_ago IS NOT NULL
+                    AND ls.sma200 > ls.sma200_20d_ago
+                    AND ls.close >= 1.30 * ls.low_52w
+                    AND ls.close >= 0.75 * ls.high_52w
+                    AND ls.atr14 IS NOT NULL AND ls.atr14 > 0
+                )
+        ),
+        composite_scoring AS (
+            SELECT
+                sf.*,
+                (0.70 * sf.rs_63 + 0.30 * sf.rs_252) AS rs_score,
+                PERCENT_RANK() OVER (ORDER BY (0.70 * sf.rs_63 + 0.30 * sf.rs_252) ASC) * 100.0 AS rs_rank,
+                PERCENT_RANK() OVER (ORDER BY (CASE WHEN sf.tightness_ratio > 0 THEN 1.0 / sf.tightness_ratio ELSE 0 END) ASC) * 100.0 AS tightness_rank
+            FROM stage_filters sf
+            WHERE sf.tightness_ratio <= 3.5 OR sf.ticker IN ({placeholders})
+        ),
+        final_ranked AS (
+            SELECT
+                cs.*,
+                (0.60 * cs.rs_rank + 0.40 * cs.tightness_rank) AS composite_score,
+                ROW_NUMBER() OVER (ORDER BY (0.60 * cs.rs_rank + 0.40 * cs.tightness_rank) DESC, cs.rs_score DESC) AS rank
+            FROM composite_scoring cs
         )
         SELECT
-            ROW_NUMBER() OVER (ORDER BY (0.70 * sm.rs_63 + 0.30 * sm.rs_252) DESC, sm.close DESC) AS rank,
-            sm.ticker,
-            COALESCE(sm.name, sm.ticker) AS name,
-            COALESCE(sm.exchange, 'NASDAQ') AS exchange,
-            sm.market_cap,
-            sm.trade_date,
-            sm.close,
-            sm.adv_20,
-            sm.sma50,
-            sm.sma150,
-            sm.sma200,
-            sm.high_52w,
-            sm.low_52w,
-            sm.tightness_ratio,
-            sm.vdu_ratio,
-            (0.70 * sm.rs_63 + 0.30 * sm.rs_252) AS rs_score,
-            ((0.70 * sm.rs_63 + 0.30 * sm.rs_252) * 100.0) AS composite_score
-        FROM stage_metrics sm;
+            CAST(rank AS INT) AS rank,
+            ticker,
+            COALESCE(name, ticker) AS name,
+            COALESCE(exchange, 'NASDAQ') AS exchange,
+            market_cap,
+            trade_date,
+            close,
+            adv_20,
+            sma50,
+            sma150,
+            sma200,
+            high_52w,
+            low_52w,
+            tightness_ratio,
+            vdu_ratio,
+            rs_score,
+            composite_score
+        FROM final_ranked
+        WHERE ticker IN ({placeholders})
+        ORDER BY rank ASC;
         """
         with db_manager.read_cursor() as conn:
-            manual_df = conn.execute(manual_sql, [cutoff_date] + manual_tickers + [cutoff_date]).df()
+            manual_df = conn.execute(manual_sql, [cutoff_date] + manual_tickers + manual_tickers + manual_tickers).df()
         if not manual_df.empty:
             return manual_df
 
     with db_manager.read_cursor() as conn:
-        df = conn.execute(SCREENER_SQL.replace("ls.tightness_ratio <= 2.0", f"ls.tightness_ratio <= {max_tightness}"), [cutoff_date]).df()
+        df = conn.execute(SCREENER_SQL.replace("sf.tightness_ratio <= 2.0", f"sf.tightness_ratio <= {max_tightness}"), [cutoff_date]).df()
 
     if df.empty and max_tightness == 2.0:
-        # Fallback to relaxed tightness ratio 3.0 to ensure historical backtests populate candidate momentum baskets
         with db_manager.read_cursor() as conn:
-            df = conn.execute(SCREENER_SQL.replace("ls.tightness_ratio <= 2.0", "ls.tightness_ratio <= 3.0"), [cutoff_date]).df()
+            df = conn.execute(SCREENER_SQL.replace("sf.tightness_ratio <= 2.0", "sf.tightness_ratio <= 3.0"), [cutoff_date]).df()
 
     if df.empty:
         logger.info("No candidates passed screener for cutoff date %s.", cutoff_date)

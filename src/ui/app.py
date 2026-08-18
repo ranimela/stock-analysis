@@ -396,27 +396,79 @@ def main() -> None:
         df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
         if not df_manual.empty:
             st.markdown("### 📋 Product Manager & Screener Evaluation Feedback")
+
+            # Dynamic fetch of top 10 recommended tickers for cutoff date
+            df_top10 = run_screener(db_manager, cutoff_date=latest_date)
+            top10_set = set(df_top10["ticker"].tolist()) if not df_top10.empty else set()
+
             for _, row in df_manual.iterrows():
                 tick = row["ticker"]
                 name_str = row.get("name", tick)
                 close_val = row["close"]
-                sma50_val = row["sma50"]
                 adv_val = row["adv_20"]
+                sma50_val = row["sma50"]
+                sma150_val = row["sma150"]
+                sma200_val = row["sma200"]
+                sma200_20d_val = row.get("sma200_20d_ago", None)
+                high52_val = row["high_52w"]
+                low52_val = row["low_52w"]
+                tight_val = row.get("tightness_ratio", None)
                 rs_val = row["rs_score"]
-                tight_val = row["tightness_ratio"]
                 comp_val = row["composite_score"]
 
                 reasons = []
-                if close_val < sma50_val:
-                    reasons.append(f"Price (${close_val:.2f}) is below 50D SMA (${sma50_val:.2f})")
-                if adv_val < 20000000.0:
-                    reasons.append(f"ADV20 (${adv_val/1e6:.2f}M) is below $20M liquidity floor")
-                if tight_val > 3.5:
-                    reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 VCP coiling ceiling")
-                if rs_val < 0:
-                    reasons.append(f"Mansfield RS ({rs_val:.4f}) shows relative underperformance vs SPY")
 
-                was_in_top10 = tick in ["ARWR", "BJRI", "BELFB", "AXGN", "ALKS", "BLZE", "AEIS", "ANAB", "BELFA", "ADPT"]
+                # Price floor check (close >= $10.00)
+                if pd.isna(close_val) or close_val < 10.0:
+                    c_str = f"${close_val:.2f}" if pd.notna(close_val) else "N/A"
+                    reasons.append(f"Price ({c_str}) is below $10.00 minimum price floor")
+
+                # Liquidity floor check (ADV20 >= $20,000,000)
+                if pd.isna(adv_val) or adv_val < 20000000.0:
+                    adv_str = f"${adv_val/1e6:.2f}M" if pd.notna(adv_val) else "N/A"
+                    reasons.append(f"ADV20 ({adv_str}) is below $20M liquidity floor")
+
+                # Moving Average Order (close > sma50 > sma150 > sma200)
+                if pd.notna(close_val) and pd.notna(sma50_val) and close_val <= sma50_val:
+                    reasons.append(f"Price (${close_val:.2f}) is below 50D SMA (${sma50_val:.2f})")
+                if pd.notna(sma50_val) and pd.notna(sma150_val) and sma50_val <= sma150_val:
+                    reasons.append(f"50D SMA (${sma50_val:.2f}) is below/equal to 150D SMA (${sma150_val:.2f})")
+                if pd.notna(sma150_val) and pd.notna(sma200_val) and sma150_val <= sma200_val:
+                    reasons.append(f"150D SMA (${sma150_val:.2f}) is below/equal to 200D SMA (${sma200_val:.2f})")
+
+                # 200D SMA Slope Trajectory (20-day uptrend)
+                if pd.isna(sma200_20d_val):
+                    reasons.append("200D SMA 20-day slope trajectory unavailable (insufficient historical data)")
+                elif pd.notna(sma200_val) and sma200_val <= sma200_20d_val:
+                    reasons.append(f"200D SMA (${sma200_val:.2f}) is not trending upward vs 20 days ago (${sma200_20d_val:.2f})")
+
+                # 52-Week Low Bound (close >= 1.30 * low_52w)
+                if pd.notna(close_val) and pd.notna(low52_val):
+                    pct_above_low = ((close_val / low52_val) - 1.0) * 100.0
+                    if close_val < 1.30 * low52_val:
+                        reasons.append(
+                            f"52W Low Bound Failure: Price (${close_val:.2f}) is only {pct_above_low:+.1f}% above 52W Low (${low52_val:.2f}) — requires >= +30.0%"
+                        )
+
+                # 52-Week High Bound (close >= 0.75 * high_52w)
+                if pd.notna(close_val) and pd.notna(high52_val):
+                    pct_off_high = ((close_val / high52_val) - 1.0) * 100.0
+                    if close_val < 0.75 * high52_val:
+                        reasons.append(
+                            f"52W High Bound Failure: Price (${close_val:.2f}) is {pct_off_high:.1f}% off 52W High (${high52_val:.2f}) — exceeds 25.0% max distance ceiling"
+                        )
+
+                # VCP Tightness Ratio ceiling (tightness_ratio <= 3.5)
+                if pd.isna(tight_val):
+                    reasons.append("Tightness Ratio unavailable (ATR14 missing or zero)")
+                elif tight_val > 3.5:
+                    reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 VCP coiling ceiling")
+
+                # Mansfield Relative Strength vs SPY
+                if pd.notna(rs_val) and rs_val < 0.0:
+                    reasons.append(f"Mansfield RS ({rs_val:.4f}) shows relative underperformance vs SPY benchmark")
+
+                was_in_top10 = tick in top10_set
                 is_passing_all = len(reasons) == 0
 
                 with st.expander(f"📌 **{tick}** — {name_str}", expanded=True):
@@ -426,10 +478,10 @@ def main() -> None:
                         st.markdown(f"**Stage-2 Trend Template:** {'✅ Passed All Filters' if is_passing_all else '⚠️ Filter Deficiencies Found'}")
                     with ecol2:
                         st.markdown(f"**Composite Score:** `{comp_val:.2f}`")
-                        st.markdown(f"**View A Top 10 Selection:** {'⭐ Qualified in Top 10' if was_in_top10 else '❌ Outside Top 10'}")
+                        st.markdown(f"**View A Top 10 Selection:** {'⭐ Qualified in Top 10' if was_in_top10 else ('Outside Top 10 (Ranked below top 10)' if is_passing_all else '❌ Outside Top 10 (Failed filters)')}")
 
                     if is_passing_all:
-                        st.success(f"**PM Verdict:** {tick} passes all Stage-2 trend template, liquidity, and tightness filters!")
+                        st.success(f"**PM Verdict:** {tick} passes all Stage-2 trend template, liquidity, 52W bounds, SMA slope trajectory, and VCP tightness filters!")
                     else:
                         st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
