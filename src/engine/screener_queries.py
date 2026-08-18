@@ -252,26 +252,51 @@ def run_screener(
             SELECT ba.*
             FROM bar_atr ba
             WHERE ba.trade_date = (SELECT target_date FROM date_anchor)
+        ),
+        stage_metrics AS (
+            SELECT
+                ls.*,
+                sb.spy_close,
+                sb.spy_close_63,
+                sb.spy_close_252,
+                CASE WHEN ls.vol_sma50 > 0 THEN CAST(ls.volume AS DOUBLE) / ls.vol_sma50 ELSE NULL END AS vdu_ratio,
+                CASE WHEN ls.atr14 > 0 THEN (ls.high_10d - ls.low_10d) / ls.atr14 ELSE 0.0 END AS tightness_ratio,
+                CASE
+                    WHEN ls.close_63 > 0 AND sb.spy_close IS NOT NULL AND sb.spy_close_63 > 0
+                        THEN ((ls.close / ls.close_63) / (sb.spy_close / sb.spy_close_63)) - 1.0
+                    WHEN ls.close_63 > 0
+                        THEN (ls.close / ls.close_63) - 1.0
+                    ELSE 0.0
+                END AS rs_63,
+                CASE
+                    WHEN ls.close_252 > 0 AND sb.spy_close IS NOT NULL AND sb.spy_close_252 > 0
+                        THEN ((ls.close / ls.close_252) / (sb.spy_close / sb.spy_close_252)) - 1.0
+                    WHEN ls.close_252 > 0
+                        THEN (ls.close / ls.close_252) - 1.0
+                    ELSE 0.0
+                END AS rs_252
+            FROM latest_snapshot ls
+            LEFT JOIN spy_bars sb ON ls.trade_date = sb.trade_date
         )
         SELECT
-            ROW_NUMBER() OVER (ORDER BY ls.close DESC) AS rank,
-            ls.ticker,
-            COALESCE(ls.name, ls.ticker) AS name,
-            COALESCE(ls.exchange, 'NASDAQ') AS exchange,
-            ls.market_cap,
-            ls.trade_date,
-            ls.close,
-            ls.adv_20,
-            ls.sma50,
-            ls.sma150,
-            ls.sma200,
-            ls.high_52w,
-            ls.low_52w,
-            CASE WHEN ls.atr14 > 0 THEN (ls.high_10d - ls.low_10d) / ls.atr14 ELSE 0 END AS tightness_ratio,
-            CASE WHEN ls.vol_sma50 > 0 THEN CAST(ls.volume AS DOUBLE) / ls.vol_sma50 ELSE 0 END AS vdu_ratio,
-            0.5 AS rs_score,
-            80.0 AS composite_score
-        FROM latest_snapshot ls;
+            ROW_NUMBER() OVER (ORDER BY (0.70 * sm.rs_63 + 0.30 * sm.rs_252) DESC, sm.close DESC) AS rank,
+            sm.ticker,
+            COALESCE(sm.name, sm.ticker) AS name,
+            COALESCE(sm.exchange, 'NASDAQ') AS exchange,
+            sm.market_cap,
+            sm.trade_date,
+            sm.close,
+            sm.adv_20,
+            sm.sma50,
+            sm.sma150,
+            sm.sma200,
+            sm.high_52w,
+            sm.low_52w,
+            sm.tightness_ratio,
+            sm.vdu_ratio,
+            (0.70 * sm.rs_63 + 0.30 * sm.rs_252) AS rs_score,
+            ((0.70 * sm.rs_63 + 0.30 * sm.rs_252) * 100.0) AS composite_score
+        FROM stage_metrics sm;
         """
         with db_manager.read_cursor() as conn:
             manual_df = conn.execute(manual_sql, [cutoff_date] + manual_tickers).df()

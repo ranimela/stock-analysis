@@ -134,10 +134,19 @@ def run_point_in_time_backtest(
 
         ret = (exit_price - entry_price) / entry_price if entry_price > 0 else 0.0
 
-        # Calculate Max Drawdown (MDD) during period
-        lows = [float(b[2]) for b in bars]
-        min_low = min(lows) if lows else entry_price
-        mdd = (min_low - entry_price) / entry_price if entry_price > 0 else 0.0
+        # Calculate standard rolling peak-to-trough Max Drawdown (MDD) during period
+        running_peak = float(bars[0][1])
+        max_drawdown = 0.0
+        for b in bars:
+            bar_close = float(b[1])
+            bar_low = float(b[2])
+            if bar_close > running_peak:
+                running_peak = bar_close
+            if running_peak > 0:
+                dd = (bar_low - running_peak) / running_peak
+                if dd < max_drawdown:
+                    max_drawdown = dd
+        mdd = max_drawdown
 
         alpha = ret - spy_return
         is_win = ret > 0.0

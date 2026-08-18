@@ -287,6 +287,14 @@ def render_backtest_view(
             },
             width="stretch",
         )
+        # Backtest CSV Export Button
+        csv_backtest = disp_pos.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label=f"📥 Download {view_label} Results CSV",
+            data=csv_backtest,
+            file_name=f"backtest_{cutoff_days_ago}d_{cutoff_date}.csv",
+            mime="text/csv",
+        )
     else:
         st.info("No position data available for this historical backtest date.")
 
@@ -328,16 +336,6 @@ def main() -> None:
         )
         return
 
-    # Manual Stock Input Controls
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("➕ Manual Stock Analysis")
-    manual_input = st.sidebar.text_input(
-        "Add Ticker(s) to Analysis",
-        placeholder="e.g. NVDA, AAPL, TSLA",
-        help="Comma-separated ticker symbols to force-analyze in the screener/backtest",
-    )
-    manual_tickers = [t.strip().upper() for t in manual_input.split(",") if t.strip()] if manual_input else None
-
     view_option = st.sidebar.radio(
         "Select View:",
         [
@@ -348,11 +346,21 @@ def main() -> None:
         ],
     )
 
+    # Manual Stock Input Controls
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("➕ Manual Stock Analysis")
+    manual_input = st.sidebar.text_input(
+        "Add Ticker(s) to Analyze",
+        placeholder="e.g. NVDA, AAPL, TSLA",
+        help="Comma-separated ticker symbols to force-analyze in View D",
+    )
+    manual_tickers = [t.strip().upper() for t in manual_input.split(",") if t.strip()] if manual_input else None
+
     st.sidebar.markdown("---")
     st.sidebar.caption("Mode: **Read-Only (Zero Write Access)**")
     st.sidebar.caption(f"Latest EOD Date: **{latest_date}**")
 
-    if view_option.startswith("View D") or manual_tickers:
+    if view_option.startswith("View D"):
         if not manual_tickers:
             st.warning("Please enter one or more stock tickers in the sidebar field (e.g. `NVDA, AAPL`).")
             return
