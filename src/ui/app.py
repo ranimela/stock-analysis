@@ -161,8 +161,8 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                validate="^https://finance\\.yahoo\\.com/quote/",
-                display_text=df.set_index("yahoo_url")["name"].to_dict(),
+                validate=r"^https://finance\.yahoo\.com/quote/",
+                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
             ),
         },
         width="stretch",
@@ -241,8 +241,6 @@ def render_backtest_view(
         )
         disp_pos["Company Name"] = disp_pos["yahoo_url"]
 
-        name_map = disp_pos.set_index("yahoo_url")["name"].to_dict()
-
         disp_pos = disp_pos[
             [
                 "Company Name",
@@ -283,8 +281,8 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    validate="^https://finance\\.yahoo\\.com/quote/",
-                    display_text=name_map,
+                    validate=r"^https://finance\.yahoo\.com/quote/",
+                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                 ),
             },
             width="stretch",
@@ -412,7 +410,6 @@ def main() -> None:
                 lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
             )
             df_manual["Company Name"] = df_manual["yahoo_url"]
-            m_map = df_manual.set_index("yahoo_url")["name"].to_dict()
 
             st.dataframe(
                 df_manual[
@@ -454,8 +451,8 @@ def main() -> None:
                     "Company Name": st.column_config.LinkColumn(
                         "Company Name",
                         help="Click to view live chart and fundamentals on Yahoo Finance",
-                        validate="^https://finance\\.yahoo\\.com/quote/",
-                        display_text=m_map,
+                        validate=r"^https://finance\.yahoo\.com/quote/",
+                        display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                     ),
                 },
                 width="stretch",

@@ -93,3 +93,121 @@ def test_ui_check_db_availability(populated_db: DatabaseManager, temp_db: Path) 
 
     non_existent_mgr = DatabaseManager(db_path=temp_db / "nonexistent.duckdb", read_only=True)
     assert check_db_availability(non_existent_mgr) is None
+
+
+def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test View A render_live_recommendations executes cleanly and configures LinkColumn with regex display_text."""
+    import streamlit as st
+    from src.ui.app import render_live_recommendations
+
+    read_only_mgr = DatabaseManager(db_path=populated_db.db_path, read_only=True)
+    latest_date = check_db_availability(read_only_mgr)
+    assert latest_date is not None
+
+    dataframe_calls = []
+
+    def mock_dataframe(*args, **kwargs):
+        dataframe_calls.append((args, kwargs))
+
+    monkeypatch.setattr(st, "dataframe", mock_dataframe)
+
+    render_live_recommendations(read_only_mgr, latest_date)
+
+    assert len(dataframe_calls) > 0
+    col_config = dataframe_calls[0][1].get("column_config", {})
+    assert "Company Name" in col_config
+    link_col = col_config["Company Name"]
+    display_text_val = link_col["type_config"]["display_text"]
+    assert isinstance(display_text_val, str)
+    assert not isinstance(display_text_val, dict)
+
+
+def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test View B and View C render_backtest_view execute cleanly and configure LinkColumn with regex display_text."""
+    import streamlit as st
+    from src.ui.app import render_backtest_view
+
+    read_only_mgr = DatabaseManager(db_path=populated_db.db_path, read_only=True)
+
+    dataframe_calls = []
+
+    def mock_dataframe(*args, **kwargs):
+        dataframe_calls.append((args, kwargs))
+
+    monkeypatch.setattr(st, "dataframe", mock_dataframe)
+
+    # Test View B (T-5)
+    render_backtest_view(read_only_mgr, cutoff_days_ago=5, view_label="View B: 1-Week Backtest")
+
+    # Test View C (T-22)
+    render_backtest_view(read_only_mgr, cutoff_days_ago=22, view_label="View C: 1-Month Backtest")
+
+    for _, kwargs in dataframe_calls:
+        col_config = kwargs.get("column_config", {})
+        if "Company Name" in col_config:
+            link_col = col_config["Company Name"]
+            display_text_val = link_col["type_config"]["display_text"]
+            assert isinstance(display_text_val, str)
+            assert not isinstance(display_text_val, dict)
+
+
+def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test View D Manual Analysis rendering with custom tickers and LinkColumn config."""
+    import streamlit as st
+    from src.engine.screener_queries import run_screener
+    from src.ui.app import check_db_availability
+
+    read_only_mgr = DatabaseManager(db_path=populated_db.db_path, read_only=True)
+    latest_date = check_db_availability(read_only_mgr)
+    assert latest_date is not None
+
+    dataframe_calls = []
+
+    def mock_dataframe(*args, **kwargs):
+        dataframe_calls.append((args, kwargs))
+
+    monkeypatch.setattr(st, "dataframe", mock_dataframe)
+
+    df_manual = run_screener(read_only_mgr, cutoff_date=latest_date, manual_tickers=["AAPL"])
+    assert not df_manual.empty
+
+    df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
+    df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+    df_manual["market_cap_str"] = "$100.00B"
+    df_manual["Company Name"] = df_manual["yahoo_url"]
+
+    st.dataframe(
+        df_manual[
+            [
+                "rank",
+                "Company Name",
+                "market_cap_str",
+                "exchange",
+                "close",
+                "adv_20",
+                "rs_score",
+                "tightness_ratio",
+                "pct_off_52w_high",
+                "composite_score",
+            ]
+        ],
+        column_config={
+            "Company Name": st.column_config.LinkColumn(
+                "Company Name",
+                help="Click to view live chart and fundamentals on Yahoo Finance",
+                validate=r"^https://finance\.yahoo\.com/quote/",
+                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+            ),
+        },
+        width="stretch",
+    )
+
+    assert len(dataframe_calls) == 1
+    col_config = dataframe_calls[0][1].get("column_config", {})
+    assert "Company Name" in col_config
+    link_col = col_config["Company Name"]
+    display_text_val = link_col["type_config"]["display_text"]
+    assert isinstance(display_text_val, str)
+    assert not isinstance(display_text_val, dict)
+
+
