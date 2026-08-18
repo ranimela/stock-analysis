@@ -98,10 +98,12 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     st.subheader("Ranked Top-10 Recommendations Table")
 
     display_df = df.copy()
+    display_df["yahoo_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
     display_df = display_df[
         [
             "rank",
             "ticker",
+            "yahoo_url",
             "name",
             "exchange",
             "close",
@@ -115,6 +117,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         columns={
             "rank": "Rank",
             "ticker": "Ticker",
+            "yahoo_url": "Yahoo Finance",
             "name": "Company Name",
             "exchange": "Exchange",
             "close": "Price ($)",
@@ -137,6 +140,14 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
                 "Composite Score": "{:.2f}",
             }
         ),
+        column_config={
+            "Yahoo Finance": st.column_config.LinkColumn(
+                "Yahoo Finance",
+                help="Click to view live chart and fundamentals on Yahoo Finance",
+                validate="^https://finance\\.yahoo\\.com/quote/",
+                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+            ),
+        },
         width="stretch",
     )
 
@@ -206,9 +217,24 @@ def render_backtest_view(
 
     st.subheader("Historical Position Performance Table")
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
-        disp_pos = pos_df.copy().rename(
+        disp_pos = pos_df.copy()
+        disp_pos["yahoo_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos = disp_pos[
+            [
+                "ticker",
+                "yahoo_url",
+                "entry_price",
+                "exit_price",
+                "return_pct",
+                "spy_return_pct",
+                "alpha_pct",
+                "max_drawdown_pct",
+                "is_win",
+            ]
+        ].rename(
             columns={
                 "ticker": "Ticker",
+                "yahoo_url": "Yahoo Finance",
                 "entry_price": "Entry Price ($)",
                 "exit_price": "Exit Price ($)",
                 "return_pct": "Return (%)",
@@ -230,6 +256,14 @@ def render_backtest_view(
                     "Max Drawdown (%)": "{:.2f}%",
                 }
             ),
+            column_config={
+                "Yahoo Finance": st.column_config.LinkColumn(
+                    "Yahoo Finance",
+                    help="Click to view live chart and fundamentals on Yahoo Finance",
+                    validate="^https://finance\\.yahoo\\.com/quote/",
+                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+                ),
+            },
             width="stretch",
         )
     else:
