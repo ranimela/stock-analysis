@@ -47,8 +47,6 @@ def check_db_availability(db_manager: DatabaseManager) -> str | None:
     Returns:
         str | None: Latest trade date string if available, otherwise None.
     """
-    if not db_manager.db_path.exists():
-        return None
     try:
         rows = db_manager.execute_read("SELECT MAX(trade_date) FROM daily_bars;")
         if rows and rows[0][0]:
@@ -78,8 +76,12 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         st.warning("No stocks passed all screening filters for the latest trade date.")
         return
 
-    # Calculate % Off 52W High
+    # Calculate % Off 52W High & Market Cap formatting helper
     df["pct_off_52w_high"] = ((df["close"] / df["high_52w"]) - 1.0) * 100.0
+    df["ticker_url"] = df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+    df["market_cap_str"] = df["market_cap"].apply(
+        lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
+    )
 
     # Key metrics for top recommendation
     top_row = df.iloc[0]
@@ -98,14 +100,13 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     st.subheader("Ranked Top-10 Recommendations Table")
 
     display_df = df.copy()
-    display_df["yahoo_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
     display_df = display_df[
         [
             "rank",
-            "ticker",
-            "yahoo_url",
+            "ticker_url",
             "name",
             "exchange",
+            "market_cap_str",
             "close",
             "adv_20",
             "rs_score",
@@ -116,10 +117,10 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     ].rename(
         columns={
             "rank": "Rank",
-            "ticker": "Ticker",
-            "yahoo_url": "Yahoo Finance",
+            "ticker_url": "Ticker",
             "name": "Company Name",
             "exchange": "Exchange",
+            "market_cap_str": "Market Cap",
             "close": "Price ($)",
             "adv_20": "ADV20 ($)",
             "rs_score": "RS Score",
@@ -141,11 +142,11 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             }
         ),
         column_config={
-            "Yahoo Finance": st.column_config.LinkColumn(
-                "Yahoo Finance",
+            "Ticker": st.column_config.LinkColumn(
+                "Ticker",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
                 validate="^https://finance\\.yahoo\\.com/quote/",
-                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+                display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",
             ),
         },
         width="stretch",
@@ -154,16 +155,17 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     # Parameter Explanations Callout
     st.markdown("### ℹ️ Parameter Definitions")
     st.markdown(
-        """
+        r"""
 - **Rank**: Priority order (#1–10) determined by the composite momentum score across passing candidates.
-- **Ticker**: Public US stock exchange symbol trading on NYSE, NASDAQ, or AMEX.
+- **Ticker**: Hyperlinked stock symbol trading on NYSE, NASDAQ, or AMEX (opens Yahoo Finance chart page).
 - **Company Name**: Registered corporate title of the asset.
 - **Exchange**: Primary US listing market (NASDAQ, NYSE, or AMEX).
+- **Market Cap**: Total dollar market capitalization of the company (in Millions/Billions).
 - **Price ($)**: End-of-Day (EOD) closing price on the cutoff evaluation date.
 - **ADV20 ($)**: 20-Day Average Daily Dollar Volume ($\text{Close} \times \text{Volume}$), enforced to be $\ge \$20,000,000$ for institutional liquidity.
 - **RS Score**: Mansfield Relative Strength measuring multi-timeframe price outperformance vs the SPY benchmark (70% 63-day weight + 30% 252-day weight).
-- **Tightness Ratio**: Volatility Contraction Ratio measuring 10-day price range relative to 14-day ATR ($\le 2.0$ signifies tight coiling).
-- **% Off 52W High**: Percentage distance from the stock's 252-day rolling peak (must be within 25% of 52-week high).
+- **Tightness Ratio**: Volatility Contraction Ratio measuring 10-day price range relative to 14-day ATR ($\le 3.5$ ceiling).
+- **% Off 52W High**: Percentage distance from the stock's 252-day rolling peak.
 - **Composite Score**: Weighted percentile score combining Relative Strength (60% weight) and Consolidation Tightness (40% weight).
 """
     )
@@ -218,11 +220,10 @@ def render_backtest_view(
     st.subheader("Historical Position Performance Table")
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
-        disp_pos["yahoo_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos["ticker_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
         disp_pos = disp_pos[
             [
-                "ticker",
-                "yahoo_url",
+                "ticker_url",
                 "entry_price",
                 "exit_price",
                 "return_pct",
@@ -233,8 +234,7 @@ def render_backtest_view(
             ]
         ].rename(
             columns={
-                "ticker": "Ticker",
-                "yahoo_url": "Yahoo Finance",
+                "ticker_url": "Ticker",
                 "entry_price": "Entry Price ($)",
                 "exit_price": "Exit Price ($)",
                 "return_pct": "Return (%)",
@@ -257,11 +257,11 @@ def render_backtest_view(
                 }
             ),
             column_config={
-                "Yahoo Finance": st.column_config.LinkColumn(
-                    "Yahoo Finance",
+                "Ticker": st.column_config.LinkColumn(
+                    "Ticker",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
                     validate="^https://finance\\.yahoo\\.com/quote/",
-                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+                    display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",
                 ),
             },
             width="stretch",
@@ -272,9 +272,10 @@ def render_backtest_view(
     # Backtest Parameter Explanations Callout
     st.markdown("### ℹ️ Backtest Parameter Definitions")
     st.markdown(
-        """
+        r"""
 - **Cutoff Date**: Historical date ($T_{-5}$ or $T_{-22}$) when screener recommendations were computed without lookahead bias.
 - **Evaluation Date**: Target date ($T_0$) up to which forward performance is tracked.
+- **Ticker**: Hyperlinked stock symbol trading on NYSE, NASDAQ, or AMEX (opens Yahoo Finance chart page).
 - **Entry Price ($)**: Closing price of recommended stock on the historical Cutoff Date.
 - **Exit Price ($)**: Closing price of stock on Evaluation Date ($T_0$).
 - **Return (%)**: Total percentage price change from Entry Price to Exit Price.
@@ -382,15 +383,18 @@ def main() -> None:
         df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
         if not df_manual.empty:
             df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-            df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+            df_manual["ticker_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+            df_manual["market_cap_str"] = df_manual["market_cap"].apply(
+                lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
+            )
             st.dataframe(
                 df_manual[
                     [
                         "rank",
-                        "ticker",
-                        "yahoo_url",
+                        "ticker_url",
                         "name",
                         "exchange",
+                        "market_cap_str",
                         "close",
                         "adv_20",
                         "rs_score",
@@ -401,10 +405,10 @@ def main() -> None:
                 ].rename(
                     columns={
                         "rank": "Rank",
-                        "ticker": "Ticker",
-                        "yahoo_url": "Yahoo Finance",
+                        "ticker_url": "Ticker",
                         "name": "Company Name",
                         "exchange": "Exchange",
+                        "market_cap_str": "Market Cap",
                         "close": "Price ($)",
                         "adv_20": "ADV20 ($)",
                         "rs_score": "RS Score",
@@ -423,8 +427,8 @@ def main() -> None:
                     }
                 ),
                 column_config={
-                    "Yahoo Finance": st.column_config.LinkColumn(
-                        "Yahoo Finance",
+                    "Ticker": st.column_config.LinkColumn(
+                        "Ticker",
                         help="Click to view live chart and fundamentals on Yahoo Finance",
                         validate="^https://finance\\.yahoo\\.com/quote/",
                         display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",

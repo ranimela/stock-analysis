@@ -358,14 +358,26 @@ class DataIngestor:
         today = datetime.date.today()
         start_date = today - datetime.timedelta(days=365 * self.lookback_years)
 
+        # Fetch market cap & metadata via yfinance Ticker info
+        market_cap = None
+        comp_name = ticker_clean
+        try:
+            info = yf.Ticker(ticker_clean).info
+            market_cap = info.get("marketCap")
+            comp_name = info.get("shortName") or info.get("longName") or ticker_clean
+        except Exception:
+            pass
+
         # Register metadata entry if missing
         self.db_manager.execute_write(
             """
-            INSERT INTO symbol_metadata (ticker, name, exchange, asset_class, is_active, first_added_date, last_updated_date)
-            VALUES (?, ?, 'NASDAQ', 'Common Stock', true, CURRENT_DATE, CURRENT_DATE)
-            ON CONFLICT (ticker) DO NOTHING;
+            INSERT INTO symbol_metadata (ticker, name, exchange, asset_class, market_cap, is_active, first_added_date, last_updated_date)
+            VALUES (?, ?, 'NASDAQ', 'Common Stock', ?, true, CURRENT_DATE, CURRENT_DATE)
+            ON CONFLICT (ticker) DO UPDATE SET
+                market_cap = COALESCE(EXCLUDED.market_cap, symbol_metadata.market_cap),
+                name = COALESCE(EXCLUDED.name, symbol_metadata.name);
             """,
-            [ticker_clean, ticker_clean],
+            [ticker_clean, comp_name, market_cap],
         )
 
         df = self.fetch_ticker_chunk([ticker_clean], start_date=start_date)

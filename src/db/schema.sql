@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS symbol_metadata (
     name VARCHAR,
     exchange VARCHAR,
     asset_class VARCHAR,
+    market_cap DOUBLE,
     is_active BOOLEAN,
     first_added_date DATE,
     last_updated_date DATE
