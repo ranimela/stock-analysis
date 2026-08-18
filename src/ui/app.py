@@ -98,13 +98,15 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     with col5:
         st.metric("Tightness Ratio", f"{top_row['tightness_ratio']:.2f}")
 
-    st.subheader("Ranked Top-10 Recommendations Table")
+    st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
     display_df = df.copy()
+    display_df["company_url"] = df["yahoo_url"]
+
+    # Select columns without Rank, sorted by Composite Score descending
     display_df = display_df[
         [
-            "rank",
-            "name",
+            "company_url",
             "market_cap_str",
             "exchange",
             "close",
@@ -116,8 +118,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         ]
     ].rename(
         columns={
-            "rank": "Rank",
-            "name": "Company Name",
+            "company_url": "Company Name",
             "market_cap_str": "Market Cap",
             "exchange": "Exchange",
             "close": "Price ($)",
@@ -127,24 +128,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "pct_off_52w_high": "% Off 52W High",
             "composite_score": "Composite Score",
         }
-    )
-    display_df["company_url"] = df["yahoo_url"]
-
-    # Reorder columns to put Company Name hyperlinked, then Market Cap
-    display_df = display_df[
-        [
-            "Rank",
-            "company_url",
-            "Market Cap",
-            "Exchange",
-            "Price ($)",
-            "ADV20 ($)",
-            "RS Score",
-            "Tightness Ratio",
-            "% Off 52W High",
-            "Composite Score",
-        ]
-    ].rename(columns={"company_url": "Company Name"})
+    ).sort_values(by="Composite Score", ascending=False)
 
     st.dataframe(
         display_df.style.format(
@@ -172,7 +156,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     st.markdown("### ℹ️ Parameter Definitions")
     st.markdown(
         r"""
-- **Rank**: Priority order (#1–10) determined by the composite momentum score across passing candidates.
 - **Company Name**: Hyperlinked corporate title of the asset (click to open live chart on Yahoo Finance).
 - **Market Cap**: Total dollar market capitalization of the company (placed directly after Company Name).
 - **Exchange**: Primary US listing market (NASDAQ, NYSE, or AMEX).
@@ -181,7 +164,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 - **RS Score**: Mansfield Relative Strength measuring multi-timeframe price outperformance vs the SPY benchmark (70% 63-day weight + 30% 252-day weight).
 - **Tightness Ratio**: Volatility Contraction Ratio measuring 10-day price range relative to 14-day ATR ($\le 3.5$ ceiling).
 - **% Off 52W High**: Percentage distance from the stock's 252-day rolling peak.
-- **Composite Score**: Weighted percentile score combining Relative Strength (60% weight) and Consolidation Tightness (40% weight).
+- **Composite Score**: Weighted percentile score combining Relative Strength (60% weight) and Consolidation Tightness (40% weight) — stocks sorted by this score.
 """
     )
 
@@ -422,7 +405,6 @@ def main() -> None:
             st.dataframe(
                 df_manual[
                     [
-                        "rank",
                         "Company Name",
                         "market_cap_str",
                         "exchange",
@@ -435,7 +417,6 @@ def main() -> None:
                     ]
                 ].rename(
                     columns={
-                        "rank": "Rank",
                         "market_cap_str": "Market Cap",
                         "exchange": "Exchange",
                         "close": "Price ($)",
@@ -445,7 +426,7 @@ def main() -> None:
                         "pct_off_52w_high": "% Off 52W High",
                         "composite_score": "Composite Score",
                     }
-                ).style.format(
+                ).sort_values(by="Composite Score", ascending=False).style.format(
                     {
                         "Price ($)": "${:.2f}",
                         "ADV20 ($)": "${:,.0f}",
