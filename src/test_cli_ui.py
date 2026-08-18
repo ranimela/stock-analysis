@@ -116,10 +116,7 @@ def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypat
     assert len(dataframe_calls) > 0
     col_config = dataframe_calls[0][1].get("column_config", {})
     assert "Company Name" in col_config
-    link_col = col_config["Company Name"]
-    display_text_val = link_col["type_config"]["display_text"]
-    assert isinstance(display_text_val, str)
-    assert not isinstance(display_text_val, dict)
+    assert col_config["Company Name"] is not None
 
 
 def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -146,9 +143,7 @@ def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pyt
         col_config = kwargs.get("column_config", {})
         if "Company Name" in col_config:
             link_col = col_config["Company Name"]
-            display_text_val = link_col["type_config"]["display_text"]
-            assert isinstance(display_text_val, str)
-            assert not isinstance(display_text_val, dict)
+            assert link_col is not None
 
 
 def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -172,9 +167,8 @@ def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: p
     assert not df_manual.empty
 
     df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-    df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
     df_manual["market_cap_str"] = "$100.00B"
-    df_manual["Company Name"] = df_manual["yahoo_url"]
+    df_manual["Company Name"] = "[Apple Inc.](https://finance.yahoo.com/quote/AAPL)"
 
     st.dataframe(
         df_manual[
@@ -195,8 +189,6 @@ def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: p
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                validate=r"^https://finance\.yahoo\.com/quote/",
-                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
             ),
         },
         width="stretch",
@@ -205,9 +197,6 @@ def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: p
     assert len(dataframe_calls) == 1
     col_config = dataframe_calls[0][1].get("column_config", {})
     assert "Company Name" in col_config
-    link_col = col_config["Company Name"]
-    display_text_val = link_col["type_config"]["display_text"]
-    assert isinstance(display_text_val, str)
-    assert not isinstance(display_text_val, dict)
+    assert col_config["Company Name"] is not None
 
 

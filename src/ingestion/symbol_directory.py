@@ -146,6 +146,64 @@ def is_common_stock(symbol: str, security_name: str) -> bool:
     return True
 
 
+def clean_company_name(raw_name: str) -> str:
+    """Clean security name to obtain official short/full company name.
+
+    Removes exchange descriptor suffixes like '- Common Stock', 'Class A Common Stock',
+    'American Depository Shares', etc.
+
+    Args:
+        raw_name: Raw security name string from directory listings.
+
+    Returns:
+        str: Cleaned company name.
+    """
+    if not raw_name:
+        return ""
+
+    name = raw_name.strip()
+
+    suffixes = [
+        " - Common Stock Par Value $0.01",
+        " - Common Stock Par Value $0.001",
+        " Common Stock Par Value $0.01",
+        " Common Stock Par Value $0.001",
+        " - Class A Common Stock",
+        " Class A Common Stock",
+        " - Class B Common Stock",
+        " Class B Common Stock",
+        " - Class C Common Stock",
+        " Class C Common Stock",
+        " - Common Stock",
+        " Common Stock",
+        " - Common Shares",
+        " Common Shares",
+        " - Class A Ordinary Shares",
+        " Class A Ordinary Shares",
+        " - Class B Ordinary Shares",
+        " Class B Ordinary Shares",
+        " - Ordinary Shares",
+        " Ordinary Shares",
+        " - American Depositary Shares",
+        " American Depositary Shares",
+        " - American Depository Shares",
+        " American Depository Shares",
+        " Depositary Shares",
+        " Depository Shares",
+        " - Class A",
+        " - Class B",
+        " - Class C",
+    ]
+
+    for s in suffixes:
+        if name.endswith(s):
+            name = name[:-len(s)].strip()
+            break
+
+    name = name.rstrip("- ,")
+    return name or raw_name.strip()
+
+
 def parse_nasdaqlisted(content: str) -> list[dict[str, Any]]:
     """Parse nasdaqlisted.txt content into ticker metadata dictionaries.
 
@@ -181,7 +239,7 @@ def parse_nasdaqlisted(content: str) -> list[dict[str, Any]]:
 
         results.append({
             "ticker": symbol,
-            "name": security_name.strip(),
+            "name": clean_company_name(security_name),
             "exchange": "NASDAQ",
             "asset_class": "Common Stock",
             "is_active": True,
@@ -227,7 +285,7 @@ def parse_otherlisted(content: str) -> list[dict[str, Any]]:
 
         results.append({
             "ticker": symbol,
-            "name": security_name.strip(),
+            "name": clean_company_name(security_name),
             "exchange": exchange_name,
             "asset_class": "Common Stock",
             "is_active": True,
@@ -283,6 +341,7 @@ def sync_symbol_metadata(db_manager: DatabaseManager, symbols: Sequence[dict[str
             s["name"],
             s.get("exchange", "UNKNOWN"),
             s.get("asset_class", "Common Stock"),
+            s.get("market_cap"),
             s.get("is_active", True),
         )
         for s in symbols
@@ -291,9 +350,16 @@ def sync_symbol_metadata(db_manager: DatabaseManager, symbols: Sequence[dict[str
     with db_manager.write_cursor() as conn:
         conn.executemany(
             """
-            INSERT OR REPLACE INTO symbol_metadata
-            (ticker, name, exchange, asset_class, is_active, last_updated_date)
-            VALUES (?, ?, ?, ?, ?, CURRENT_DATE)
+            INSERT INTO symbol_metadata
+            (ticker, name, exchange, asset_class, market_cap, is_active, first_added_date, last_updated_date)
+            VALUES (?, ?, ?, ?, ?, ?, CURRENT_DATE(), CURRENT_DATE())
+            ON CONFLICT (ticker) DO UPDATE SET
+                name = COALESCE(EXCLUDED.name, symbol_metadata.name),
+                exchange = COALESCE(EXCLUDED.exchange, symbol_metadata.exchange),
+                asset_class = COALESCE(EXCLUDED.asset_class, symbol_metadata.asset_class),
+                market_cap = COALESCE(EXCLUDED.market_cap, symbol_metadata.market_cap),
+                is_active = EXCLUDED.is_active,
+                last_updated_date = CURRENT_DATE()
             """,
             records,
         )

@@ -82,7 +82,10 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     df["market_cap_str"] = df["market_cap"].apply(
         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
     )
-    df["company_name_link"] = df.apply(lambda r: f"https://finance.yahoo.com/quote/{r['ticker']}", axis=1)
+    # Format Company Name as Markdown Link: [Company Full Name](https://finance.yahoo.com/quote/TICKER)
+    df["Company Name"] = df.apply(
+        lambda r: f"[{r.get('name', r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
+    )
 
     # Key metrics for top recommendation
     top_row = df.iloc[0]
@@ -101,12 +104,11 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
     display_df = df.copy()
-    display_df["company_url"] = df["yahoo_url"]
 
     # Select columns without Rank, sorted by Composite Score descending
     display_df = display_df[
         [
-            "company_url",
+            "Company Name",
             "market_cap_str",
             "exchange",
             "close",
@@ -118,7 +120,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         ]
     ].rename(
         columns={
-            "company_url": "Company Name",
             "market_cap_str": "Market Cap",
             "exchange": "Exchange",
             "close": "Price ($)",
@@ -145,8 +146,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                validate=r"^https://finance\.yahoo\.com/quote/",
-                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
             ),
         },
         width="stretch",
@@ -218,11 +217,12 @@ def render_backtest_view(
     st.subheader("Historical Position Performance Table")
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
-        disp_pos["yahoo_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos["Company Name"] = disp_pos.apply(
+            lambda r: f"[{r.get('name', r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
+        )
         disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
-        disp_pos["Company Name"] = disp_pos["yahoo_url"]
 
         disp_pos = disp_pos[
             [
@@ -264,8 +264,6 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    validate=r"^https://finance\.yahoo\.com/quote/",
-                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                 ),
             },
             width="stretch",
@@ -485,12 +483,9 @@ def main() -> None:
                     else:
                         st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
-            df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-            df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-            df_manual["market_cap_str"] = df_manual["market_cap"].apply(
-                lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
+            df_manual["Company Name"] = df_manual.apply(
+                lambda r: f"[{r.get('name', r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
             )
-            df_manual["Company Name"] = df_manual["yahoo_url"]
 
             st.dataframe(
                 df_manual[
@@ -530,8 +525,6 @@ def main() -> None:
                     "Company Name": st.column_config.LinkColumn(
                         "Company Name",
                         help="Click to view live chart and fundamentals on Yahoo Finance",
-                        validate=r"^https://finance\.yahoo\.com/quote/",
-                        display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                     ),
                 },
                 width="stretch",
