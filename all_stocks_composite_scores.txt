@@ -1,808 +1,808 @@
 Rank | Ticker | Company Name                             | Market Cap   | Composite Score (Mansfield RS vs SPY)
 =========================================================================================================
-   1 | DFNS   | T3 Defense Inc.                          | N/A          | 5043.9353
-   2 | CCG    | Cheche Group Inc.                        | $42.6M       | 2118.9686
-   3 | BANL   | CBL International Limited                | $21.9M       | 1948.8835
-   4 | AXTI   | AXT Inc                                  | $6.29B       | 1287.1895
-   5 | BYND   | Beyond Meat, Inc. - Common stock         | $200.0M      | 1071.9901
-   6 | DBGI   | Digital Brands Group, Inc.               | $7.9M        | 821.7124
-   7 | BVC    | BitVentures Limited - Ordinary Share     | $2.45B       | 821.0036
-   8 | CSAI   | Cloudastructure, Inc.                    | $4.9M        | 637.8814
-   9 | CLYM   | Climb Bio, Inc.                          | $1.00B       | 249.3128
-  10 | AEHR   | Aehr Test Systems                        | $4.75B       | 234.0564
-  11 | APPS   | Digital Turbine, Inc.                    | $1.48B       | 188.4285
-  12 | AAOI   | Applied Optoelectronics, Inc.            | $13.10B      | 178.1229
-  13 | ASTC   | Astrotech Corporation                    | $16.4M       | 172.8819
-  14 | ADIL   | Adial Pharmaceuticals, Inc               | $13.1M       | 171.8082
-  15 | BLZE   | Backblaze, Inc.                          | $1.20B       | 169.4111
-  16 | ABCL   | AbCellera Biologics Inc.                 | $3.43B       | 166.3537
-  17 | BBGI   | Beasley Broadcast Group, Inc.            | $40.4M       | 164.5235
-  18 | CHRN   | ChronoScale Holdings Corporation         | $3.22B       | 156.4767
-  19 | ANTX   | AN2 Therapeutics, Inc.                   | $216.2M      | 150.1583
-  20 | ALMS   | Alumis Inc.                              | $3.30B       | 145.5495
-  21 | APLM   | Apollomics Inc.                          | $68.2M       | 143.0236
-  22 | DFTX   | Definium Therapeutics, Inc.              | $6.08B       | 141.2541
-  23 | ATEX   | Anterix Inc.                             | $1.79B       | 138.9890
-  24 | CDNA   | CareDx, Inc.                             | $2.40B       | 138.9814
-  25 | CRNX   | Crinetics Pharmaceuticals, Inc.          | $8.99B       | 126.5646
-  26 | ARWR   | Arrowhead Pharmaceuticals, Inc.          | $12.53B      | 122.6767
-  27 | APGE   | Apogee Therapeutics, Inc.                | $10.19B      | 120.3541
-  28 | ABSI   | Absci Corporation                        | $1.59B       | 118.4819
-  29 | ALOT   | AstroNova, Inc.                          | $226.5M      | 117.9751
-  30 | ARTV   | Artiva Biotherapeutics, Inc.             | $574.0M      | 114.4731
-  31 | ATRO   | Astronics Corporation                    | $4.00B       | 110.2273
-  32 | BNAI   | Brand Engagement Network Inc.            | $120.2M      | 108.1598
-  33 | CSTE   | Caesarstone Ltd.                         | $118.6M      | 107.7018
-  34 | CIIT   | Tianci International, Inc.               | $3.4M        | 106.3996
-  35 | ALNT   | Allient Inc.                             | $1.92B       | 106.0563
-  36 | BDSX   | Biodesix, Inc.                           | $245.3M      | 101.0845
-  37 | BOLD   | Boundless Bio, Inc.                      | $64.4M       | 100.3706
-  38 | ANAB   | AnaptysBio, Inc.                         | $1.77B       | 96.8217
-  39 | ACRS   | Aclaris Therapeutics, Inc.               | $871.4M      | 96.7702
-  40 | ACMR   | ACM Research, Inc.                       | $5.96B       | 94.9863
-  41 | AYA    | Aya Gold & Silver Inc.                   | $3.84B       | 89.7942
-  42 | ADPT   | Adaptive Biotechnologies Corporation     | $3.95B       | 88.7169
-  43 | ACHV   | Achieve Life Sciences, Inc.              | $771.8M      | 87.4792
-  44 | AGEN   | Agenus Inc.                              | $321.8M      | 86.9473
-  45 | CLMT   | Calumet, Inc                             | $4.25B       | 85.9702
-  46 | AMLX   | Amylyx Pharmaceuticals, Inc.             | $2.39B       | 85.5342
-  47 | ALTO   | Alto Ingredients, Inc.                   | $327.3M      | 84.9856
-  48 | AXGN   | Axogen, Inc.                             | $2.64B       | 82.8948
-  49 | CAMP   | CAMP4 Therapeutics Corporation           | $313.6M      | 82.6484
-  50 | BAND   | Bandwidth Inc.                           | $1.70B       | 80.6016
-  51 | ATAI   | AtaiBeckley Inc.                         | $2.69B       | 80.3912
-  52 | CAKE   | The Cheesecake Factory Incorporated      | $5.43B       | 79.9741
-  53 | AZTA   | Azenta, Inc.                             | $1.47B       | 79.6614
-  54 | AMPL   | Amplitude, Inc.                          | $1.67B       | 78.9611
-  55 | ALOY   | REalloys Inc.                            | $955.8M      | 75.7092
-  56 | ANIK   | Anika Therapeutics Inc.                  | $287.3M      | 75.3467
-  57 | CPIX   | Cumberland Pharmaceuticals Inc.          | $115.1M      | 73.0676
-  58 | AVAH   | Aveanna Healthcare Holdings Inc.         | $2.76B       | 72.6399
-  59 | CJMB   | Callan JMB Inc.                          | $15.1M       | 72.3142
-  60 | CORT   | Corcept Therapeutics Incorporated        | $12.67B      | 71.6399
-  61 | CTRN   | Citi Trends, Inc.                        | $605.3M      | 71.5117
-  62 | AMAT   | Applied Materials, Inc.                  | $425.01B     | 71.1351
-  63 | ALM    | Almonty Industries Inc.                  | $4.72B       | 69.8313
-  64 | BBNX   | Beta Bionics, Inc.                       | $790.0M      | 68.4961
-  65 | OKTA   | Okta, Inc.                               | $24.90B      | 68.3105
-  66 | AQB    | AquaBounty Technologies, Inc.            | $7.2M        | 67.4912
-  67 | AMD    | Advanced Micro Devices, Inc.             | $826.03B     | 67.4086
-  68 | AMRX   | Amneal Pharmaceuticals, Inc.             | $6.42B       | 66.9303
-  69 | BJRI   | BJ's Restaurants, Inc.                   | $1.41B       | 66.3584
-  70 | ACCL   | Acco Group Holdings Limited              | $39.8M       | 65.7143
-  71 | CMPS   | COMPASS Pathways Plc                     | $1.90B       | 63.5670
-  72 | ASML   | ASML Holding N.V. - New York Registry Sh | $723.31B     | 62.5782
-  73 | APPN   | Appian Corporation                       | $2.50B       | 62.3944
-  74 | BLFS   | BioLife Solutions, Inc.                  | $1.73B       | 61.5351
-  75 | AVR    | Anteris Technologies Global Corp.        | $918.1M      | 60.5576
-  76 | BFRI   | Biofrontera Inc.                         | $17.3M       | 60.0505
-  77 | COAG   | Hemab Therapeutics Holdings, Inc.        | $2.50B       | 59.7707
-  78 | ADVB   | Advanced Biomed Inc.                     | $13.6M       | 59.1167
-  79 | CADL   | Candel Therapeutics, Inc.                | $891.0M      | 57.4555
-  80 | AUGO   | Aura Minerals Inc.                       | $6.58B       | 57.3767
-  81 | CBRL   | Cracker Barrel Old Country Store, Inc.   | $1.32B       | 57.3619
-  82 | ALXO   | ALX Oncology Holdings Inc.               | $272.4M      | 57.0080
-  83 | COGT   | Cogent Biosciences, Inc.                 | $6.57B       | 56.4593
-  84 | ASYS   | Amtech Systems, Inc.                     | $295.2M      | 56.1451
-  85 | ANGO   | AngioDynamics, Inc.                      | $647.7M      | 55.6965
-  86 | CGEM   | Cullinan Therapeutics, Inc.              | $1.27B       | 53.7478
-  87 | CRSR   | Corsair Gaming, Inc.                     | $1.32B       | 53.6853
-  88 | AMCX   | AMC Global Media Inc.                    | $498.7M      | 53.1927
-  89 | COHU   | Cohu, Inc.                               | $2.96B       | 51.6446
-  90 | AGPU   | Axe Compute Inc.                         | $122.1M      | 51.4907
-  91 | CRWD   | CrowdStrike Holdings, Inc.               | $217.81B     | 50.9889
-  92 | BCAX   | Bicara Therapeutics Inc.                 | $1.64B       | 50.5794
-  93 | DGII   | Digi International Inc.                  | N/A          | 50.4569
-  94 | ARQQ   | Arqit Quantum Inc.                       | $423.7M      | 50.2782
-  95 | BWEN   | Broadwind, Inc.                          | $123.3M      | 50.0566
-  96 | ATRC   | AtriCure, Inc.                           | $2.28B       | 49.3773
-  97 | ASRV   | AmeriServ Financial Inc.                 | $89.0M       | 49.2396
-  98 | BELFB  | Bel Fuse Inc.                            | $4.30B       | 48.8715
-  99 | CRDO   | Credo Technology Group Holding Ltd       | $52.74B      | 48.4783
- 100 | CVV    | CVD Equipment Corporation                | $55.8M       | 48.2957
- 101 | CSTL   | Castle Biosciences, Inc. - Common stock  | $915.0M      | 48.2584
- 102 | CRVS   | Corvus Pharmaceuticals, Inc.             | $1.25B       | 47.7742
- 103 | CHYM   | Chime Financial, Inc.                    | $11.91B      | 47.4076
- 104 | AGYS   | Agilysys, Inc.                           | $3.14B       | 47.1887
- 105 | BVS    | Bioventus Inc.                           | $1.17B       | 46.8728
- 106 | ALAB   | Astera Labs, Inc.                        | $55.54B      | 46.6909
- 107 | ATNI   | ATN International, Inc.                  | $486.3M      | 46.1314
- 108 | ALKS   | Alkermes plc                             | $8.36B       | 46.0223
- 109 | BMHL   | Bluemount Holdings Limited               | $149.0M      | 45.9317
- 110 | BRKR   | Bruker Corporation                       | $8.79B       | 45.5740
- 111 | AREC   | American Resources Corporation           | $315.6M      | 45.0197
- 112 | CIFR   | Cipher Digital Inc.                      | $7.68B       | 44.8445
- 113 | AIRJ   | AirJoule Technologies Corporation        | $426.1M      | 43.7560
- 114 | BOTJ   | Bank of the James Financial Group, Inc.  | $126.0M      | 43.5383
- 115 | CGON   | CG Oncology, Inc. - Common stock         | $6.84B       | 43.3399
- 116 | BWFG   | Bankwell Financial Group, Inc.           | $539.4M      | 43.3032
- 117 | ADAG   | Adagene Inc. - ADS, each representing 1. | $253.1M      | 42.8877
- 118 | ARCB   | ArcBest Corporation                      | $3.26B       | 42.7423
- 119 | CCXI   | Churchill Capital Corp XI                | $958.0M      | 42.4553
- 120 | ARXS   | Arxis, Inc.                              | $24.05B      | 41.6898
- 121 | ABOS   | Acumen Pharmaceuticals, Inc.             | $192.4M      | 40.7426
- 122 | BELFA  | Bel Fuse Inc.                            | $3.58B       | 40.7124
- 123 | AEIS   | Advanced Energy Industries, Inc.         | $13.96B      | 40.0520
- 124 | AVTX   | Avalo Therapeutics, Inc.                 | $1.07B       | 39.4118
- 125 | AMAL   | Amalgamated Financial Corp.              | $1.52B       | 39.2924
- 126 | ATLC   | Atlanticus Holdings Corporation          | $1.52B       | 39.1855
- 127 | DAVE   | Dave Inc.                                | $4.36B       | 39.1707
- 128 | CNET   | ZW Data Action Technologies Inc.         | $4.8M        | 38.8585
- 129 | CARE   | Carter Bankshares, Inc.                  | $709.9M      | 37.8803
- 130 | BSIN   | Big Sky Industrial Inc.                  | $74.5M       | 37.6808
- 131 | ABNB   | Airbnb, Inc.                             | $107.36B     | 37.6236
- 132 | CBLL   | CeriBell, Inc.                           | $936.4M      | 37.5667
- 133 | BLMN   | Bloomin' Brands, Inc.                    | $915.3M      | 36.8447
- 134 | AVT    | Avnet, Inc.                              | $8.09B       | 36.8161
- 135 | DCTH   | Delcath Systems, Inc.                    | N/A          | 36.0086
- 136 | AMKR   | Amkor Technology, Inc.                   | $15.23B      | 35.9950
- 137 | CERS   | Cerus Corporation                        | $598.5M      | 35.9286
- 138 | ARHS   | Arhaus, Inc.                             | $1.35B       | 35.9111
- 139 | BWIN   | The Baldwin Insurance Group, Inc.        | $2.98B       | 35.7270
- 140 | APA    | APA Corporation                          | $14.57B      | 35.5475
- 141 | ACOG   | Alpha Cognition Inc.                     | $192.5M      | 35.4902
- 142 | CERT   | Certara, Inc.                            | $1.22B       | 34.9153
- 143 | AEVA   | Aeva Technologies, Inc.                  | $1.66B       | 34.8487
- 144 | AIP    | Arteris, Inc.                            | $1.37B       | 34.6719
- 145 | DDOG   | Datadog, Inc.                            | N/A          | 34.4215
- 146 | ALMR   | Alamar Biosciences, Inc. - Class A commo | $2.23B       | 34.4150
- 147 | CLBK   | Columbia Financial, Inc.                 | $1.22B       | 34.3958
- 148 | CLRO   | ClearOne, Inc.                           | $13.2M       | 34.0889
- 149 | ALRS   | Alerus Financial Corporation             | $834.0M      | 33.9450
- 150 | CLWT   | Euro Tech Holdings Company Limited       | $12.3M       | 33.6734
- 151 | CHEF   | The Chefs' Warehouse, Inc.               | $4.51B       | 33.3318
- 152 | AMGN   | Amgen Inc.                               | $226.88B     | 33.3062
- 153 | CLOV   | Clover Health Investments, Corp.  - Clas | $2.27B       | 32.6691
- 154 | ARQT   | Arcutis Biotherapeutics, Inc. - Common s | $3.22B       | 32.1642
- 155 | BBCP   | Concrete Pumping Holdings, Inc.          | $483.8M      | 32.1588
- 156 | AXON   | Axon Enterprise, Inc.                    | $49.09B      | 32.1256
- 157 | BRZE   | Braze, Inc.                              | $3.15B       | 31.6073
- 158 | ALLO   | Allogene Therapeutics, Inc.              | $717.9M      | 31.1177
- 159 | CROX   | Crocs, Inc.                              | $6.23B       | 30.8143
- 160 | CAC    | Camden National Corporation              | $986.4M      | 30.7312
- 161 | ATLO   | Ames National Corporation                | $282.4M      | 30.7254
- 162 | CAMT   | Camtek Ltd.                              | $8.02B       | 30.6419
- 163 | BPOP   | Popular, Inc.                            | $11.28B      | 30.4685
- 164 | ACAD   | ACADIA Pharmaceuticals Inc.              | $5.00B       | 30.3715
- 165 | AVIR   | Atea Pharmaceuticals, Inc. - common stoc | $417.7M      | 30.3166
- 166 | CCSI   | Consensus Cloud Solutions, Inc.          | $675.1M      | 30.2115
- 167 | CCC    | CCC Intelligent Solutions Holdings Inc.  | $3.94B       | 30.0178
- 168 | AOUT   | American Outdoor Brands, Inc.            | $152.9M      | 29.7106
- 169 | AIRT   | Air T, Inc.                              | $74.6M       | 29.6970
- 170 | ACNB   | ACNB Corporation                         | $654.6M      | 29.4012
- 171 | ADEA   | Adeia Inc.                               | $3.27B       | 29.0747
- 172 | CRDL   | Cardiol Therapeutics Inc. - Class A      | $210.3M      | 29.0450
- 173 | CLDX   | Celldex Therapeutics, Inc.               | $3.29B       | 29.0426
- 174 | DGICB  | Donegal Group, Inc.                      | $918.3M      | 28.9742
- 175 | BSET   | Bassett Furniture Industries, Incorporat | $164.5M      | 28.7411
- 176 | CASS   | Cass Information Systems, Inc            | $731.6M      | 28.5668
- 177 | BBIO   | BridgeBio Pharma, Inc.                   | $15.62B      | 27.8524
- 178 | BOF    | BranchOut Food Inc.                      | $61.4M       | 27.5289
- 179 | BWB    | Bridgewater Bancshares, Inc.             | $622.6M      | 27.1818
- 180 | ALZN   | Alzamend Neuro, Inc.                     | $7.6M        | 26.9654
- 181 | AVNW   | Aviat Networks, Inc.                     | $285.2M      | 26.3707
- 182 | ANNX   | Annexon, Inc. - common stock             | $840.5M      | 26.0638
- 183 | ADAM   | Adamas Trust, Inc.                       | $909.6M      | 25.6895
- 184 | AHMA   | Ambitions Enterprise Management Co. L.L. | $46.7M       | 25.5652
- 185 | CFBK   | CF Bankshares Inc.                       | $233.2M      | 25.4320
- 186 | CABR   | Caring Brands, Inc.                      | $12.1M       | 25.0000
- 187 | ACHC   | Acadia Healthcare Company, Inc.          | $2.79B       | 24.9263
- 188 | CCCC   | C4 Therapeutics, Inc.                    | $524.7M      | 24.8964
- 189 | CHMG   | Chemung Financial Corp                   | $399.2M      | 24.5990
- 190 | BMRN   | BioMarin Pharmaceutical Inc.             | $12.90B      | 24.5056
- 191 | AXSM   | Axsome Therapeutics, Inc.                | $11.33B      | 24.4897
- 192 | CRCT   | Cricut, Inc. - Class A common stock      | $1.15B       | 24.4385
- 193 | BUSE   | First Busey Corporation                  | $2.57B       | 24.0711
- 194 | BPRN   | Princeton Bancorp, Inc.                  | $291.3M      | 24.0181
- 195 | CZFS   | Citizens Financial Services, Inc.        | $393.9M      | 23.7068
- 196 | BYFC   | Broadway Financial Corporation           | $107.2M      | 22.9052
- 197 | DHC    | Diversified Healthcare Trust  - Common S | $2.01B       | 22.8016
- 198 | CASY   | Caseys General Stores, Inc.              | $32.19B      | 22.7772
- 199 | BUUU   | BUUU Group Limited - Class A Ordinary Sh | $459.9M      | 22.6273
- 200 | CURR   | Currenc Group Inc.                       | $433.4M      | 22.4140
- 201 | BIIB   | Biogen Inc.                              | $30.90B      | 22.3756
- 202 | AERT   | Aeries Technology, Inc. - Class A Ordina | $38.6M       | 22.3214
- 203 | BWMN   | Bowman Consulting Group Ltd.             | $734.4M      | 22.1892
- 204 | BTQ    | BTQ Technologies Corp.                   | $566.3M      | 21.9795
- 205 | BOKF   | BOK Financial Corporation                | $8.85B       | 21.9431
- 206 | BFST   | Business First Bancshares, Inc.          | $1.05B       | 21.8978
- 207 | ANIX   | Anixa Biosciences, Inc.                  | $118.7M      | 21.8837
- 208 | ACRV   | Acrivon Therapeutics, Inc.               | $87.7M       | 21.6861
- 209 | CART   | Maplebear Inc.                           | $11.31B      | 21.3995
- 210 | AVPT   | AvePoint, Inc.                           | $2.80B       | 21.2572
- 211 | ADUR   | Aduro Clean Technologies Inc.            | $561.8M      | 21.2386
- 212 | ANDE   | The Andersons, Inc.                      | $2.34B       | 21.2152
- 213 | ACIW   | ACI Worldwide, Inc.                      | $5.26B       | 21.1453
- 214 | CATY   | Cathay General Bancorp                   | $4.30B       | 21.0480
- 215 | CYCN   | Cyclerion Therapeutics, Inc.             | $18.9M       | 21.0382
- 216 | ALGT   | Allegiant Travel Company                 | $2.30B       | 21.0054
- 217 | BKNG   | Booking Holdings Inc.                    | $153.85B     | 20.9936
- 218 | BCAL   | California BanCorp                       | $688.3M      | 20.4697
- 219 | ACT    | Enact Holdings, Inc.                     | $6.84B       | 20.2188
- 220 | BSVN   | Bank7 Corp. - Common stock               | $496.2M      | 20.2043
- 221 | CLMB   | Climb Global Solutions, Inc.             | $519.5M      | 20.1377
- 222 | CTNM   | Contineum Therapeutics, Inc. - Common st | $546.6M      | 20.0389
- 223 | DBX    | Dropbox, Inc.                            | $7.26B       | 20.0102
- 224 | BEEP   | Mobile Infrastructure Corporation        | $106.6M      | 19.9814
- 225 | AVBH   | Avidbank Holdings, Inc.                  | $358.6M      | 19.8086
- 226 | AVBP   | ArriVent BioPharma, Inc.                 | $1.43B       | 19.7495
- 227 | ABUS   | Arbutus Biopharma Corporation            | $930.4M      | 19.6882
- 228 | CARL   | Carlsmed, Inc.                           | $376.2M      | 19.6468
- 229 | CYRX   | CryoPort, Inc.                           | $775.9M      | 19.6142
- 230 | ALRM   | Alarm.com Holdings, Inc.                 | $2.70B       | 19.5998
- 231 | BRUN   | Boost Run Inc.                           | $1.39B       | 19.4936
- 232 | BLKB   | Blackbaud, Inc.                          | $1.97B       | 19.2677
- 233 | AMPG   | Amplitech Group, Inc.                    | $111.2M      | 19.0642
- 234 | COKE   | Coca-Cola Consolidated, Inc.             | $12.39B      | 19.0045
- 235 | AUDC   | AudioCodes Ltd.                          | $244.9M      | 18.8126
- 236 | AKTS   | Aktis Oncology, Inc. - Common stock      | $1.37B       | 18.7385
- 237 | ADUS   | Addus HomeCare Corporation               | $2.15B       | 18.6781
- 238 | DIBS   | 1stdibs.com, Inc.                        | N/A          | 18.5552
- 239 | BHRB   | Burke & Herbert Financial Services Corp. | $1.46B       | 18.3282
- 240 | CMCO   | Columbus McKinnon Corporation            | $550.7M      | 18.3275
- 241 | CAI    | Caris Life Sciences, Inc.                | $6.11B       | 18.2146
- 242 | AROW   | Arrow Financial Corporation              | $719.8M      | 18.1626
- 243 | BSRR   | Sierra Bancorp                           | $529.0M      | 18.1505
- 244 | CMTV   | Community Bancorp.  - Common stock       | $228.8M      | 18.0185
- 245 | AVLN   | Avalyn Pharma Inc. - common stock        | $1.70B       | 17.4428
- 246 | CTBI   | Community Trust Bancorp, Inc.            | $1.43B       | 17.2269
- 247 | CBK    | Commercial Bancgroup, Inc.               | $480.4M      | 17.2139
- 248 | CLAR   | Clarus Corporation                       | $139.0M      | 17.1103
- 249 | CZNC   | Citizens & Northern Corp                 | N/A          | 17.0387
- 250 | CARG   | CarGurus, Inc.                           | $3.19B       | 16.7821
- 251 | CNXN   | PC Connection, Inc.                      | $1.98B       | 16.7583
- 252 | AGMB   | AgomAb Therapeutics NV - ADRs representi | $673.7M      | 16.7391
- 253 | ACLS   | Axcelis Technologies, Inc.               | $4.45B       | 16.6218
- 254 | DASH   | DoorDash, Inc.                           | $92.69B      | 16.5271
- 255 | CVLT   | Commvault Systems, Inc.                  | $5.98B       | 16.3808
- 256 | BANR   | Banner Corporation                       | $2.50B       | 16.1051
- 257 | CVCO   | Cavco Industries, Inc.                   | $4.61B       | 16.0714
- 258 | BKR    | Baker Hughes Company                     | $64.42B      | 15.8689
- 259 | AAL    | American Airlines Group, Inc.            | $9.55B       | 15.8228
- 260 | BFC    | Bank First Corporation                   | $1.74B       | 15.8165
- 261 | APOG   | Apogee Enterprises, Inc.                 | $880.2M      | 15.8053
- 262 | AIRO   | AIRO Group Holdings, Inc.                | $296.9M      | 15.7126
- 263 | APLD   | Applied Digital Corporation              | $8.98B       | 15.5716
- 264 | BVFL   | BV Financial, Inc.                       | $180.9M      | 15.4981
- 265 | ADI    | Analog Devices, Inc.                     | $190.10B     | 15.0055
- 266 | CTKB   | Cytek Biosciences, Inc.                  | $616.1M      | 14.9765
- 267 | CPBI   | Central Plains Bancshares, Inc.          | $81.4M       | 14.9733
- 268 | CDW    | CDW Corporation                          | $16.91B      | 14.8556
- 269 | CBC    | Central Bancompany, Inc.                 | $7.80B       | 14.7972
- 270 | API    | Agora, Inc. - ADS                        | $372.0M      | 14.7368
- 271 | ALGM   | Allegro MicroSystems, Inc.               | $8.25B       | 14.5526
- 272 | CBUS   | Cibus, Inc.                              | $127.6M      | 14.2612
- 273 | CUE    | Cue Biopharma, Inc.                      | $200.8M      | 14.2486
- 274 | BEAM   | Beam Therapeutics Inc.                   | $2.80B       | 14.0344
- 275 | BMRC   | Bank of Marin Bancorp                    | $456.0M      | 13.8964
- 276 | CYTK   | Cytokinetics, Incorporated               | N/A          | 13.6820
- 277 | ADP    | Automatic Data Processing, Inc.          | $105.70B     | 13.2920
- 278 | ACTG   | Acacia Research Corporation              | $456.7M      | 13.1901
- 279 | APPF   | AppFolio, Inc.                           | $6.94B       | 13.1818
- 280 | CLPT   | ClearPoint Neuro Inc.                    | $472.8M      | 13.1069
- 281 | CBNK   | Capital Bancorp, Inc.                    | $613.5M      | 13.0965
- 282 | ASTH   | Astrana Health Inc.                      | $1.97B       | 13.0951
- 283 | CIVB   | Civista Bancshares, Inc.                 | $589.7M      | 12.9100
- 284 | CCNE   | CNB Financial Corporation                | $1.03B       | 12.5991
- 285 | AFRI   | Forafric Global PLC                      | $285.3M      | 12.4822
- 286 | BCRX   | BioCryst Pharmaceuticals, Inc.           | $2.54B       | 12.4296
- 287 | ACNT   | Ascent Industries Co.                    | $136.3M      | 12.3904
- 288 | CFFN   | Capitol Federal Financial, Inc.          | $1.08B       | 12.3447
- 289 | ALGN   | Align Technology, Inc.                   | $12.16B      | 12.1299
- 290 | ALKT   | Alkami Technology, Inc.                  | $2.16B       | 11.9398
- 291 | BCPC   | Balchem Corporation                      | $5.69B       | 11.7731
- 292 | CBFV   | CB Financial Services, Inc.              | $189.6M      | 11.2715
- 293 | DCBO   | Docebo Inc.                              | $561.2M      | 11.2266
- 294 | CHCO   | City Holding Company                     | $2.05B       | 10.8691
- 295 | CFFI   | C&F Financial Corporation                | $279.5M      | 10.7605
- 296 | COO    | The Cooper Companies, Inc.               | $14.65B      | 10.6594
- 297 | AAPL   | Apple Inc.                               | $4459.84B    | 10.6332
- 298 | ARTNA  | Artesian Resources Corporation - Class A | $360.8M      | 9.5308
- 299 | AGIO   | Agios Pharmaceuticals, Inc.              | $2.01B       | 9.4968
- 300 | ASMB   | Assembly Biosciences, Inc.               | $611.0M      | 9.3926
- 301 | ASND   | Ascendis Pharma A/S - Ordinary Share     | $16.23B      | 9.3870
- 302 | CACC   | Credit Acceptance Corporation            | $5.95B       | 9.2239
- 303 | CCEP   | Coca-Cola Europacific Partners plc       | $46.63B      | 9.1144
- 304 | COCO   | The Vita Coco Company, Inc.              | $3.79B       | 9.0373
- 305 | CTRM   | Castor Maritime Inc.                     | $22.5M       | 8.9874
- 306 | BOOM   | DMC Global Inc.                          | $149.9M      | 8.9464
- 307 | BRCB   | Black Rock Coffee Bar, Inc.              | $175.4M      | 8.8873
- 308 | CNOB   | ConnectOne Bancorp, Inc.                 | $1.65B       | 8.8036
- 309 | CVBF   | CVB Financial Corporation                | $4.07B       | 8.5677
- 310 | BNTC   | Benitec Biopharma Inc.                   | $449.0M      | 8.5497
- 311 | AEBI   | Aebi Schmidt Holding AG                  | $961.1M      | 8.3644
- 312 | CSX    | CSX Corporation                          | $93.70B      | 8.3343
- 313 | AIHS   | Senmiao Technology Limited               | $21.8M       | 8.3246
- 314 | AGNC   | AGNC Investment Corp.                    | $12.98B      | 8.3127
- 315 | AFRM   | Affirm Holdings, Inc.                    | $24.96B      | 8.2787
- 316 | CASH   | Pathward Financial, Inc.                 | $1.77B       | 8.2349
- 317 | CCBG   | Capital City Bank Group                  | $889.4M      | 8.1429
- 318 | BATRK  | Atlanta Braves Holdings, Inc. - Series C | $3.38B       | 8.0092
- 319 | CCLD   | CareCloud, Inc.                          | $105.0M      | 7.9271
- 320 | AYTU   | Aytu BioPharma, Inc.                     | $25.3M       | 7.7625
- 321 | CLST   | Catalyst Bancorp, Inc. - common stock    | $71.0M       | 7.7339
- 322 | BATRA  | Atlanta Braves Holdings, Inc. - Series A | $3.60B       | 7.6937
- 323 | DDI    | DoubleDown Interactive Co., Ltd.         | $617.2M      | 7.6835
- 324 | BSBK   | Bogota Financial Corp.                   | $118.0M      | 7.5243
- 325 | ALTI   | AlTi Global, Inc.                        | $459.1M      | 7.3574
- 326 | CENT   | Central Garden & Pet Company             | $2.71B       | 7.3427
- 327 | BIOA   | BioAge Labs, Inc.                        | $477.3M      | 7.3203
- 328 | ARVN   | Arvinas, Inc.                            | $593.6M      | 7.2932
- 329 | ALLT   | Allot Ltd.                               | $375.7M      | 7.2669
- 330 | CMPR   | Cimpress plc                             | $2.23B       | 7.1799
- 331 | CRON   | Cronos Group Inc. - Common Share         | $1.16B       | 7.1746
- 332 | CTMX   | CytomX Therapeutics, Inc.                | $751.8M      | 7.1377
- 333 | CWBC   | Community West Bancshares                | $704.9M      | 7.0055
- 334 | DERM   | Journey Medical Corporation              | $177.9M      | 6.9565
- 335 | CTSH   | Cognizant Technology Solutions Corporati | $25.50B      | 6.9279
- 336 | AUBN   | Auburn National Bancorporation, Inc.     | $91.5M       | 6.9150
- 337 | COLB   | Columbia Banking System, Inc.            | $9.15B       | 6.9071
- 338 | AFCG   | Advanced Flower Capital Inc.             | $79.1M       | 6.8774
- 339 | ASBP   | Aspire Biopharma Holdings, Inc.          | $10.0M       | 6.8487
- 340 | CABA   | Cabaletta Bio, Inc.                      | $490.0M      | 6.7405
- 341 | AKAM   | Akamai Technologies, Inc.                | $17.67B      | 6.7228
- 342 | ALGS   | Aligos Therapeutics, Inc. - Common stock | $41.1M       | 6.6095
- 343 | AEHL   | Antelope Enterprise Holdings Limited     | $5.8M        | 6.2427
- 344 | CDT    | CDT Equity Inc.                          | $2.2M        | 6.1049
- 345 | ARTW   | Art's-Way Manufacturing Co., Inc.        | $16.7M       | 6.0110
- 346 | AUPH   | Aurinia Pharmaceuticals Inc              | $2.03B       | 5.7626
- 347 | CECO   | CECO Environmental Corp.                 | $4.93B       | 5.4447
- 348 | MSFT   | Microsoft Corporation                    | $3566.86B    | 5.3399
- 349 | CBSH   | Commerce Bancshares, Inc.                | $8.56B       | 5.0793
- 350 | CZR    | Caesars Entertainment, Inc.              | N/A          | 5.0021
- 351 | AMPH   | Amphastar Pharmaceuticals, Inc.          | $887.3M      | 4.9361
- 352 | ACGL   | Arch Capital Group Ltd.                  | $33.38B      | 4.9356
- 353 | BLLN   | BillionToOne, Inc. - Class A common stoc | $4.43B       | 4.7521
- 354 | CSCO   | Cisco Systems, Inc.                      | $444.99B     | 4.7447
- 355 | APEI   | American Public Education, Inc.          | $810.9M      | 4.6830
- 356 | ATEC   | Alphatec Holdings, Inc.                  | $1.46B       | 4.5658
- 357 | AEP    | American Electric Power Company, Inc.    | $68.88B      | 4.4056
- 358 | AVO    | Mission Produce, Inc.                    | $1.14B       | 4.3966
- 359 | COFS   | ChoiceOne Financial Services, Inc.       | $511.0M      | 4.2323
- 360 | ACFN   | Acorn Energy, Inc.                       | $48.9M       | 4.1808
- 361 | CGNX   | Cognex Corporation                       | $11.20B      | 4.0101
- 362 | BCML   | BayCom Corp                              | $334.2M      | 3.8455
- 363 | CAE    | CAE Inc                                  | $8.73B       | 3.5994
- 364 | ASTS   | AST SpaceMobile, Inc.                    | $21.33B      | 3.5213
- 365 | CRAI   | CRA International,Inc.                   | $1.03B       | 3.4490
- 366 | AQST   | Aquestive Therapeutics, Inc.             | $538.3M      | 3.3283
- 367 | CENTA  | Central Garden & Pet Company - Class A C | $2.36B       | 3.3057
- 368 | ALCO   | Alico, Inc.                              | $289.8M      | 3.2286
- 369 | AEYE   | AudioEye, Inc.                           | $103.8M      | 3.1998
- 370 | CTAS   | Cintas Corporation                       | $79.16B      | 3.1950
- 371 | AMZN   | Amazon.com, Inc.                         | $2818.57B    | 3.1893
- 372 | AEMD   | Aethlon Medical, Inc.                    | $1.5M        | 3.1632
- 373 | ADSE   | ADS-TEC ENERGY PLC                       | $901.6M      | 3.1375
- 374 | CURI   | CuriosityStream Inc.                     | $175.0M      | 3.0245
- 375 | BANF   | BancFirst Corporation                    | $3.86B       | 2.9185
- 376 | AVGO   | Broadcom Inc.                            | $1867.02B    | 2.4337
- 377 | ALLR   | Allarity Therapeutics, Inc. - Common sto | $21.3M       | 2.3192
- 378 | AMBA   | Ambarella, Inc.                          | $3.45B       | 2.0972
- 379 | BBOT   | BridgeBio Oncology Therapeutics, Inc.    | $724.2M      | 2.0613
- 380 | AVAV   | AeroVironment, Inc.                      | $9.21B       | 2.0066
- 381 | BGC    | BGC Group, Inc.                          | $5.31B       | 2.0046
- 382 | ANGH   | Anghami Inc.                             | $32.4M       | 1.9767
- 383 | BOXL   | Boxlight Corporation                     | $4.8M        | 1.9509
- 384 | ALDF   | Aldel Financial II Inc.                  | $321.7M      | 1.9159
- 385 | CV     | CapsoVision, Inc.                        | $322.6M      | 1.9076
- 386 | CAAS   | China Automotive Systems, Inc. - Ordinar | $138.0M      | 1.0192
- 387 | BPAC   | Blueport Acquisition Ltd                 | $75.1M       | 0.9771
- 388 | GOOGL  | Alphabet Inc.                            | $4207.10B    | 0.8619
- 389 | CING   | Cingulate Inc.                           | $70.2M       | 0.8043
- 390 | APAC   | StoneBridge Acquisition II Corporation   | $82.2M       | 0.7624
- 391 | APXT   | Apex Treasury Corporation - Class A Ordi | $464.7M      | 0.6993
- 392 | CZWI   | Citizens Community Bancorp, Inc.         | $201.9M      | 0.5508
- 393 | GOOG   | Alphabet Inc.                            | $4175.91B    | 0.5178
- 394 | CCTG   | CCSC Technology International Holdings L | $9.0M        | 0.4473
- 395 | ABEO   | Abeona Therapeutics Inc.                 | $338.6M      | 0.3850
- 396 | CENX   | Century Aluminum Company                 | $4.66B       | 0.1760
- 397 | DGICA  | Donegal Group, Inc.                      | $685.2M      | 0.1284
- 398 | APUR   | Aperture AC                              | $146.9M      | 0.0000
- 399 | ARCL   | ARC Group Acquisition I Corp             | $178.6M      | 0.0000
- 400 | BIOT   | Instinct Bio Technical Company Holdings  | $10.9M       | 0.0000
- 401 | ARCLR  | ARC Group Acquisition I Corp - Right     | N/A          | 0.0000
- 402 | SPY    | SPY                                      | N/A          | 0.0000
- 403 | CEPL   | Capstone Energy Plus, Inc.               | $219.7M      | 0.0000
- 404 | CXII   | Churchill Capital Corp XII               | $597.7M      | 0.0000
- 405 | ATTO   | Attovia Therapeutics, Inc.               | $977.2M      | 0.0000
- 406 | CIGL   | Concorde International Group Ltd         | $110.1M      | 0.0000
- 407 | APMD   | Apnimed, Inc.                            | $1.30B       | 0.0000
- 408 | AMPGZ  | Amplitech Group, Inc. - Series B Right   | N/A          | 0.0000
- 409 | CCCT   | Columbus Circle Capital Corp III         | $308.6M      | 0.0000
- 410 | AMSS   | AMASS Brands Inc.                        | $10.9M       | 0.0000
- 411 | BSP    | Bending Spoons S.p.A.                    | $24.46B      | 0.0000
- 412 | CGCF   | Cartesian Growth Corporation IV          | N/A          | 0.0000
- 413 | AESP   | Aeon Acquisition I Corp.                 | $206.7M      | 0.0000
- 414 | CAES   | Cantor Equity Partners VII, Inc.         | $320.7M      | 0.0000
- 415 | BLSM   | BlossomHill Therapeutics, Inc.           | $476.3M      | 0.0000
- 416 | BRVE   | Braveheart Bio, Inc.                     | $1.95B       | 0.0000
- 417 | CNXU   | Conexeu Sciences Inc.                    | $261.7M      | 0.0000
- 418 | AFJKR  | Aimei Health Technology Co., Ltd - Right | N/A          | 0.0000
- 419 | AIBZ   | Bitzero Holdings Inc.                    | $353.4M      | 0.0000
- 420 | BGDE   | Big Digital Energy, Inc.                 | $41.0M       | -0.3472
- 421 | CRTO   | Criteo S.A.                              | $895.4M      | -0.6400
- 422 | BOSC   | B.O.S. Better Online Solutions           | $32.4M       | -0.7123
- 423 | AURA   | Aura Biosciences, Inc.                   | $794.4M      | -0.7644
- 424 | ACIU   | AC Immune SA                             | $257.5M      | -0.8895
- 425 | BHF    | Brighthouse Financial, Inc.              | $3.21B       | -0.8947
- 426 | CEPS   | Cantor Equity Partners VI, Inc.          | $152.6M      | -1.0144
- 427 | BTBD   | BT Brands, Inc.                          | $7.5M        | -1.0149
- 428 | CTW    | CTW                                      | $157.5M      | -1.2210
- 429 | CHRD   | Chord Energy Corporation                 | $7.82B       | -1.2389
- 430 | CINF   | Cincinnati Financial Corporation         | $26.25B      | -1.3118
- 431 | DAKT   | Daktronics, Inc.                         | $963.2M      | -1.5132
- 432 | CEPV   | Cantor Equity Partners V, Inc.           | $329.7M      | -1.5834
- 433 | DBCA   | D. Boral Acquisition I Corp.             | $432.3M      | -1.5851
- 434 | CEPF   | Cantor Equity Partners IV, Inc.          | $591.5M      | -1.6877
- 435 | CMII   | Columbus Circle Capital Corp II          | $313.9M      | -1.7223
- 436 | CHEC   | Chenghe Acquisition III Co.              | $176.9M      | -1.7393
- 437 | CCEC   | Capital Clean Energy Carriers Corp. - Co | $1.37B       | -1.7512
- 438 | ALT    | Altimmune, Inc.                          | $583.6M      | -1.8593
- 439 | ASUR   | Asure Software Inc                       | $239.7M      | -1.8875
- 440 | AZ     | A2Z Cust2Mate Solutions Corp.            | $320.5M      | -1.9263
- 441 | ALOV   | Aldabra 4 Liquidity Opportunity Vehicle, | $373.7M      | -1.9938
- 442 | CUPR   | Cuprina Holdings (Cayman) Limited - Clas | $7.8M        | -2.0645
- 443 | BDCI   | BTC Development Corp.                    | $350.6M      | -2.1364
- 444 | AIFA   | All In FutureTech Alliance, Inc.         | $19.4M       | -2.2766
- 445 | AFYA   | Afya Limited - Class A                   | $1.26B       | -2.3735
- 446 | ABTS   | Abits Group Inc                          | $3.9M        | -2.6016
- 447 | APWC   | Asia Pacific Wire & Cable Corporation Li | $62.3M       | -2.7334
- 448 | DAIO   | Data I/O Corporation                     | $31.9M       | -2.7358
- 449 | ADSK   | Autodesk, Inc.                           | $51.02B      | -2.9671
- 450 | CSWC   | Capital Southwest Corporation            | $1.57B       | -3.1148
- 451 | BULL   | Webull Corporation                       | $4.34B       | -3.2488
- 452 | BZ     | KANZHUN LIMITED                          | $6.95B       | -3.3047
- 453 | ACET   | Adicet Bio, Inc.                         | $81.8M       | -3.3648
- 454 | BSY    | Bentley Systems, Incorporated            | $10.49B      | -3.3761
- 455 | BCBP   | BCB Bancorp, Inc. (NJ)                   | $161.8M      | -3.4725
- 456 | CNTB   | Connect Biopharma Holdings Limited       | $156.8M      | -3.7092
- 457 | APYX   | Apyx Medical Corporation                 | $128.9M      | -3.8092
- 458 | CODA   | Coda Octopus Group, Inc. - Common stock  | $118.1M      | -3.9655
- 459 | ACB    | Aurora Cannabis Inc.                     | $223.0M      | -4.0593
- 460 | BLBD   | Blue Bird Corporation                    | $2.02B       | -4.3496
- 461 | CALM   | Cal-Maine Foods, Inc.                    | $3.77B       | -4.4180
- 462 | COCH   | Envoy Medical, Inc.                      | $56.7M       | -4.4196
- 463 | ADMA   | ADMA Biologics Inc                       | $2.09B       | -4.4317
- 464 | CPB    | The Campbell's Company                   | $6.76B       | -4.5692
- 465 | CWCO   | Consolidated Water Co. Ltd.              | $481.2M      | -4.6187
- 466 | CBIO   | Crescent Biopharma, Inc.                 | $649.3M      | -4.6380
- 467 | AEI    | Alset Inc.                               | $58.3M       | -4.6508
- 468 | NVDA   | NVIDIA Corporation                       | $5449.97B    | -4.6679
- 469 | APC    | ARKO Petroleum Corp.                     | $927.6M      | -4.7202
- 470 | CRWS   | Crown Crafts, Inc.                       | $31.7M       | -4.7215
- 471 | CRVL   | CorVel Corp.                             | $3.38B       | -4.7854
- 472 | AUR    | Aurora Innovation, Inc.                  | $13.97B      | -4.8436
- 473 | ASTI   | Ascent Solar Technologies, Inc           | $32.1M       | -5.0218
- 474 | CRSP   | CRISPR Therapeutics AG                   | $5.25B       | -5.1175
- 475 | CDRO   | Codere Online Luxembourg, S.A.           | $413.3M      | -5.1940
- 476 | CMPX   | Compass Therapeutics, Inc.               | $416.0M      | -5.2535
- 477 | BRNX   | BrenX Ltd.                               | $2.2M        | -5.3242
- 478 | BLIN   | Bridgeline Digital, Inc.                 | $12.6M       | -5.5319
- 479 | ACDC   | ProFrac Holding Corp.                    | $961.6M      | -5.5944
- 480 | DGNX   | Diginex Limited                          | $35.2M       | -5.6890
- 481 | CGEN   | Compugen Ltd.                            | $222.6M      | -5.7639
- 482 | CHCI   | Comstock Holding Companies, Inc.         | $192.6M      | -5.9825
- 483 | CNL    | Collective Mining Ltd.                   | $1.33B       | -6.1047
- 484 | COLM   | Columbia Sportswear Company              | $2.92B       | -6.2400
- 485 | ADBE   | Adobe Inc.                               | $100.98B     | -6.3158
- 486 | CWST   | Casella Waste Systems, Inc.              | $5.68B       | -6.3740
- 487 | CUB    | Lionheart Holdings                       | N/A          | -6.4275
- 488 | BL     | BlackLine, Inc.                          | $1.70B       | -6.4347
- 489 | ANIP   | ANI Pharmaceuticals, Inc.                | $1.75B       | -6.4703
- 490 | BLIV   | BeLive Holdings - ordinary shares        | $25.0M       | -6.6055
- 491 | CHRW   | C.H. Robinson Worldwide, Inc.            | $16.92B      | -6.6719
- 492 | CHDN   | Churchill Downs, Incorporated            | $6.25B       | -6.7072
- 493 | BOT    | RoboStrategy, Inc.                       | $784.2M      | -6.8425
- 494 | BBSI   | Barrett Business Services, Inc.          | $759.3M      | -6.8634
- 495 | CEVA   | CEVA, Inc.                               | $920.9M      | -6.8721
- 496 | ASTE   | Astec Industries, Inc.                   | $994.4M      | -7.2668
- 497 | CAR    | Avis Budget Group, Inc.                  | $4.99B       | -7.3378
- 498 | CHNR   | China Natural Resources, Inc.            | $5.2M        | -7.4500
- 499 | CEPO   | Cantor Equity Partners I, Inc.           | $272.1M      | -7.5356
- 500 | CPSH   | CPS Technologies Corp.                   | N/A          | -7.6333
- 501 | CLIR   | ClearSign Technologies Corporation       | $31.0M       | -7.6440
- 502 | BCTX   | BriaCell Therapeutics Corp.              | $29.5M       | -7.6806
- 503 | ALVO   | Alvotech                                 | $1.31B       | -7.8253
- 504 | CIGI   | Colliers International Group Inc.  - Sub | $5.29B       | -7.8662
- 505 | UUUU   | Energy Fuels Inc Ordinary Shares (Canada | $3.70B       | -8.1931
- 506 | AMST   | Amesite Inc.                             | $6.3M        | -8.2424
- 507 | BON    | Bon Natural Life Limited                 | $9.3M        | -8.4833
- 508 | ALEC   | Alector, Inc.                            | $228.9M      | -8.5648
- 509 | ARAY   | Accuray Incorporated                     | $39.0M       | -8.6150
- 510 | CHKP   | Check Point Software Technologies Ltd.   | $12.97B      | -8.6563
- 511 | CMCSA  | Comcast Corporation                      | $90.74B      | -8.6998
- 512 | AEC    | Anfield Energy Inc.                      | $90.4M       | -9.0472
- 513 | CORZ   | Core Scientific, Inc.                    | $6.47B       | -9.0615
- 514 | CULP   | Culp, Inc.                               | $42.4M       | -9.2664
- 515 | CEG    | Constellation Energy Corporation - Commo | $98.57B      | -9.2780
- 516 | COYA   | Coya Therapeutics, Inc.                  | $109.5M      | -9.3524
- 517 | CREX   | Creative Realities, Inc.                 | $41.3M       | -9.4374
- 518 | CETY   | Clean Energy Technologies, Inc.          | $11.2M       | -9.5118
- 519 | CDIO   | Cardio Diagnostics Holdings Inc. - Commo | $5.9M        | -9.5253
- 520 | AOSL   | Alpha and Omega Semiconductor Limited    | $929.9M      | -9.6011
- 521 | CPSS   | Consumer Portfolio Services, Inc.        | $198.1M      | -9.8020
- 522 | AIRG   | Airgain, Inc.                            | $70.9M       | -10.1523
- 523 | CELC   | Celcuity Inc.                            | $4.52B       | -10.1533
- 524 | ARBB   | ARB IOT Group Limited                    | $7.5M        | -10.1533
- 525 | CSIQ   | Canadian Solar Inc.                      | $1.00B       | -10.3275
- 526 | BMEA   | Biomea Fusion, Inc.                      | $97.6M       | -10.3696
- 527 | CGNT   | Cognyte Software Ltd.                    | $661.4M      | -10.4256
- 528 | DETX   | Liberty Defense Holdings, Ltd.           | $20.6M       | -11.3179
- 529 | DIOD   | Diodes Incorporated                      | $4.95B       | -11.4278
- 530 | CLSK   | CleanSpark, Inc.                         | $3.18B       | -11.4407
- 531 | CNSP   | CNS Pharmaceuticals, Inc.                | $7.9M        | -11.6023
- 532 | ASO    | Academy Sports and Outdoors, Inc.        | $2.86B       | -11.7352
- 533 | AARD   | Aardvark Therapeutics, Inc.              | $147.5M      | -11.8424
- 534 | CBAT   | CBAK Energy Technology Limited           | $64.9M       | -12.1619
- 535 | CPHC   | Canterbury Park Holding Corporation      | $81.0M       | -12.2110
- 536 | BRLT   | Brilliant Earth Group, Inc.              | $20.6M       | -12.3187
- 537 | ALHC   | Alignment Healthcare, Inc.               | $2.79B       | -12.8548
- 538 | AVXL   | Anavex Life Sciences Corp.               | $297.6M      | -13.2583
- 539 | COST   | Costco Wholesale Corporation             | $422.86B     | -13.2642
- 540 | CSHR   | CoinShares PLC                           | $701.1M      | -13.3857
- 541 | CG     | The Carlyle Group Inc.                   | $17.30B      | -13.4118
- 542 | ACIC   | American Coastal Insurance Corporation   | $446.7M      | -13.4225
- 543 | DCGO   | DocGo Inc.                               | $70.1M       | -13.4633
- 544 | AUC    | ATIF Holdings Limited                    | $72.0M       | -13.7865
- 545 | CNDT   | Conduent Incorporated                    | $227.1M      | -14.2792
- 546 | CME    | CME Group Inc.                           | $96.32B      | -14.3167
- 547 | CTXR   | Citius Pharmaceuticals, Inc.             | $15.4M       | -14.4484
- 548 | ARCT   | Arcturus Therapeutics Holdings Inc.      | $231.4M      | -14.5165
- 549 | CDNS   | Cadence Design Systems, Inc.             | $89.08B      | -14.7113
- 550 | AMCI   | AMC Robotics Corporation                 | $121.6M      | -15.1680
- 551 | AENT   | Alliance Entertainment Holding Corporati | $278.2M      | -15.2263
- 552 | ADV    | Advantage Solutions Inc.                 | $401.8M      | -15.3708
- 553 | CHTR   | Charter Communications, Inc.             | $17.19B      | -15.3904
- 554 | ATOM   | Atomera Incorporated                     | $211.5M      | -15.4356
- 555 | BRTX   | BioRestorative Therapies, Inc.           | $5.6M        | -15.4751
- 556 | CRWV   | CoreWeave, Inc.                          | $58.46B      | -15.5540
- 557 | CNXC   | Concentrix Corporation                   | $1.42B       | -15.7834
- 558 | ASLE   | AerSale Corporation                      | $281.6M      | -15.9087
- 559 | CRBP   | Corbus Pharmaceuticals Holdings, Inc.    | $202.9M      | -15.9144
- 560 | BAFN   | BayFirst Financial Corp.                 | $164.5M      | -16.1439
- 561 | BIVI   | BioVie Inc. - Common stock               | $8.8M        | -16.3363
- 562 | AGCC   | Agencia Comercial Spirits Ltd - Class A  | $326.5M      | -16.3583
- 563 | CYPH   | Cypherpunk Technologies Inc.             | $76.0M       | -16.4551
- 564 | BLDP   | Ballard Power Systems, Inc.              | $783.9M      | -16.4782
- 565 | META   | Meta Platforms, Inc.                     | $1449.45B    | -16.8143
- 566 | ASTL   | Algoma Steel Group Inc.                  | $439.6M      | -16.9031
- 567 | CRNT   | Ceragon Networks Ltd.                    | $198.1M      | -16.9881
- 568 | BRAI   | Braiin Limited                           | $1.13B       | -17.3554
- 569 | CVGI   | Commercial Vehicle Group, Inc.           | $137.7M      | -17.4013
- 570 | CLPS   | CLPS Incorporation                       | $25.5M       | -17.6007
- 571 | CNCK   | Coincheck Group N.V.                     | $383.0M      | -17.9870
- 572 | AIOT   | PowerFleet, Inc.                         | $386.6M      | -18.1257
- 573 | CPRT   | Copart, Inc.                             | $29.35B      | -18.1571
- 574 | CNVS   | Cineverse Corp.                          | $65.1M       | -18.1801
- 575 | ATRA   | Atara Biotherapeutics, Inc.              | $75.3M       | -18.3021
- 576 | ARKR   | Ark Restaurants Corp.                    | $20.2M       | -18.4689
- 577 | BRID   | Bridgford Foods Corporation              | $57.7M       | -18.7370
- 578 | CHR    | Cheer Holding, Inc.  - Class A Ordinary  | $3.4M        | -18.7839
- 579 | ABAT   | American Battery Technology Company      | $331.5M      | -18.8535
- 580 | ATPC   | Agape ATP Corporation                    | $2.5M        | -18.9314
- 581 | BNGO   | Bionano Genomics, Inc.                   | $14.0M       | -18.9815
- 582 | ATHR   | Aether Holdings, Inc.                    | $44.1M       | -19.2391
- 583 | CELH   | Celsius Holdings, Inc.                   | $7.58B       | -19.4249
- 584 | AGRZ   | Agroz Inc.                               | $5.8M        | -19.8209
- 585 | CHRS   | Coherus Oncology, Inc.                   | $177.7M      | -19.8740
- 586 | BCDA   | BioCardia, Inc.                          | $14.0M       | -19.9308
- 587 | CGC    | Canopy Growth Corporation                | $449.3M      | -20.1931
- 588 | CLNE   | Clean Energy Fuels Corp.                 | $364.8M      | -20.2906
- 589 | CRMD   | CorMedix Inc.                            | $601.7M      | -20.3031
- 590 | ALMU   | Aeluma, Inc.                             | $325.5M      | -20.4660
- 591 | ATCX   | Atlas Critical Minerals Corporation      | $18.8M       | -20.4780
- 592 | AWRE   | Aware, Inc.                              | $25.5M       | -20.6389
- 593 | BMM    | Blue Moon Metals Inc.                    | $535.8M      | -20.9328
- 594 | CDNL   | Cardinal Infrastructure Group Inc.       | $801.4M      | -21.2418
- 595 | BCG    | Binah Capital Group, Inc.                | $26.6M       | -21.5505
- 596 | BODI   | The Beachbody Company, Inc.              | $46.6M       | -21.7572
- 597 | CALC   | CalciMedica, Inc.                        | $20.4M       | -21.7991
- 598 | ARKO   | ARKO Corp.                               | $545.2M      | -22.0534
- 599 | CSGP   | CoStar Group, Inc.                       | $12.70B      | -22.2018
- 600 | AMSF   | AMERISAFE, Inc.                          | $489.5M      | -22.2791
- 601 | CBRS   | Cerebras Systems Inc.                    | $59.86B      | -22.5110
- 602 | CRUS   | Cirrus Logic, Inc.                       | $6.01B       | -22.5666
- 603 | CGTX   | Cognition Therapeutics, Inc.             | $97.0M       | -22.5904
- 604 | AAON   | AAON, Inc.                               | $7.26B       | -22.6913
- 605 | TSLA   | Tesla, Inc.                              | $1340.08B    | -22.7818
- 606 | CLBT   | Cellebrite DI Ltd.                       | $2.62B       | -22.8770
- 607 | BTBT   | Bit Digital, Inc. - Ordinary Share       | $558.3M      | -22.9031
- 608 | CURX   | Curanex Pharmaceuticals Inc              | $6.0M        | -23.2306
- 609 | CCAP   | Crescent Capital BDC, Inc.               | $398.7M      | -23.4183
- 610 | AAPG   | Ascentage Pharma Group International     | $1.70B       | -23.5997
- 611 | ABLV   | Able View Global Inc.                    | $36.1M       | -23.6308
- 612 | BRBI   | BRBI BR Partners S.A. - ADSs             | $239.8M      | -23.6656
- 613 | CRE    | Cre8 Enterprise Limited                  | $5.6M        | -23.8997
- 614 | ASPS   | Altisource Portfolio Solutions S.A.      | $61.9M       | -23.9089
- 615 | COCP   | Cocrystal Pharma, Inc.                   | $21.0M       | -24.0568
- 616 | BFRG   | Bullfrog AI Holdings, Inc.               | $10.3M       | -24.3449
- 617 | CNTY   | Century Casinos, Inc.                    | $35.6M       | -24.3624
- 618 | CTOR   | Citius Oncology, Inc.                    | $78.3M       | -24.3842
- 619 | DGXX   | Digi Power X Inc. - Common Subordinate V | $382.4M      | -25.0006
- 620 | ANY    | Sphere 3D Corp.                          | $18.1M       | -25.1118
- 621 | CRNC   | Cerence Inc.                             | $385.4M      | -25.2274
- 622 | ALDX   | Aldeyra Therapeutics, Inc.               | $94.1M       | -25.5018
- 623 | CNTN   | Canton Strategic Holdings, Inc.          | $161.4M      | -25.5258
- 624 | BENF   | Beneficient                              | $32.9M       | -25.5576
- 625 | BZFD   | BuzzFeed, Inc.                           | $92.5M       | -25.5693
- 626 | CDZI   | Cadiz, Inc.                              | $271.0M      | -25.5964
- 627 | BDTX   | Black Diamond Therapeutics, Inc.         | $117.8M      | -25.7752
- 628 | AMTX   | Aemetis, Inc                             | $129.9M      | -25.8182
- 629 | ATXG   | Addentax Group Corp.                     | $4.2M        | -25.9508
- 630 | CXDO   | Crexendo, Inc.                           | $217.8M      | -25.9752
- 631 | CSPI   | CSP Inc.                                 | $79.6M       | -26.2046
- 632 | AMIX   | Autonomix Medical, Inc.                  | $6.2M        | -26.2679
- 633 | CSBR   | Champions Oncology, Inc.                 | $69.9M       | -26.4523
- 634 | COLL   | Collegium Pharmaceutical, Inc.           | $910.4M      | -26.8091
- 635 | AGNT   | AGNT, Inc.                               | $710.3M      | -27.3897
- 636 | BTOC   | Armlogi Holding Corp. - common stock     | $12.3M       | -27.4168
- 637 | ARBE   | Arbe Robotics Ltd.                       | $99.7M       | -27.4617
- 638 | BGIN   | Bgin Blockchain Limited                  | $246.6M      | -27.4911
- 639 | CYAB   | Cyabra, Inc.                             | $5.6M        | -27.5252
- 640 | BIOX   | Bioceres Crop Solutions Corp.            | $27.9M       | -27.6524
- 641 | CRBU   | Caribou Biosciences, Inc.                | $168.3M      | -27.7264
- 642 | CRML   | Critical Metals Corp.                    | $965.1M      | -27.9414
- 643 | AZI    | Autozi Internet Technology (Global) Ltd. | $3.1M        | -27.9497
- 644 | ACON   | Aclarion, Inc.                           | $8.0M        | -28.0619
- 645 | CAST   | FreeCast, Inc. - Class A common stock    | $40.9M       | -28.2042
- 646 | ARQ    | Arq, Inc.                                | $100.9M      | -28.8667
- 647 | AISP   | Airship AI Holdings, Inc                 | $69.6M       | -29.0116
- 648 | CLNN   | Clene Inc.                               | $54.0M       | -29.1493
- 649 | ANNA   | AleAnna, Inc.                            | $111.8M      | -29.1649
- 650 | BMBL   | Bumble Inc. - common stock               | $343.1M      | -29.1881
- 651 | BRR    | ProCap Financial, Inc.                   | $160.8M      | -29.3137
- 652 | CISO   | CISO Global, Inc.                        | $11.4M       | -29.5290
- 653 | AIMD   | Ainos, Inc.                              | $10.5M       | -29.5307
- 654 | AXG    | Solowin Holdings - Class A Ordinary Shar | $511.7M      | -29.8102
- 655 | ANGI   | Angi Inc.                                | $180.9M      | -29.9455
- 656 | ACXP   | Acurx Pharmaceuticals, Inc.              | $7.1M        | -29.9766
- 657 | ALNY   | Alnylam Pharmaceuticals, Inc.            | $30.05B      | -29.9965
- 658 | BTDR   | Bitdeer Technologies Group               | $2.55B       | -30.3214
- 659 | ADTN   | ADTRAN Holdings, Inc.                    | $705.2M      | -30.3226
- 660 | CLRB   | Cellectar Biosciences, Inc.              | $20.5M       | -30.5297
- 661 | BCAR   | D. Boral ARC Acquisition I Corp.         | $239.8M      | -31.0888
- 662 | ADGM   | Adagio Medical Holdings, Inc             | $14.5M       | -31.5203
- 663 | CD     | Chaince Digital Holdings Inc. - American | $387.2M      | -31.7827
- 664 | BRAG   | Bragg Gaming Group Inc.                  | $45.0M       | -32.0999
- 665 | ATYR   | aTyr Pharma, Inc.                        | $50.9M       | -32.1148
- 666 | BNC    | CEA Industries Inc.                      | $104.6M      | -32.1687
- 667 | BLNK   | Blink Charging Co.                       | $84.4M       | -32.4281
- 668 | AIOS   | AIOS Tech Inc. - Class A                 | $46.2M       | -32.7838
- 669 | BAER   | Bridger Aerospace Group Holdings, Inc.   | $70.0M       | -33.1198
- 670 | BGMS   | Bio Green Med Solution, Inc.             | $5.0M        | -33.2952
- 671 | ARDX   | Ardelyx, Inc.                            | $1.05B       | -33.5259
- 672 | COOT   | Australian Oilseeds Holdings Limited     | $13.2M       | -33.8532
- 673 | AZIO   | Azio AI Holdings, Inc. - Common stock    | $21.1M       | -33.9458
- 674 | CMRC   | Commerce.com, Inc. - Series 1            | $170.7M      | -34.0026
- 675 | AQMS   | Aqua Metals, Inc.                        | $9.6M        | -34.0705
- 676 | CELU   | Celularity Inc.                          | $20.1M       | -34.6722
- 677 | AIIR   | Air Global PLC - Ordinary shares         | $1.23B       | -34.6766
- 678 | APP    | Applovin Corporation                     | $104.81B     | -34.8117
- 679 | BGLC   | BioNexus Gene Lab Corp - Common stock    | $3.8M        | -35.1793
- 680 | CLFD   | Clearfield, Inc.                         | $400.2M      | -35.2164
- 681 | BGM    | BGM Group Ltd.                           | $108.8M      | -35.3521
- 682 | AKBA   | Akebia Therapeutics, Inc.                | $238.3M      | -35.3656
- 683 | CCB    | Coastal Financial Corporation            | $748.1M      | -35.4210
- 684 | BKYI   | BIO-key International, Inc.              | $3.4M        | -35.7224
- 685 | ABVC   | ABVC BioPharma, Inc.                     | $22.1M       | -36.3290
- 686 | AGMH   | AGM Group Holdings Inc.                  | $2.2M        | -36.3950
- 687 | ARRY   | Array Technologies, Inc.                 | $766.1M      | -36.5648
- 688 | APRE   | Aprea Therapeutics, Inc.                 | $8.7M        | -36.5664
- 689 | CENN   | Cenntro Inc.                             | $8.6M        | -36.9936
- 690 | BTTC   | Black Titan Corp                         | $6.5M        | -37.2422
- 691 | AURE   | Aurelion Inc.                            | $64.3M       | -37.3633
- 692 | BTMD   | Biote Corp. - Class A common stock       | $39.3M       | -37.4329
- 693 | CODX   | Co-Diagnostics, Inc.                     | $4.9M        | -37.6370
- 694 | ATLX   | Atlas Lithium Corporation                | $93.6M       | -37.7026
- 695 | BOLT   | Bolt Biotherapeutics, Inc.               | $6.2M        | -38.1181
- 696 | BYRN   | Byrna Technologies, Inc.                 | $90.3M       | -38.1220
- 697 | CNEY   | CN Energy Group Inc.                     | N/A          | -38.6248
- 698 | BMR    | Beamr Imaging Ltd. - Ordinary Share      | $20.0M       | -39.2791
- 699 | DFSC   | DEFSEC Technologies Inc. - common stock, | $5.8M        | -39.3069
- 700 | BEEM   | Beam Global                              | $25.3M       | -39.5031
- 701 | BTAI   | BioXcel Therapeutics, Inc.               | $27.5M       | -39.7298
- 702 | CMCT   | Creative Media                           | $15.0M       | -39.7315
- 703 | CLIK   | Click Holdings Limited - Ordinary Share  | $11.9M       | -39.7443
- 704 | BMRA   | Biomerica, Inc.                          | $4.8M        | -40.0000
- 705 | ASPI   | ASP Isotopes Inc.                        | $616.3M      | -40.0731
- 706 | AIRS   | AirSculpt Technologies, Inc.             | $222.4M      | -40.1787
- 707 | BDMD   | Baird Medical Investment Holdings Ltd -  | $36.5M       | -40.2993
- 708 | BETR   | Better Home & Finance Holding Company    | $257.2M      | -40.4999
- 709 | ASST   | Strive, Inc.                             | $1.14B       | -40.5964
- 710 | AMSC   | American Superconductor Corporation      | $1.56B       | -40.6722
- 711 | CTSO   | Cytosorbents Corporation                 | $23.7M       | -40.9842
- 712 | AAME   | Atlantic American Corporation            | $29.0M       | -41.0306
- 713 | AIFF   | Firefly Neuroscience, Inc.               | $17.7M       | -41.2323
- 714 | AIDX   | 20/20 Biolabs, Inc.                      | $6.7M        | -41.2530
- 715 | COIN   | Coinbase Global, Inc.                    | $39.72B      | -41.4435
- 716 | CAPS   | Capstone Holding Corp.                   | $3.3M        | -41.5506
- 717 | DFLI   | Dragonfly Energy Holdings Corp           | $18.9M       | -43.4456
- 718 | AHCO   | AdaptHealth Corp.                        | $775.1M      | -43.4813
- 719 | CRVO   | CervoMed Inc.                            | $35.3M       | -43.9624
- 720 | CLGN   | CollPlant Biotechnologies Ltd.           | $6.0M        | -43.9723
- 721 | CCOI   | Cogent Communications Holdings, Inc.     | $550.6M      | -44.5477
- 722 | ALPS   | ALPS Group Inc - Ordinary Share          | $53.2M       | -44.6734
- 723 | COSM   | Cosmos Health Inc.                       | $12.7M       | -45.1916
- 724 | CRGO   | Freightos Limited - Ordinary shares      | $86.3M       | -45.4723
- 725 | CHSN   | Chanson International Holding            | $2.6M        | -45.5984
- 726 | CTNT   | Cheetah Net Supply Chain Service Inc.    | $5.1M        | -45.8489
- 727 | BRLS   | Borealis Foods Inc. - Class A            | $18.7M       | -46.1229
- 728 | AIIO   | Robo.ai Inc.                             | $486.9M      | -46.1584
- 729 | BLNE   | Beeline Holdings, Inc.                   | $32.2M       | -46.1731
- 730 | BCAB   | BioAtla, Inc.                            | $5.1M        | -46.3003
- 731 | CDXS   | Codexis, Inc.                            | $174.1M      | -46.3053
- 732 | AIAI   | AIAI Holdings Corporation - Class A comm | $352.3M      | -46.5575
- 733 | DH     | Definitive Healthcare Corp.              | $68.3M       | -46.9170
- 734 | AFJK   | Aimei Health Technology Co., Ltd - Ordin | $38.0M       | -46.9903
- 735 | CCHH   | CCH Holdings Ltd                         | $5.3M        | -47.0173
- 736 | CYCU   | Cycurion, Inc.                           | $8.4M        | -47.6187
- 737 | ANPA   | Rich Sparkle Holdings Limited            | $64.2M       | -48.2647
- 738 | BRFH   | Barfresh Food Group Inc.                 | $21.7M       | -48.2873
- 739 | CDLX   | Cardlytics, Inc.                         | $23.8M       | -48.6563
- 740 | DCOY   | Decoy Therapeutics Inc.                  | $2.3M        | -48.9937
- 741 | CMTL   | Comtech Telecommunications Corp.         | $50.0M       | -49.2344
- 742 | BTCS   | BTCS Inc.                                | $55.7M       | -49.6835
- 743 | AIRE   | reAlpha Tech Corp.                       | $8.6M        | -49.7422
- 744 | BSEM   | BioStem Technologies, Inc.               | $51.0M       | -49.8535
- 745 | BMGL   | Basel Medical Group Ltd - ordinary share | $8.2M        | -50.0000
- 746 | BEAT   | Heartbeam, Inc.                          | $28.2M       | -50.2171
- 747 | AIXC   | AIxCrypto Holdings, Inc.                 | $14.4M       | -50.4167
- 748 | CNSY   | Cerenome, Inc.                           | $22.0M       | -50.4650
- 749 | BIRD   | Smartbird, Inc.                          | $21.8M       | -50.9919
- 750 | CXAI   | CXApp Inc.                               | $9.7M        | -51.2706
- 751 | BJDX   | Bluejay Diagnostics, Inc.                | $1.1M        | -51.4058
- 752 | CYN    | Cyngn Inc. - Common stock                | $15.3M       | -51.6903
- 753 | CRDF   | Cardiff Oncology, Inc.                   | $70.3M       | -52.8008
- 754 | CAPR   | Capricor Therapeutics, Inc.              | $433.1M      | -53.1586
- 755 | CELZ   | Creative Medical Technology Holdings, In | $7.1M        | -53.8457
- 756 | CVRX   | CVRx, Inc.                               | $73.3M       | -53.8596
- 757 | DEFT   | Defi Technologies, Inc.                  | $180.5M      | -54.3376
- 758 | DFDV   | DeFi Development Corp.                   | $98.0M       | -54.9663
- 759 | ATOS   | Atossa Therapeutics, Inc.                | $27.8M       | -55.0144
- 760 | BBLG   | Bone Biologics Corp                      | $1.2M        | -55.1785
- 761 | BYSI   | BeyondSpring, Inc.                       | $29.3M       | -55.4465
- 762 | CHGA   | Change Agents Corporation                | $3.8M        | -56.2317
- 763 | APVO   | Aptevo Therapeutics Inc.                 | $4.3M        | -56.5261
- 764 | BHST   | BioHarvest Sciences Inc.                 | $49.2M       | -56.6257
- 765 | BXBL   | BOXABL, Inc.  - Common stock             | $1.52B       | -57.9616
- 766 | ATGL   | Alpha Technology Group Limited           | $115.2M      | -58.9422
- 767 | AVX    | Avax One Technology Ltd.                 | $22.8M       | -60.8243
- 768 | ANTA   | Antalpha Platform Holding Company        | $92.9M       | -61.4410
- 769 | ATER   | Aterian, Inc.                            | $5.0M        | -61.6197
- 770 | CWD    | CaliberCos Inc.                          | $4.6M        | -63.2874
- 771 | AMOD   | Alpha Modus Holdings, Inc.               | $21.6M       | -63.2877
- 772 | CGTL   | Creative Global Technology Holdings Limi | $8.2M        | -63.5261
- 773 | AUUD   | Auddia Inc.                              | $5.2M        | -63.8274
- 774 | ALP    | Alpha Compute Corp                       | $3.7M        | -65.7953
- 775 | CIRC   | Circle8 Group, Inc.                      | $59.3M       | -65.8420
- 776 | CNTX   | Context Therapeutics Inc.                | $48.7M       | -65.8835
- 777 | DARE   | Dare Bioscience, Inc.                    | $15.7M       | -66.4925
- 778 | BNKK   | Bonk, Inc.                               | $7.8M        | -67.3439
- 779 | ABTC   | American Bitcoin Corp.                   | $518.5M      | -68.0462
- 780 | BZAI   | Blaize Holdings, Inc.                    | $75.4M       | -68.0499
- 781 | BTOG   | Bit Origin Limited                       | $2.2M        | -68.7251
- 782 | BTCT   | BTC Digital Ltd.                         | $7.5M        | -68.8833
- 783 | AIFC   | AI Financial Corporation                 | $59.2M       | -68.8864
- 784 | AIFU   | AIFU Inc. - Class A Ordinary Share       | $102.2M      | -69.1333
- 785 | DCX    | Digital Currency X Technology Inc.       | $334.3M      | -69.2972
- 786 | CVKD   | Cadrenal Therapeutics, Inc.              | $6.3M        | -71.9715
- 787 | ACTU   | Actuate Therapeutics, Inc. - Common stoc | $23.8M       | -72.6216
- 788 | ARAI   | Arrive AI Inc.                           | $12.9M       | -72.9657
- 789 | CETX   | Cemtrex Inc.                             | $5.2M        | -74.6196
- 790 | AUID   | authID Inc.                              | $6.7M        | -75.6703
- 791 | CMND   | Clearmind Medicine Inc.                  | $2.8M        | -75.7565
- 792 | ARTL   | Artelo Biosciences, Inc.                 | $3.3M        | -77.7199
- 793 | BIYA   | Baiya International Group Inc.           | $75.2M       | -79.0989
- 794 | BYAH   | Park Ha Biological Technology Co., Ltd.  | $2.4M        | -79.4046
- 795 | CISS   | C3is Inc.                                | $88,105      | -80.2235
- 796 | CDTG   | CDT Environmental Technology Investment  | $8.5M        | -80.8424
- 797 | CRMT   | America's Car-Mart, Inc.                 | $27.2M       | -81.0548
- 798 | CHAI   | Core AI Holdings, Inc.                   | $7.3M        | -82.7662
- 799 | BAOS   | Baosheng Media Group Holdings Limited -  | $736,554     | -82.9621
- 800 | AKAN   | Akanda Corp.                             | $2.9M        | -83.1080
- 801 | BIAF   | bioAffinity Technologies, Inc.           | $2.7M        | -83.8670
- 802 | BGL    | Blue Gold Limited - Class A ordinary sha | $8.6M        | -84.8572
- 803 | CRIS   | Curis, Inc.                              | $4.4M        | -86.7913
- 804 | CPOP   | Pop Culture Group Co., Ltd               | $4.8M        | -90.2176
- 805 | DAIC   | CID HoldCo, Inc.                         | $675,394     | -92.5150
- 806 | AVAT   | Avalanche Treasury Corporation           | $17.5M       | -96.3199
+   1 | ALOT   | AstroNova, Inc.                          | $226.5M      | 97.1677
+   2 | DFNS   | T3 Defense Inc.                          | N/A          | 97.1180
+   3 | CORT   | Corcept Therapeutics Incorporated        | $12.67B      | 95.2050
+   4 | BJRI   | BJ's Restaurants, Inc.                   | $1.41B       | 93.7888
+   5 | BELFB  | Bel Fuse Inc.                            | $4.30B       | 92.0745
+   6 | ARWR   | Arrowhead Pharmaceuticals, Inc.          | $12.53B      | 91.4783
+   7 | AMAT   | Applied Materials, Inc.                  | $425.01B     | 91.3292
+   8 | CIIT   | Tianci International, Inc.               | $3.4M        | 90.4845
+   9 | ARTV   | Artiva Biotherapeutics, Inc.             | $574.0M      | 90.1366
+  10 | AXGN   | Axogen, Inc.                             | $2.64B       | 90.0870
+  11 | AEIS   | Advanced Energy Industries, Inc.         | $13.96B      | 89.6149
+  12 | ALAB   | Astera Labs, Inc.                        | $55.54B      | 89.5404
+  13 | ALKS   | Alkermes plc                             | $8.36B       | 89.4410
+  14 | CNET   | ZW Data Action Technologies Inc.         | $4.8M        | 88.4969
+  15 | CBRL   | Cracker Barrel Old Country Store, Inc.   | $1.32B       | 88.4224
+  16 | ACMR   | ACM Research, Inc.                       | $5.96B       | 88.3478
+  17 | AAOI   | Applied Optoelectronics, Inc.            | $13.10B      | 88.2981
+  18 | AMD    | Advanced Micro Devices, Inc.             | $826.03B     | 88.1242
+  19 | ARCB   | ArcBest Corporation                      | $3.26B       | 87.8509
+  20 | AMCX   | AMC Global Media Inc.                    | $498.7M      | 87.5528
+  21 | CHRN   | ChronoScale Holdings Corporation         | $3.22B       | 87.5528
+  22 | BELFA  | Bel Fuse Inc.                            | $3.58B       | 87.3540
+  23 | ADVB   | Advanced Biomed Inc.                     | $13.6M       | 86.3106
+  24 | ABSI   | Absci Corporation                        | $1.59B       | 86.2112
+  25 | BWFG   | Bankwell Financial Group, Inc.           | $539.4M      | 85.8634
+  26 | AVTX   | Avalo Therapeutics, Inc.                 | $1.07B       | 85.7640
+  27 | ALXO   | ALX Oncology Holdings Inc.               | $272.4M      | 85.4658
+  28 | CROX   | Crocs, Inc.                              | $6.23B       | 85.4410
+  29 | ANIK   | Anika Therapeutics Inc.                  | $287.3M      | 85.4161
+  30 | CFBK   | CF Bankshares Inc.                       | $233.2M      | 85.3416
+  31 | ACRS   | Aclaris Therapeutics, Inc.               | $871.4M      | 84.8447
+  32 | BOTJ   | Bank of the James Financial Group, Inc.  | $126.0M      | 84.8199
+  33 | CCG    | Cheche Group Inc.                        | $42.6M       | 84.6708
+  34 | COAG   | Hemab Therapeutics Holdings, Inc.        | $2.50B       | 84.4472
+  35 | BBCP   | Concrete Pumping Holdings, Inc.          | $483.8M      | 84.2484
+  36 | ACHC   | Acadia Healthcare Company, Inc.          | $2.79B       | 84.0497
+  37 | AVNW   | Aviat Networks, Inc.                     | $285.2M      | 83.9006
+  38 | ARXS   | Arxis, Inc.                              | $24.05B      | 83.8758
+  39 | CHEF   | The Chefs' Warehouse, Inc.               | $4.51B       | 83.5528
+  40 | AXSM   | Axsome Therapeutics, Inc.                | $11.33B      | 83.3540
+  41 | ACOG   | Alpha Cognition Inc.                     | $192.5M      | 82.8571
+  42 | BPOP   | Popular, Inc.                            | $11.28B      | 82.5093
+  43 | AERT   | Aeries Technology, Inc. - Class A Ordina | $38.6M       | 82.1863
+  44 | BUSE   | First Busey Corporation                  | $2.57B       | 82.1615
+  45 | BFRI   | Biofrontera Inc.                         | $17.3M       | 82.0373
+  46 | AOUT   | American Outdoor Brands, Inc.            | $152.9M      | 81.8385
+  47 | ADAG   | Adagene Inc. - ADS, each representing 1. | $253.1M      | 81.7143
+  48 | BLKB   | Blackbaud, Inc.                          | $1.97B       | 80.7950
+  49 | ANGO   | AngioDynamics, Inc.                      | $647.7M      | 80.7702
+  50 | ASYS   | Amtech Systems, Inc.                     | $295.2M      | 80.4969
+  51 | OKTA   | Okta, Inc.                               | $24.90B      | 80.0248
+  52 | CHMG   | Chemung Financial Corp                   | $399.2M      | 79.8758
+  53 | AXTI   | AXT Inc                                  | $6.29B       | 79.7516
+  54 | BBGI   | Beasley Broadcast Group, Inc.            | $40.4M       | 79.7267
+  55 | ACLS   | Axcelis Technologies, Inc.               | $4.45B       | 79.4783
+  56 | BWEN   | Broadwind, Inc.                          | $123.3M      | 79.3789
+  57 | BLZE   | Backblaze, Inc.                          | $1.20B       | 79.2298
+  58 | AVBH   | Avidbank Holdings, Inc.                  | $358.6M      | 79.1304
+  59 | AVBP   | ArriVent BioPharma, Inc.                 | $1.43B       | 78.8571
+  60 | ANAB   | AnaptysBio, Inc.                         | $1.77B       | 78.8075
+  61 | ADUR   | Aduro Clean Technologies Inc.            | $561.8M      | 78.6832
+  62 | CLMB   | Climb Global Solutions, Inc.             | $519.5M      | 78.3851
+  63 | APOG   | Apogee Enterprises, Inc.                 | $880.2M      | 78.3851
+  64 | ACNB   | ACNB Corporation                         | $654.6M      | 78.3602
+  65 | DFTX   | Definium Therapeutics, Inc.              | $6.08B       | 78.0621
+  66 | CASS   | Cass Information Systems, Inc            | $731.6M      | 77.9627
+  67 | CBK    | Commercial Bancgroup, Inc.               | $480.4M      | 77.9379
+  68 | ADP    | Automatic Data Processing, Inc.          | $105.70B     | 77.8882
+  69 | AMAL   | Amalgamated Financial Corp.              | $1.52B       | 77.8385
+  70 | ALMS   | Alumis Inc.                              | $3.30B       | 77.8137
+  71 | CTNM   | Contineum Therapeutics, Inc. - Common st | $546.6M      | 77.7143
+  72 | CVV    | CVD Equipment Corporation                | $55.8M       | 77.6149
+  73 | AGYS   | Agilysys, Inc.                           | $3.14B       | 77.6149
+  74 | BCAL   | California BanCorp                       | $688.3M      | 77.5155
+  75 | BPRN   | Princeton Bancorp, Inc.                  | $291.3M      | 77.3168
+  76 | AIRJ   | AirJoule Technologies Corporation        | $426.1M      | 77.2422
+  77 | COHU   | Cohu, Inc.                               | $2.96B       | 77.1429
+  78 | CBC    | Central Bancompany, Inc.                 | $7.80B       | 77.0435
+  79 | APLD   | Applied Digital Corporation              | $8.98B       | 76.9938
+  80 | CBFV   | CB Financial Services, Inc.              | $189.6M      | 76.7205
+  81 | CMCO   | Columbus McKinnon Corporation            | $550.7M      | 76.7205
+  82 | BDSX   | Biodesix, Inc.                           | $245.3M      | 76.7205
+  83 | BVFL   | BV Financial, Inc.                       | $180.9M      | 76.5714
+  84 | BHRB   | Burke & Herbert Financial Services Corp. | $1.46B       | 76.4969
+  85 | AIP    | Arteris, Inc.                            | $1.37B       | 76.3230
+  86 | ADIL   | Adial Pharmaceuticals, Inc               | $13.1M       | 76.1739
+  87 | BOOM   | DMC Global Inc.                          | $149.9M      | 76.1739
+  88 | CCXI   | Churchill Capital Corp XI                | $958.0M      | 76.1491
+  89 | CYRX   | CryoPort, Inc.                           | $775.9M      | 76.0994
+  90 | COKE   | Coca-Cola Consolidated, Inc.             | $12.39B      | 76.0248
+  91 | BFST   | Business First Bancshares, Inc.          | $1.05B       | 76.0248
+  92 | BSET   | Bassett Furniture Industries, Incorporat | $164.5M      | 75.8012
+  93 | ADPT   | Adaptive Biotechnologies Corporation     | $3.95B       | 75.6273
+  94 | BIOA   | BioAge Labs, Inc.                        | $477.3M      | 75.4534
+  95 | BWIN   | The Baldwin Insurance Group, Inc.        | $2.98B       | 75.3540
+  96 | ALRS   | Alerus Financial Corporation             | $834.0M      | 75.3043
+  97 | BTQ    | BTQ Technologies Corp.                   | $566.3M      | 75.2795
+  98 | CTBI   | Community Trust Bancorp, Inc.            | $1.43B       | 75.2795
+  99 | AAPL   | Apple Inc.                               | $4459.84B    | 75.2050
+ 100 | COGT   | Cogent Biosciences, Inc.                 | $6.57B       | 75.1553
+ 101 | CAKE   | The Cheesecake Factory Incorporated      | $5.43B       | 75.1304
+ 102 | BEAM   | Beam Therapeutics Inc.                   | $2.80B       | 74.8820
+ 103 | CSTL   | Castle Biosciences, Inc. - Common stock  | $915.0M      | 74.8075
+ 104 | ATAI   | AtaiBeckley Inc.                         | $2.69B       | 74.8075
+ 105 | CAC    | Camden National Corporation              | $986.4M      | 74.7826
+ 106 | AMRX   | Amneal Pharmaceuticals, Inc.             | $6.42B       | 74.2857
+ 107 | ALRM   | Alarm.com Holdings, Inc.                 | $2.70B       | 73.9876
+ 108 | BAND   | Bandwidth Inc.                           | $1.70B       | 73.9379
+ 109 | ANIX   | Anixa Biosciences, Inc.                  | $118.7M      | 73.8137
+ 110 | AMKR   | Amkor Technology, Inc.                   | $15.23B      | 73.4410
+ 111 | ASBP   | Aspire Biopharma Holdings, Inc.          | $10.0M       | 73.3168
+ 112 | ATLO   | Ames National Corporation                | $282.4M      | 73.2671
+ 113 | ADI    | Analog Devices, Inc.                     | $190.10B     | 73.1677
+ 114 | ACGL   | Arch Capital Group Ltd.                  | $33.38B      | 73.0435
+ 115 | BCAX   | Bicara Therapeutics Inc.                 | $1.64B       | 72.9441
+ 116 | APPF   | AppFolio, Inc.                           | $6.94B       | 72.7702
+ 117 | BOKF   | BOK Financial Corporation                | $8.85B       | 72.5217
+ 118 | ANTX   | AN2 Therapeutics, Inc.                   | $216.2M      | 72.4720
+ 119 | BIIB   | Biogen Inc.                              | $30.90B      | 72.4720
+ 120 | COFS   | ChoiceOne Financial Services, Inc.       | $511.0M      | 72.4720
+ 121 | ASML   | ASML Holding N.V. - New York Registry Sh | $723.31B     | 72.4472
+ 122 | CASY   | Caseys General Stores, Inc.              | $32.19B      | 72.4472
+ 123 | CBNK   | Capital Bancorp, Inc.                    | $613.5M      | 72.2733
+ 124 | CTRN   | Citi Trends, Inc.                        | $605.3M      | 72.2733
+ 125 | AGEN   | Agenus Inc.                              | $321.8M      | 72.2484
+ 126 | CDNA   | CareDx, Inc.                             | $2.40B       | 72.1491
+ 127 | AZTA   | Azenta, Inc.                             | $1.47B       | 72.0248
+ 128 | ALM    | Almonty Industries Inc.                  | $4.72B       | 71.8261
+ 129 | ALGM   | Allegro MicroSystems, Inc.               | $8.25B       | 71.7764
+ 130 | BCML   | BayCom Corp                              | $334.2M      | 71.7516
+ 131 | ARQQ   | Arqit Quantum Inc.                       | $423.7M      | 71.7019
+ 132 | AMLX   | Amylyx Pharmaceuticals, Inc.             | $2.39B       | 71.6522
+ 133 | ATEX   | Anterix Inc.                             | $1.79B       | 71.6273
+ 134 | ABUS   | Arbutus Biopharma Corporation            | $930.4M      | 71.4286
+ 135 | ANNX   | Annexon, Inc. - common stock             | $840.5M      | 71.3540
+ 136 | ASTS   | AST SpaceMobile, Inc.                    | $21.33B      | 71.3043
+ 137 | AEHR   | Aehr Test Systems                        | $4.75B       | 71.3043
+ 138 | APGE   | Apogee Therapeutics, Inc.                | $10.19B      | 71.2795
+ 139 | CHCO   | City Holding Company                     | $2.05B       | 71.1553
+ 140 | CMPR   | Cimpress plc                             | $2.23B       | 71.1553
+ 141 | CJMB   | Callan JMB Inc.                          | $15.1M       | 70.9814
+ 142 | CGON   | CG Oncology, Inc. - Common stock         | $6.84B       | 70.9317
+ 143 | BRKR   | Bruker Corporation                       | $8.79B       | 70.8571
+ 144 | APAC   | StoneBridge Acquisition II Corporation   | $82.2M       | 70.8075
+ 145 | CCBG   | Capital City Bank Group                  | $889.4M      | 70.5839
+ 146 | BBIO   | BridgeBio Pharma, Inc.                   | $15.62B      | 70.4845
+ 147 | AVT    | Avnet, Inc.                              | $8.09B       | 70.4596
+ 148 | AVPT   | AvePoint, Inc.                           | $2.80B       | 70.4099
+ 149 | ALLO   | Allogene Therapeutics, Inc.              | $717.9M      | 70.3106
+ 150 | AVR    | Anteris Technologies Global Corp.        | $918.1M      | 69.9876
+ 151 | AVIR   | Atea Pharmaceuticals, Inc. - common stoc | $417.7M      | 69.9876
+ 152 | DBGI   | Digital Brands Group, Inc.               | $7.9M        | 69.9627
+ 153 | CURR   | Currenc Group Inc.                       | $433.4M      | 69.7640
+ 154 | AFRM   | Affirm Holdings, Inc.                    | $24.96B      | 69.4907
+ 155 | ALGN   | Align Technology, Inc.                   | $12.16B      | 69.3416
+ 156 | ASND   | Ascendis Pharma A/S - Ordinary Share     | $16.23B      | 69.2919
+ 157 | CFFN   | Capitol Federal Financial, Inc.          | $1.08B       | 69.2671
+ 158 | ACHV   | Achieve Life Sciences, Inc.              | $771.8M      | 69.1925
+ 159 | BOLD   | Boundless Bio, Inc.                      | $64.4M       | 69.1429
+ 160 | CSX    | CSX Corporation                          | $93.70B      | 69.0186
+ 161 | CLST   | Catalyst Bancorp, Inc. - common stock    | $71.0M       | 68.9441
+ 162 | CTAS   | Cintas Corporation                       | $79.16B      | 68.9193
+ 163 | BIOT   | Instinct Bio Technical Company Holdings  | $10.9M       | 68.8447
+ 164 | CIFR   | Cipher Digital Inc.                      | $7.68B       | 68.7205
+ 165 | AFJKR  | Aimei Health Technology Co., Ltd - Right | N/A          | 68.6957
+ 166 | BSRR   | Sierra Bancorp                           | $529.0M      | 68.6957
+ 167 | CGCF   | Cartesian Growth Corporation IV          | N/A          | 68.6957
+ 168 | AMPGZ  | Amplitech Group, Inc. - Series B Right   | N/A          | 68.6957
+ 169 | CAMT   | Camtek Ltd.                              | $8.02B       | 68.5714
+ 170 | AXON   | Axon Enterprise, Inc.                    | $49.09B      | 68.5714
+ 171 | CATY   | Cathay General Bancorp                   | $4.30B       | 68.4224
+ 172 | BVC    | BitVentures Limited - Ordinary Share     | $2.45B       | 68.1988
+ 173 | CVBF   | CVB Financial Corporation                | $4.07B       | 68.1988
+ 174 | CZNC   | Citizens & Northern Corp                 | N/A          | 67.7019
+ 175 | AMBA   | Ambarella, Inc.                          | $3.45B       | 67.4783
+ 176 | AGPU   | Axe Compute Inc.                         | $122.1M      | 67.4286
+ 177 | ACTG   | Acacia Research Corporation              | $456.7M      | 67.3292
+ 178 | BNAI   | Brand Engagement Network Inc.            | $120.2M      | 67.1801
+ 179 | BVS    | Bioventus Inc.                           | $1.17B       | 67.1553
+ 180 | CBSH   | Commerce Bancshares, Inc.                | $8.56B       | 66.6584
+ 181 | CRNX   | Crinetics Pharmaceuticals, Inc.          | $8.99B       | 66.6087
+ 182 | BFC    | Bank First Corporation                   | $1.74B       | 66.5839
+ 183 | ASTC   | Astrotech Corporation                    | $16.4M       | 66.5093
+ 184 | CMTV   | Community Bancorp.  - Common stock       | $228.8M      | 66.4348
+ 185 | DBX    | Dropbox, Inc.                            | $7.26B       | 66.4099
+ 186 | MSFT   | Microsoft Corporation                    | $3566.86B    | 66.3851
+ 187 | AEVA   | Aeva Technologies, Inc.                  | $1.66B       | 66.2609
+ 188 | ALNT   | Allient Inc.                             | $1.92B       | 66.2112
+ 189 | ASRV   | AmeriServ Financial Inc.                 | $89.0M       | 66.1615
+ 190 | COCO   | The Vita Coco Company, Inc.              | $3.79B       | 66.1366
+ 191 | CWBC   | Community West Bancshares                | $704.9M      | 65.9627
+ 192 | CRWD   | CrowdStrike Holdings, Inc.               | $217.81B     | 65.7640
+ 193 | CZFS   | Citizens Financial Services, Inc.        | $393.9M      | 65.7143
+ 194 | CEPV   | Cantor Equity Partners V, Inc.           | $329.7M      | 65.5901
+ 195 | APWC   | Asia Pacific Wire & Cable Corporation Li | $62.3M       | 65.5652
+ 196 | CRVS   | Corvus Pharmaceuticals, Inc.             | $1.25B       | 65.5404
+ 197 | AGMB   | AgomAb Therapeutics NV - ADRs representi | $673.7M      | 65.3913
+ 198 | CADL   | Candel Therapeutics, Inc.                | $891.0M      | 65.3665
+ 199 | CTSH   | Cognizant Technology Solutions Corporati | $25.50B      | 65.3168
+ 200 | DHC    | Diversified Healthcare Trust  - Common S | $2.01B       | 65.3168
+ 201 | BCPC   | Balchem Corporation                      | $5.69B       | 65.1677
+ 202 | AKTS   | Aktis Oncology, Inc. - Common stock      | $1.37B       | 65.1429
+ 203 | ASUR   | Asure Software Inc                       | $239.7M      | 65.0186
+ 204 | BMHL   | Bluemount Holdings Limited               | $149.0M      | 64.8696
+ 205 | CNXN   | PC Connection, Inc.                      | $1.98B       | 64.7702
+ 206 | DDOG   | Datadog, Inc.                            | N/A          | 64.6708
+ 207 | ALOY   | REalloys Inc.                            | $955.8M      | 64.6708
+ 208 | BRZE   | Braze, Inc.                              | $3.15B       | 64.6211
+ 209 | CCSI   | Consensus Cloud Solutions, Inc.          | $675.1M      | 64.5963
+ 210 | ATRO   | Astronics Corporation                    | $4.00B       | 64.5714
+ 211 | CARL   | Carlsmed, Inc.                           | $376.2M      | 64.0994
+ 212 | AEMD   | Aethlon Medical, Inc.                    | $1.5M        | 63.9503
+ 213 | APPS   | Digital Turbine, Inc.                    | $1.48B       | 63.9255
+ 214 | ALTO   | Alto Ingredients, Inc.                   | $327.3M      | 63.8758
+ 215 | BOF    | BranchOut Food Inc.                      | $61.4M       | 63.8509
+ 216 | CLYM   | Climb Bio, Inc.                          | $1.00B       | 63.6770
+ 217 | BMRC   | Bank of Marin Bancorp                    | $456.0M      | 63.6273
+ 218 | AUDC   | AudioCodes Ltd.                          | $244.9M      | 63.6273
+ 219 | CGEM   | Cullinan Therapeutics, Inc.              | $1.27B       | 63.5528
+ 220 | BANF   | BancFirst Corporation                    | $3.86B       | 63.4783
+ 221 | CENTA  | Central Garden & Pet Company - Class A C | $2.36B       | 63.3292
+ 222 | CLMT   | Calumet, Inc                             | $4.25B       | 63.2298
+ 223 | CCEC   | Capital Clean Energy Carriers Corp. - Co | $1.37B       | 62.9814
+ 224 | CPB    | The Campbell's Company                   | $6.76B       | 62.9565
+ 225 | AUR    | Aurora Innovation, Inc.                  | $13.97B      | 62.9565
+ 226 | BSY    | Bentley Systems, Incorporated            | $10.49B      | 62.9565
+ 227 | ATLC   | Atlanticus Holdings Corporation          | $1.52B       | 62.9068
+ 228 | CBUS   | Cibus, Inc.                              | $127.6M      | 62.8571
+ 229 | BBNX   | Beta Bionics, Inc.                       | $790.0M      | 62.7578
+ 230 | ADAM   | Adamas Trust, Inc.                       | $909.6M      | 62.7329
+ 231 | CCNE   | CNB Financial Corporation                | $1.03B       | 62.7081
+ 232 | CAR    | Avis Budget Group, Inc.                  | $4.99B       | 62.5839
+ 233 | CODA   | Coda Octopus Group, Inc. - Common stock  | $118.1M      | 62.5590
+ 234 | DASH   | DoorDash, Inc.                           | $92.69B      | 62.5590
+ 235 | AMZN   | Amazon.com, Inc.                         | $2818.57B    | 62.4845
+ 236 | AHMA   | Ambitions Enterprise Management Co. L.L. | $46.7M       | 62.4596
+ 237 | CART   | Maplebear Inc.                           | $11.31B      | 62.3851
+ 238 | CDT    | CDT Equity Inc.                          | $2.2M        | 62.2609
+ 239 | CZR    | Caesars Entertainment, Inc.              | N/A          | 62.0621
+ 240 | ALLT   | Allot Ltd.                               | $375.7M      | 61.9876
+ 241 | AEP    | American Electric Power Company, Inc.    | $68.88B      | 61.7888
+ 242 | AGIO   | Agios Pharmaceuticals, Inc.              | $2.01B       | 61.7391
+ 243 | CRDO   | Credo Technology Group Holding Ltd       | $52.74B      | 61.7391
+ 244 | BLFS   | BioLife Solutions, Inc.                  | $1.73B       | 61.7143
+ 245 | CPIX   | Cumberland Pharmaceuticals Inc.          | $115.1M      | 61.6398
+ 246 | CNOB   | ConnectOne Bancorp, Inc.                 | $1.65B       | 61.3665
+ 247 | ALZN   | Alzamend Neuro, Inc.                     | $7.6M        | 61.1677
+ 248 | CMPS   | COMPASS Pathways Plc                     | $1.90B       | 61.1429
+ 249 | CFFI   | C&F Financial Corporation                | $279.5M      | 61.0932
+ 250 | CLWT   | Euro Tech Holdings Company Limited       | $12.3M       | 61.0683
+ 251 | DIBS   | 1stdibs.com, Inc.                        | N/A          | 61.0683
+ 252 | AYA    | Aya Gold & Silver Inc.                   | $3.84B       | 60.9938
+ 253 | ASTI   | Ascent Solar Technologies, Inc           | $32.1M       | 60.9441
+ 254 | BANL   | CBL International Limited                | $21.9M       | 60.8944
+ 255 | BCTX   | BriaCell Therapeutics Corp.              | $29.5M       | 60.8199
+ 256 | AQB    | AquaBounty Technologies, Inc.            | $7.2M        | 60.8199
+ 257 | DAIO   | Data I/O Corporation                     | $31.9M       | 60.7702
+ 258 | ARQT   | Arcutis Biotherapeutics, Inc. - Common s | $3.22B       | 60.7205
+ 259 | AIBZ   | Bitzero Holdings Inc.                    | $353.4M      | 60.6957
+ 260 | BKNG   | Booking Holdings Inc.                    | $153.85B     | 60.6957
+ 261 | CRSR   | Corsair Gaming, Inc.                     | $1.32B       | 60.6957
+ 262 | CAMP   | CAMP4 Therapeutics Corporation           | $313.6M      | 60.4969
+ 263 | ATRC   | AtriCure, Inc.                           | $2.28B       | 60.4720
+ 264 | CING   | Cingulate Inc.                           | $70.2M       | 60.3478
+ 265 | CUE    | Cue Biopharma, Inc.                      | $200.8M      | 60.3478
+ 266 | ABOS   | Acumen Pharmaceuticals, Inc.             | $192.4M      | 60.2981
+ 267 | AMGN   | Amgen Inc.                               | $226.88B     | 60.2236
+ 268 | CHRW   | C.H. Robinson Worldwide, Inc.            | $16.92B      | 60.1491
+ 269 | ANGH   | Anghami Inc.                             | $32.4M       | 60.0745
+ 270 | CSAI   | Cloudastructure, Inc.                    | $4.9M        | 59.9752
+ 271 | COO    | The Cooper Companies, Inc.               | $14.65B      | 59.9255
+ 272 | CARG   | CarGurus, Inc.                           | $3.19B       | 59.8758
+ 273 | CHRD   | Chord Energy Corporation                 | $7.82B       | 59.8509
+ 274 | BYND   | Beyond Meat, Inc. - Common stock         | $200.0M      | 59.8509
+ 275 | ALHC   | Alignment Healthcare, Inc.               | $2.79B       | 59.7019
+ 276 | CSTE   | Caesarstone Ltd.                         | $118.6M      | 59.7019
+ 277 | ABCL   | AbCellera Biologics Inc.                 | $3.43B       | 59.6770
+ 278 | CXII   | Churchill Capital Corp XII               | $597.7M      | 59.6025
+ 279 | AROW   | Arrow Financial Corporation              | $719.8M      | 59.5776
+ 280 | CPSS   | Consumer Portfolio Services, Inc.        | $198.1M      | 59.5528
+ 281 | AGNC   | AGNC Investment Corp.                    | $12.98B      | 59.5280
+ 282 | APPN   | Appian Corporation                       | $2.50B       | 59.4534
+ 283 | CLOV   | Clover Health Investments, Corp.  - Clas | $2.27B       | 59.3540
+ 284 | APLM   | Apollomics Inc.                          | $68.2M       | 59.3540
+ 285 | BSIN   | Big Sky Industrial Inc.                  | $74.5M       | 59.2795
+ 286 | BGDE   | Big Digital Energy, Inc.                 | $41.0M       | 59.2298
+ 287 | CEPO   | Cantor Equity Partners I, Inc.           | $272.1M      | 59.2050
+ 288 | AIRT   | Air T, Inc.                              | $74.6M       | 58.9068
+ 289 | CSIQ   | Canadian Solar Inc.                      | $1.00B       | 58.7578
+ 290 | BTBD   | BT Brands, Inc.                          | $7.5M        | 58.7578
+ 291 | BWB    | Bridgewater Bancshares, Inc.             | $622.6M      | 58.7578
+ 292 | CABA   | Cabaletta Bio, Inc.                      | $490.0M      | 58.5839
+ 293 | BDCI   | BTC Development Corp.                    | $350.6M      | 58.4596
+ 294 | CACC   | Credit Acceptance Corporation            | $5.95B       | 58.3354
+ 295 | BKR    | Baker Hughes Company                     | $64.42B      | 58.1863
+ 296 | CERS   | Cerus Corporation                        | $598.5M      | 58.1615
+ 297 | ACCL   | Acco Group Holdings Limited              | $39.8M       | 58.1366
+ 298 | BRTX   | BioRestorative Therapies, Inc.           | $5.6M        | 58.0621
+ 299 | ALLR   | Allarity Therapeutics, Inc. - Common sto | $21.3M       | 58.0621
+ 300 | BLSM   | BlossomHill Therapeutics, Inc.           | $476.3M      | 58.0621
+ 301 | AYTU   | Aytu BioPharma, Inc.                     | $25.3M       | 57.9876
+ 302 | ALVO   | Alvotech                                 | $1.31B       | 57.9627
+ 303 | DGICB  | Donegal Group, Inc.                      | $918.3M      | 57.9379
+ 304 | AVGO   | Broadcom Inc.                            | $1867.02B    | 57.8882
+ 305 | DGII   | Digi International Inc.                  | N/A          | 57.7143
+ 306 | CINF   | Cincinnati Financial Corporation         | $26.25B      | 57.6398
+ 307 | BEEP   | Mobile Infrastructure Corporation        | $106.6M      | 57.6398
+ 308 | ADSE   | ADS-TEC ENERGY PLC                       | $901.6M      | 57.6149
+ 309 | AMPL   | Amplitude, Inc.                          | $1.67B       | 57.5901
+ 310 | CTW    | CTW                                      | $157.5M      | 57.5404
+ 311 | COST   | Costco Wholesale Corporation             | $422.86B     | 57.4658
+ 312 | BRAI   | Braiin Limited                           | $1.13B       | 57.4410
+ 313 | ACIW   | ACI Worldwide, Inc.                      | $5.26B       | 57.3665
+ 314 | BON    | Bon Natural Life Limited                 | $9.3M        | 57.3168
+ 315 | AFRI   | Forafric Global PLC                      | $285.3M      | 57.3168
+ 316 | CYTK   | Cytokinetics, Incorporated               | N/A          | 57.2919
+ 317 | ACT    | Enact Holdings, Inc.                     | $6.84B       | 57.2671
+ 318 | AREC   | American Resources Corporation           | $315.6M      | 57.2671
+ 319 | CLPS   | CLPS Incorporation                       | $25.5M       | 57.0435
+ 320 | CIGL   | Concorde International Group Ltd         | $110.1M      | 57.0186
+ 321 | CCC    | CCC Intelligent Solutions Holdings Inc.  | $3.94B       | 56.9193
+ 322 | BRCB   | Black Rock Coffee Bar, Inc.              | $175.4M      | 56.8696
+ 323 | CDRO   | Codere Online Luxembourg, S.A.           | $413.3M      | 56.8199
+ 324 | ACFN   | Acorn Energy, Inc.                       | $48.9M       | 56.7950
+ 325 | ALT    | Altimmune, Inc.                          | $583.6M      | 56.7453
+ 326 | APMD   | Apnimed, Inc.                            | $1.30B       | 56.7205
+ 327 | ACAD   | ACADIA Pharmaceuticals Inc.              | $5.00B       | 56.6957
+ 328 | CIVB   | Civista Bancshares, Inc.                 | $589.7M      | 56.6708
+ 329 | AIHS   | Senmiao Technology Limited               | $21.8M       | 56.6211
+ 330 | ARAY   | Accuray Incorporated                     | $39.0M       | 56.6211
+ 331 | BNTC   | Benitec Biopharma Inc.                   | $449.0M      | 56.5466
+ 332 | AVAH   | Aveanna Healthcare Holdings Inc.         | $2.76B       | 56.4969
+ 333 | CECO   | CECO Environmental Corp.                 | $4.93B       | 56.3727
+ 334 | ASTH   | Astrana Health Inc.                      | $1.97B       | 56.3478
+ 335 | CCTG   | CCSC Technology International Holdings L | $9.0M        | 56.1491
+ 336 | CEPL   | Capstone Energy Plus, Inc.               | $219.7M      | 56.0745
+ 337 | AMCI   | AMC Robotics Corporation                 | $121.6M      | 56.0000
+ 338 | APA    | APA Corporation                          | $14.57B      | 55.9503
+ 339 | CARE   | Carter Bankshares, Inc.                  | $709.9M      | 55.8261
+ 340 | AMST   | Amesite Inc.                             | $6.3M        | 55.8012
+ 341 | ADEA   | Adeia Inc.                               | $3.27B       | 55.7764
+ 342 | ADBE   | Adobe Inc.                               | $100.98B     | 55.7267
+ 343 | ATOM   | Atomera Incorporated                     | $211.5M      | 55.6522
+ 344 | CORZ   | Core Scientific, Inc.                    | $6.47B       | 55.5776
+ 345 | CHR    | Cheer Holding, Inc.  - Class A Ordinary  | $3.4M        | 55.5528
+ 346 | CVCO   | Cavco Industries, Inc.                   | $4.61B       | 55.4783
+ 347 | CCEP   | Coca-Cola Europacific Partners plc       | $46.63B      | 55.4286
+ 348 | ARHS   | Arhaus, Inc.                             | $1.35B       | 55.3540
+ 349 | DCBO   | Docebo Inc.                              | $561.2M      | 55.3292
+ 350 | CNXC   | Concentrix Corporation                   | $1.42B       | 55.3292
+ 351 | DAVE   | Dave Inc.                                | $4.36B       | 55.3292
+ 352 | ARTNA  | Artesian Resources Corporation - Class A | $360.8M      | 55.3043
+ 353 | CETY   | Clean Energy Technologies, Inc.          | $11.2M       | 55.2547
+ 354 | AUGO   | Aura Minerals Inc.                       | $6.58B       | 55.2547
+ 355 | ADUS   | Addus HomeCare Corporation               | $2.15B       | 55.1304
+ 356 | ALMR   | Alamar Biosciences, Inc. - Class A commo | $2.23B       | 55.1056
+ 357 | CCCC   | C4 Therapeutics, Inc.                    | $524.7M      | 55.0559
+ 358 | CIGI   | Colliers International Group Inc.  - Sub | $5.29B       | 55.0062
+ 359 | AEBI   | Aebi Schmidt Holding AG                  | $961.1M      | 54.9814
+ 360 | CYCN   | Cyclerion Therapeutics, Inc.             | $18.9M       | 54.7826
+ 361 | CERT   | Certara, Inc.                            | $1.22B       | 54.7578
+ 362 | BRVE   | Braveheart Bio, Inc.                     | $1.95B       | 54.5839
+ 363 | CHYM   | Chime Financial, Inc.                    | $11.91B      | 54.3851
+ 364 | BLMN   | Bloomin' Brands, Inc.                    | $915.3M      | 54.3354
+ 365 | BRUN   | Boost Run Inc.                           | $1.39B       | 54.1863
+ 366 | CSCO   | Cisco Systems, Inc.                      | $444.99B     | 54.1118
+ 367 | BPAC   | Blueport Acquisition Ltd                 | $75.1M       | 53.8385
+ 368 | CRAI   | CRA International,Inc.                   | $1.03B       | 53.6894
+ 369 | CPBI   | Central Plains Bancshares, Inc.          | $81.4M       | 53.5404
+ 370 | AKAM   | Akamai Technologies, Inc.                | $17.67B      | 53.4907
+ 371 | CAES   | Cantor Equity Partners VII, Inc.         | $320.7M      | 53.4907
+ 372 | CABR   | Caring Brands, Inc.                      | $12.1M       | 53.4658
+ 373 | ATNI   | ATN International, Inc.                  | $486.3M      | 53.4410
+ 374 | AFYA   | Afya Limited - Class A                   | $1.26B       | 53.3913
+ 375 | ATEC   | Alphatec Holdings, Inc.                  | $1.46B       | 53.3665
+ 376 | BANR   | Banner Corporation                       | $2.50B       | 53.3665
+ 377 | DCTH   | Delcath Systems, Inc.                    | N/A          | 53.0932
+ 378 | BLDP   | Ballard Power Systems, Inc.              | $783.9M      | 52.9193
+ 379 | CPHC   | Canterbury Park Holding Corporation      | $81.0M       | 52.8944
+ 380 | CPSH   | CPS Technologies Corp.                   | N/A          | 52.7702
+ 381 | ALKT   | Alkami Technology, Inc.                  | $2.16B       | 52.7702
+ 382 | ATTO   | Attovia Therapeutics, Inc.               | $977.2M      | 52.7453
+ 383 | BUUU   | BUUU Group Limited - Class A Ordinary Sh | $459.9M      | 52.5963
+ 384 | ABNB   | Airbnb, Inc.                             | $107.36B     | 52.5466
+ 385 | CLDX   | Celldex Therapeutics, Inc.               | $3.29B       | 52.4969
+ 386 | CGNT   | Cognyte Software Ltd.                    | $661.4M      | 52.3478
+ 387 | ANDE   | The Andersons, Inc.                      | $2.34B       | 52.2236
+ 388 | CLRO   | ClearOne, Inc.                           | $13.2M       | 52.2236
+ 389 | BCDA   | BioCardia, Inc.                          | $14.0M       | 52.1739
+ 390 | ALMU   | Aeluma, Inc.                             | $325.5M      | 52.1739
+ 391 | CHTR   | Charter Communications, Inc.             | $17.19B      | 52.0497
+ 392 | BSBK   | Bogota Financial Corp.                   | $118.0M      | 51.9255
+ 393 | CAE    | CAE Inc                                  | $8.73B       | 51.9006
+ 394 | BSVN   | Bank7 Corp. - Common stock               | $496.2M      | 51.8758
+ 395 | DGICA  | Donegal Group, Inc.                      | $685.2M      | 51.8012
+ 396 | CBLL   | CeriBell, Inc.                           | $936.4M      | 51.6770
+ 397 | CLBK   | Columbia Financial, Inc.                 | $1.22B       | 51.6522
+ 398 | CWST   | Casella Waste Systems, Inc.              | $5.68B       | 51.6273
+ 399 | AMSS   | AMASS Brands Inc.                        | $10.9M       | 51.6025
+ 400 | CALM   | Cal-Maine Foods, Inc.                    | $3.77B       | 51.1056
+ 401 | BCRX   | BioCryst Pharmaceuticals, Inc.           | $2.54B       | 51.0311
+ 402 | CCLD   | CareCloud, Inc.                          | $105.0M      | 51.0062
+ 403 | BFRG   | Bullfrog AI Holdings, Inc.               | $10.3M       | 50.9814
+ 404 | BBOT   | BridgeBio Oncology Therapeutics, Inc.    | $724.2M      | 50.9068
+ 405 | AWRE   | Aware, Inc.                              | $25.5M       | 50.7826
+ 406 | CLPT   | ClearPoint Neuro Inc.                    | $472.8M      | 50.7329
+ 407 | CYPH   | Cypherpunk Technologies Inc.             | $76.0M       | 50.6584
+ 408 | CV     | CapsoVision, Inc.                        | $322.6M      | 50.5093
+ 409 | BOT    | RoboStrategy, Inc.                       | $784.2M      | 50.5093
+ 410 | CRDL   | Cardiol Therapeutics Inc. - Class A      | $210.3M      | 50.2857
+ 411 | CVLT   | Commvault Systems, Inc.                  | $5.98B       | 50.2609
+ 412 | CME    | CME Group Inc.                           | $96.32B      | 50.2360
+ 413 | CRCT   | Cricut, Inc. - Class A common stock      | $1.15B       | 50.2360
+ 414 | ALNY   | Alnylam Pharmaceuticals, Inc.            | $30.05B      | 50.2112
+ 415 | CEG    | Constellation Energy Corporation - Commo | $98.57B      | 50.2112
+ 416 | CISO   | CISO Global, Inc.                        | $11.4M       | 50.0870
+ 417 | ALGT   | Allegiant Travel Company                 | $2.30B       | 50.0870
+ 418 | CELC   | Celcuity Inc.                            | $4.52B       | 50.0124
+ 419 | CHKP   | Check Point Software Technologies Ltd.   | $12.97B      | 49.9876
+ 420 | AMPH   | Amphastar Pharmaceuticals, Inc.          | $887.3M      | 49.9627
+ 421 | AMPG   | Amplitech Group, Inc.                    | $111.2M      | 49.7640
+ 422 | DIOD   | Diodes Incorporated                      | $4.95B       | 49.6646
+ 423 | CGNX   | Cognex Corporation                       | $11.20B      | 49.6646
+ 424 | CASH   | Pathward Financial, Inc.                 | $1.77B       | 49.6398
+ 425 | CTMX   | CytomX Therapeutics, Inc.                | $751.8M      | 49.5404
+ 426 | DCGO   | DocGo Inc.                               | $70.1M       | 49.5155
+ 427 | CNXU   | Conexeu Sciences Inc.                    | $261.7M      | 49.5155
+ 428 | ACNT   | Ascent Industries Co.                    | $136.3M      | 49.4658
+ 429 | CTKB   | Cytek Biosciences, Inc.                  | $616.1M      | 49.3913
+ 430 | AARD   | Aardvark Therapeutics, Inc.              | $147.5M      | 49.3168
+ 431 | APXT   | Apex Treasury Corporation - Class A Ordi | $464.7M      | 49.2671
+ 432 | AUPH   | Aurinia Pharmaceuticals Inc              | $2.03B       | 49.1429
+ 433 | CULP   | Culp, Inc.                               | $42.4M       | 49.0435
+ 434 | ALDX   | Aldeyra Therapeutics, Inc.               | $94.1M       | 49.0435
+ 435 | BYFC   | Broadway Financial Corporation           | $107.2M      | 49.0435
+ 436 | BRID   | Bridgford Foods Corporation              | $57.7M       | 49.0186
+ 437 | COLB   | Columbia Banking System, Inc.            | $9.15B       | 48.9193
+ 438 | BGC    | BGC Group, Inc.                          | $5.31B       | 48.8696
+ 439 | BMRN   | BioMarin Pharmaceutical Inc.             | $12.90B      | 48.8447
+ 440 | CAAS   | China Automotive Systems, Inc. - Ordinar | $138.0M      | 48.7950
+ 441 | APEI   | American Public Education, Inc.          | $810.9M      | 48.6708
+ 442 | CGEN   | Compugen Ltd.                            | $222.6M      | 48.5714
+ 443 | CDNS   | Cadence Design Systems, Inc.             | $89.08B      | 48.5714
+ 444 | ARBB   | ARB IOT Group Limited                    | $7.5M        | 48.5466
+ 445 | AVO    | Mission Produce, Inc.                    | $1.14B       | 48.5466
+ 446 | CLRB   | Cellectar Biosciences, Inc.              | $20.5M       | 48.4969
+ 447 | CNTN   | Canton Strategic Holdings, Inc.          | $161.4M      | 48.2733
+ 448 | AENT   | Alliance Entertainment Holding Corporati | $278.2M      | 47.8758
+ 449 | AGCC   | Agencia Comercial Spirits Ltd - Class A  | $326.5M      | 47.8509
+ 450 | CODX   | Co-Diagnostics, Inc.                     | $4.9M        | 47.8261
+ 451 | CENN   | Cenntro Inc.                             | $8.6M        | 47.6770
+ 452 | META   | Meta Platforms, Inc.                     | $1449.45B    | 47.6770
+ 453 | AAL    | American Airlines Group, Inc.            | $9.55B       | 47.6273
+ 454 | CRVL   | CorVel Corp.                             | $3.38B       | 47.5280
+ 455 | AIMD   | Ainos, Inc.                              | $10.5M       | 47.4286
+ 456 | BCBP   | BCB Bancorp, Inc. (NJ)                   | $161.8M      | 47.3789
+ 457 | BTOC   | Armlogi Holding Corp. - common stock     | $12.3M       | 47.3540
+ 458 | ALTI   | AlTi Global, Inc.                        | $459.1M      | 47.0807
+ 459 | DERM   | Journey Medical Corporation              | $177.9M      | 46.7578
+ 460 | BRR    | ProCap Financial, Inc.                   | $160.8M      | 46.7329
+ 461 | CLAR   | Clarus Corporation                       | $139.0M      | 46.6584
+ 462 | CTSO   | Cytosorbents Corporation                 | $23.7M       | 46.5839
+ 463 | ASTL   | Algoma Steel Group Inc.                  | $439.6M      | 46.5093
+ 464 | CEPF   | Cantor Equity Partners IV, Inc.          | $591.5M      | 46.5093
+ 465 | CMCSA  | Comcast Corporation                      | $90.74B      | 46.4348
+ 466 | ACRV   | Acrivon Therapeutics, Inc.               | $87.7M       | 46.4099
+ 467 | AAON   | AAON, Inc.                               | $7.26B       | 46.2609
+ 468 | ARVN   | Arvinas, Inc.                            | $593.6M      | 46.2609
+ 469 | CALC   | CalciMedica, Inc.                        | $20.4M       | 46.1366
+ 470 | CLSK   | CleanSpark, Inc.                         | $3.18B       | 46.1118
+ 471 | BLIN   | Bridgeline Digital, Inc.                 | $12.6M       | 46.1118
+ 472 | CENT   | Central Garden & Pet Company             | $2.71B       | 46.0124
+ 473 | CHDN   | Churchill Downs, Incorporated            | $6.25B       | 45.9130
+ 474 | ANY    | Sphere 3D Corp.                          | $18.1M       | 45.8634
+ 475 | API    | Agora, Inc. - ADS                        | $372.0M      | 45.8137
+ 476 | AISP   | Airship AI Holdings, Inc                 | $69.6M       | 45.7888
+ 477 | CSGP   | CoStar Group, Inc.                       | $12.70B      | 45.5901
+ 478 | COIN   | Coinbase Global, Inc.                    | $39.72B      | 45.5404
+ 479 | AVLN   | Avalyn Pharma Inc. - common stock        | $1.70B       | 45.5404
+ 480 | AOSL   | Alpha and Omega Semiconductor Limited    | $929.9M      | 45.5155
+ 481 | CLGN   | CollPlant Biotechnologies Ltd.           | $6.0M        | 45.4161
+ 482 | BWMN   | Bowman Consulting Group Ltd.             | $734.4M      | 45.2422
+ 483 | CNSP   | CNS Pharmaceuticals, Inc.                | $7.9M        | 45.1925
+ 484 | CUB    | Lionheart Holdings                       | N/A          | 45.1429
+ 485 | AIFF   | Firefly Neuroscience, Inc.               | $17.7M       | 45.0435
+ 486 | AUBN   | Auburn National Bancorporation, Inc.     | $91.5M       | 44.8696
+ 487 | ADSK   | Autodesk, Inc.                           | $51.02B      | 44.8447
+ 488 | ASO    | Academy Sports and Outdoors, Inc.        | $2.86B       | 44.8199
+ 489 | APUR   | Aperture AC                              | $146.9M      | 44.7950
+ 490 | BOSC   | B.O.S. Better Online Solutions           | $32.4M       | 44.7702
+ 491 | AURA   | Aura Biosciences, Inc.                   | $794.4M      | 44.7453
+ 492 | AQMS   | Aqua Metals, Inc.                        | $9.6M        | 44.7453
+ 493 | CHNR   | China Natural Resources, Inc.            | $5.2M        | 44.6708
+ 494 | ASPI   | ASP Isotopes Inc.                        | $616.3M      | 44.4969
+ 495 | COLM   | Columbia Sportswear Company              | $2.92B       | 44.4720
+ 496 | CDW    | CDW Corporation                          | $16.91B      | 44.3230
+ 497 | APC    | ARKO Petroleum Corp.                     | $927.6M      | 44.2981
+ 498 | ATRA   | Atara Biotherapeutics, Inc.              | $75.3M       | 44.0994
+ 499 | BL     | BlackLine, Inc.                          | $1.70B       | 44.0248
+ 500 | AUC    | ATIF Holdings Limited                    | $72.0M       | 44.0248
+ 501 | GOOGL  | Alphabet Inc.                            | $4207.10B    | 43.9255
+ 502 | BRLS   | Borealis Foods Inc. - Class A            | $18.7M       | 43.7516
+ 503 | AZIO   | Azio AI Holdings, Inc. - Common stock    | $21.1M       | 43.7516
+ 504 | DGXX   | Digi Power X Inc. - Common Subordinate V | $382.4M      | 43.7019
+ 505 | AFJK   | Aimei Health Technology Co., Ltd - Ordin | $38.0M       | 43.5776
+ 506 | BRLT   | Brilliant Earth Group, Inc.              | $20.6M       | 43.4783
+ 507 | BEEM   | Beam Global                              | $25.3M       | 43.4286
+ 508 | CTRM   | Castor Maritime Inc.                     | $22.5M       | 43.4037
+ 509 | GOOG   | Alphabet Inc.                            | $4175.91B    | 43.3043
+ 510 | CAI    | Caris Life Sciences, Inc.                | $6.11B       | 43.3043
+ 511 | CRNT   | Ceragon Networks Ltd.                    | $198.1M      | 42.9565
+ 512 | CNDT   | Conduent Incorporated                    | $227.1M      | 42.9068
+ 513 | AIRO   | AIRO Group Holdings, Inc.                | $296.9M      | 42.8820
+ 514 | CTXR   | Citius Pharmaceuticals, Inc.             | $15.4M       | 42.6087
+ 515 | ASST   | Strive, Inc.                             | $1.14B       | 42.3106
+ 516 | BNGO   | Bionano Genomics, Inc.                   | $14.0M       | 42.2609
+ 517 | BULL   | Webull Corporation                       | $4.34B       | 42.2112
+ 518 | ACIU   | AC Immune SA                             | $257.5M      | 42.0870
+ 519 | ATHR   | Aether Holdings, Inc.                    | $44.1M       | 41.9379
+ 520 | ASPS   | Altisource Portfolio Solutions S.A.      | $61.9M       | 41.7888
+ 521 | AEC    | Anfield Energy Inc.                      | $90.4M       | 41.6894
+ 522 | CBIO   | Crescent Biopharma, Inc.                 | $649.3M      | 41.6894
+ 523 | AMTX   | Aemetis, Inc                             | $129.9M      | 41.6398
+ 524 | BZFD   | BuzzFeed, Inc.                           | $92.5M       | 41.6149
+ 525 | BATRK  | Atlanta Braves Holdings, Inc. - Series C | $3.38B       | 41.5901
+ 526 | ASMB   | Assembly Biosciences, Inc.               | $611.0M      | 41.5901
+ 527 | CSBR   | Champions Oncology, Inc.                 | $69.9M       | 41.5652
+ 528 | CEVA   | CEVA, Inc.                               | $920.9M      | 41.5652
+ 529 | AQST   | Aquestive Therapeutics, Inc.             | $538.3M      | 41.3416
+ 530 | SPY    | SPY                                      | N/A          | 41.2671
+ 531 | BLNK   | Blink Charging Co.                       | $84.4M       | 41.2671
+ 532 | DBCA   | D. Boral Acquisition I Corp.             | $432.3M      | 41.2174
+ 533 | BCAR   | D. Boral ARC Acquisition I Corp.         | $239.8M      | 41.1180
+ 534 | BATRA  | Atlanta Braves Holdings, Inc. - Series A | $3.60B       | 41.0932
+ 535 | BTCS   | BTCS Inc.                                | $55.7M       | 40.9938
+ 536 | AIIO   | Robo.ai Inc.                             | $486.9M      | 40.9441
+ 537 | CZWI   | Citizens Community Bancorp, Inc.         | $201.9M      | 40.8944
+ 538 | DGNX   | Diginex Limited                          | $35.2M       | 40.8944
+ 539 | DAKT   | Daktronics, Inc.                         | $963.2M      | 40.8199
+ 540 | CMTL   | Comtech Telecommunications Corp.         | $50.0M       | 40.7702
+ 541 | COCH   | Envoy Medical, Inc.                      | $56.7M       | 40.5963
+ 542 | ANIP   | ANI Pharmaceuticals, Inc.                | $1.75B       | 40.5714
+ 543 | AIRG   | Airgain, Inc.                            | $70.9M       | 40.5466
+ 544 | ARCL   | ARC Group Acquisition I Corp             | $178.6M      | 40.4720
+ 545 | DCOY   | Decoy Therapeutics Inc.                  | $2.3M        | 40.1988
+ 546 | BGMS   | Bio Green Med Solution, Inc.             | $5.0M        | 40.1491
+ 547 | AVAV   | AeroVironment, Inc.                      | $9.21B       | 40.0994
+ 548 | CENX   | Century Aluminum Company                 | $4.66B       | 40.0994
+ 549 | AGNT   | AGNT, Inc.                               | $710.3M      | 40.0745
+ 550 | CLIK   | Click Holdings Limited - Ordinary Share  | $11.9M       | 40.0745
+ 551 | ATPC   | Agape ATP Corporation                    | $2.5M        | 40.0000
+ 552 | CNCK   | Coincheck Group N.V.                     | $383.0M      | 39.9255
+ 553 | ANNA   | AleAnna, Inc.                            | $111.8M      | 39.7267
+ 554 | CGC    | Canopy Growth Corporation                | $449.3M      | 39.5280
+ 555 | AESP   | Aeon Acquisition I Corp.                 | $206.7M      | 39.3789
+ 556 | CPRT   | Copart, Inc.                             | $29.35B      | 39.3292
+ 557 | CRON   | Cronos Group Inc. - Common Share         | $1.16B       | 39.0807
+ 558 | ALDF   | Aldel Financial II Inc.                  | $321.7M      | 39.0559
+ 559 | BAFN   | BayFirst Financial Corp.                 | $164.5M      | 39.0559
+ 560 | ARBE   | Arbe Robotics Ltd.                       | $99.7M       | 38.8323
+ 561 | CRNC   | Cerence Inc.                             | $385.4M      | 38.8323
+ 562 | CHGA   | Change Agents Corporation                | $3.8M        | 38.7081
+ 563 | AZ     | A2Z Cust2Mate Solutions Corp.            | $320.5M      | 38.6584
+ 564 | DCX    | Digital Currency X Technology Inc.       | $334.3M      | 38.6335
+ 565 | COSM   | Cosmos Health Inc.                       | $12.7M       | 38.5342
+ 566 | BMR    | Beamr Imaging Ltd. - Ordinary Share      | $20.0M       | 38.3106
+ 567 | CMII   | Columbus Circle Capital Corp II          | $313.9M      | 38.1366
+ 568 | DDI    | DoubleDown Interactive Co., Ltd.         | $617.2M      | 38.0373
+ 569 | BLIV   | BeLive Holdings - ordinary shares        | $25.0M       | 37.9130
+ 570 | CRUS   | Cirrus Logic, Inc.                       | $6.01B       | 37.6646
+ 571 | ALGS   | Aligos Therapeutics, Inc. - Common stock | $41.1M       | 37.4161
+ 572 | BNC    | CEA Industries Inc.                      | $104.6M      | 37.3665
+ 573 | CURX   | Curanex Pharmaceuticals Inc              | $6.0M        | 37.0683
+ 574 | ABTS   | Abits Group Inc                          | $3.9M        | 36.9689
+ 575 | ALEC   | Alector, Inc.                            | $228.9M      | 36.9689
+ 576 | BIYA   | Baiya International Group Inc.           | $75.2M       | 36.9441
+ 577 | CYCU   | Cycurion, Inc.                           | $8.4M        | 36.6708
+ 578 | ARTW   | Art's-Way Manufacturing Co., Inc.        | $16.7M       | 36.6460
+ 579 | AFCG   | Advanced Flower Capital Inc.             | $79.1M       | 36.5714
+ 580 | CRBP   | Corbus Pharmaceuticals Holdings, Inc.    | $202.9M      | 36.5466
+ 581 | ALCO   | Alico, Inc.                              | $289.8M      | 36.4720
+ 582 | AHCO   | AdaptHealth Corp.                        | $775.1M      | 36.4224
+ 583 | CSWC   | Capital Southwest Corporation            | $1.57B       | 36.3230
+ 584 | CRE    | Cre8 Enterprise Limited                  | $5.6M        | 36.1988
+ 585 | BZ     | KANZHUN LIMITED                          | $6.95B       | 36.1242
+ 586 | BNKK   | Bonk, Inc.                               | $7.8M        | 36.0745
+ 587 | COYA   | Coya Therapeutics, Inc.                  | $109.5M      | 35.7764
+ 588 | BXBL   | BOXABL, Inc.  - Common stock             | $1.52B       | 35.7019
+ 589 | BLLN   | BillionToOne, Inc. - Class A common stoc | $4.43B       | 35.7019
+ 590 | BTBT   | Bit Digital, Inc. - Ordinary Share       | $558.3M      | 35.7019
+ 591 | ABEO   | Abeona Therapeutics Inc.                 | $338.6M      | 35.6025
+ 592 | BRAG   | Bragg Gaming Group Inc.                  | $45.0M       | 35.4783
+ 593 | AEYE   | AudioEye, Inc.                           | $103.8M      | 35.4534
+ 594 | AIFC   | AI Financial Corporation                 | $59.2M       | 35.3540
+ 595 | CRWS   | Crown Crafts, Inc.                       | $31.7M       | 35.2298
+ 596 | ARKR   | Ark Restaurants Corp.                    | $20.2M       | 35.1304
+ 597 | AMOD   | Alpha Modus Holdings, Inc.               | $21.6M       | 35.0559
+ 598 | AEHL   | Antelope Enterprise Holdings Limited     | $5.8M        | 34.8571
+ 599 | BHF    | Brighthouse Financial, Inc.              | $3.21B       | 34.8571
+ 600 | CRTO   | Criteo S.A.                              | $895.4M      | 34.8571
+ 601 | BKYI   | BIO-key International, Inc.              | $3.4M        | 34.7826
+ 602 | CSPI   | CSP Inc.                                 | $79.6M       | 34.6584
+ 603 | BSP    | Bending Spoons S.p.A.                    | $24.46B      | 34.6087
+ 604 | ACET   | Adicet Bio, Inc.                         | $81.8M       | 34.5590
+ 605 | CRSP   | CRISPR Therapeutics AG                   | $5.25B       | 34.3851
+ 606 | CNTY   | Century Casinos, Inc.                    | $35.6M       | 34.3106
+ 607 | COOT   | Australian Oilseeds Holdings Limited     | $13.2M       | 34.1366
+ 608 | ACON   | Aclarion, Inc.                           | $8.0M        | 34.1366
+ 609 | CNEY   | CN Energy Group Inc.                     | N/A          | 34.0621
+ 610 | APYX   | Apyx Medical Corporation                 | $128.9M      | 33.8634
+ 611 | AMSC   | American Superconductor Corporation      | $1.56B       | 33.7391
+ 612 | CSHR   | CoinShares PLC                           | $701.1M      | 33.7391
+ 613 | ADMA   | ADMA Biologics Inc                       | $2.09B       | 33.7143
+ 614 | CLIR   | ClearSign Technologies Corporation       | $31.0M       | 33.7143
+ 615 | BLBD   | Blue Bird Corporation                    | $2.02B       | 33.5901
+ 616 | CYAB   | Cyabra, Inc.                             | $5.6M        | 33.5652
+ 617 | CIRC   | Circle8 Group, Inc.                      | $59.3M       | 33.4161
+ 618 | CMPX   | Compass Therapeutics, Inc.               | $416.0M      | 33.3913
+ 619 | BGM    | BGM Group Ltd.                           | $108.8M      | 33.3168
+ 620 | BOXL   | Boxlight Corporation                     | $4.8M        | 32.8199
+ 621 | AAME   | Atlantic American Corporation            | $29.0M       | 32.7950
+ 622 | AVXL   | Anavex Life Sciences Corp.               | $297.6M      | 32.7950
+ 623 | CG     | The Carlyle Group Inc.                   | $17.30B      | 32.7205
+ 624 | CNVS   | Cineverse Corp.                          | $65.1M       | 32.6460
+ 625 | ABAT   | American Battery Technology Company      | $331.5M      | 32.6211
+ 626 | CURI   | CuriosityStream Inc.                     | $175.0M      | 32.5963
+ 627 | ATER   | Aterian, Inc.                            | $5.0M        | 32.3230
+ 628 | AIOS   | AIOS Tech Inc. - Class A                 | $46.2M       | 32.1491
+ 629 | NVDA   | NVIDIA Corporation                       | $5449.97B    | 32.0994
+ 630 | AVAT   | Avalanche Treasury Corporation           | $17.5M       | 32.0994
+ 631 | CREX   | Creative Realities, Inc.                 | $41.3M       | 31.9255
+ 632 | CELH   | Celsius Holdings, Inc.                   | $7.58B       | 31.8758
+ 633 | AEI    | Alset Inc.                               | $58.3M       | 31.8261
+ 634 | ACDC   | ProFrac Holding Corp.                    | $961.6M      | 31.5776
+ 635 | CDLX   | Cardlytics, Inc.                         | $23.8M       | 31.5280
+ 636 | DH     | Definitive Healthcare Corp.              | $68.3M       | 31.4783
+ 637 | ARQ    | Arq, Inc.                                | $100.9M      | 31.4534
+ 638 | CDZI   | Cadiz, Inc.                              | $271.0M      | 31.4534
+ 639 | ANPA   | Rich Sparkle Holdings Limited            | $64.2M       | 31.4286
+ 640 | AIFA   | All In FutureTech Alliance, Inc.         | $19.4M       | 31.3540
+ 641 | CCB    | Coastal Financial Corporation            | $748.1M      | 31.2795
+ 642 | AIXC   | AIxCrypto Holdings, Inc.                 | $14.4M       | 31.2298
+ 643 | DEFT   | Defi Technologies, Inc.                  | $180.5M      | 31.2298
+ 644 | ARAI   | Arrive AI Inc.                           | $12.9M       | 31.1553
+ 645 | CBRS   | Cerebras Systems Inc.                    | $59.86B      | 31.0807
+ 646 | BDMD   | Baird Medical Investment Holdings Ltd -  | $36.5M       | 31.0311
+ 647 | CNTB   | Connect Biopharma Holdings Limited       | $156.8M      | 30.9565
+ 648 | BTOG   | Bit Origin Limited                       | $2.2M        | 30.9317
+ 649 | BMRA   | Biomerica, Inc.                          | $4.8M        | 30.8571
+ 650 | CWCO   | Consolidated Water Co. Ltd.              | $481.2M      | 30.8323
+ 651 | CNL    | Collective Mining Ltd.                   | $1.33B       | 30.7826
+ 652 | CUPR   | Cuprina Holdings (Cayman) Limited - Clas | $7.8M        | 30.5093
+ 653 | CHCI   | Comstock Holding Companies, Inc.         | $192.6M      | 30.4099
+ 654 | CCCT   | Columbus Circle Capital Corp III         | $308.6M      | 30.3354
+ 655 | CISS   | C3is Inc.                                | $88,105      | 30.2857
+ 656 | BMEA   | Biomea Fusion, Inc.                      | $97.6M       | 30.2112
+ 657 | AURE   | Aurelion Inc.                            | $64.3M       | 30.0373
+ 658 | CVKD   | Cadrenal Therapeutics, Inc.              | $6.3M        | 29.9130
+ 659 | CELU   | Celularity Inc.                          | $20.1M       | 29.7143
+ 660 | DFLI   | Dragonfly Energy Holdings Corp           | $18.9M       | 29.5404
+ 661 | ASTE   | Astec Industries, Inc.                   | $994.4M      | 29.5155
+ 662 | UUUU   | Energy Fuels Inc Ordinary Shares (Canada | $3.70B       | 29.4410
+ 663 | ABLV   | Able View Global Inc.                    | $36.1M       | 29.3416
+ 664 | CRVO   | CervoMed Inc.                            | $35.3M       | 29.1925
+ 665 | CHAI   | Core AI Holdings, Inc.                   | $7.3M        | 29.1677
+ 666 | TSLA   | Tesla, Inc.                              | $1340.08B    | 28.9938
+ 667 | ARCLR  | ARC Group Acquisition I Corp - Right     | N/A          | 28.8944
+ 668 | BCAB   | BioAtla, Inc.                            | $5.1M        | 28.7702
+ 669 | AGRZ   | Agroz Inc.                               | $5.8M        | 28.6211
+ 670 | BMM    | Blue Moon Metals Inc.                    | $535.8M      | 28.4472
+ 671 | DETX   | Liberty Defense Holdings, Ltd.           | $20.6M       | 28.4224
+ 672 | CEPS   | Cantor Equity Partners VI, Inc.          | $152.6M      | 28.3230
+ 673 | BHST   | BioHarvest Sciences Inc.                 | $49.2M       | 28.2236
+ 674 | ACIC   | American Coastal Insurance Corporation   | $446.7M      | 28.1739
+ 675 | ASLE   | AerSale Corporation                      | $281.6M      | 28.1739
+ 676 | CRMT   | America's Car-Mart, Inc.                 | $27.2M       | 28.0994
+ 677 | CNSY   | Cerenome, Inc.                           | $22.0M       | 28.0745
+ 678 | BIOX   | Bioceres Crop Solutions Corp.            | $27.9M       | 27.9752
+ 679 | CAST   | FreeCast, Inc. - Class A common stock    | $40.9M       | 27.8509
+ 680 | CHEC   | Chenghe Acquisition III Co.              | $176.9M      | 27.7764
+ 681 | ALOV   | Aldabra 4 Liquidity Opportunity Vehicle, | $373.7M      | 27.7516
+ 682 | CCAP   | Crescent Capital BDC, Inc.               | $398.7M      | 27.7019
+ 683 | CDIO   | Cardio Diagnostics Holdings Inc. - Commo | $5.9M        | 27.4037
+ 684 | ADTN   | ADTRAN Holdings, Inc.                    | $705.2M      | 27.3540
+ 685 | ARTL   | Artelo Biosciences, Inc.                 | $3.3M        | 27.1801
+ 686 | ACB    | Aurora Cannabis Inc.                     | $223.0M      | 26.8571
+ 687 | BCG    | Binah Capital Group, Inc.                | $26.6M       | 26.7578
+ 688 | CHRS   | Coherus Oncology, Inc.                   | $177.7M      | 26.7578
+ 689 | CRBU   | Caribou Biosciences, Inc.                | $168.3M      | 26.7081
+ 690 | AIAI   | AIAI Holdings Corporation - Class A comm | $352.3M      | 26.6832
+ 691 | ABVC   | ABVC BioPharma, Inc.                     | $22.1M       | 26.6584
+ 692 | CDXS   | Codexis, Inc.                            | $174.1M      | 26.5590
+ 693 | CGTX   | Cognition Therapeutics, Inc.             | $97.0M       | 26.4099
+ 694 | CLNE   | Clean Energy Fuels Corp.                 | $364.8M      | 26.2360
+ 695 | ATYR   | aTyr Pharma, Inc.                        | $50.9M       | 26.1615
+ 696 | BTDR   | Bitdeer Technologies Group               | $2.55B       | 26.1366
+ 697 | BBSI   | Barrett Business Services, Inc.          | $759.3M      | 25.7391
+ 698 | AVX    | Avax One Technology Ltd.                 | $22.8M       | 25.7143
+ 699 | CLNN   | Clene Inc.                               | $54.0M       | 25.3416
+ 700 | CTNT   | Cheetah Net Supply Chain Service Inc.    | $5.1M        | 24.9938
+ 701 | BRNX   | BrenX Ltd.                               | $2.2M        | 24.9689
+ 702 | CRML   | Critical Metals Corp.                    | $965.1M      | 24.8944
+ 703 | ADV    | Advantage Solutions Inc.                 | $401.8M      | 24.4472
+ 704 | BLNE   | Beeline Holdings, Inc.                   | $32.2M       | 24.3230
+ 705 | AIDX   | 20/20 Biolabs, Inc.                      | $6.7M        | 24.2484
+ 706 | BMBL   | Bumble Inc. - common stock               | $343.1M      | 24.2484
+ 707 | CXDO   | Crexendo, Inc.                           | $217.8M      | 24.2484
+ 708 | BDTX   | Black Diamond Therapeutics, Inc.         | $117.8M      | 23.9255
+ 709 | CYN    | Cyngn Inc. - Common stock                | $15.3M       | 23.5031
+ 710 | BENF   | Beneficient                              | $32.9M       | 23.5031
+ 711 | ARRY   | Array Technologies, Inc.                 | $766.1M      | 23.4783
+ 712 | ANTA   | Antalpha Platform Holding Company        | $92.9M       | 23.3540
+ 713 | AMSF   | AMERISAFE, Inc.                          | $489.5M      | 23.2547
+ 714 | CBAT   | CBAK Energy Technology Limited           | $64.9M       | 23.0559
+ 715 | AGMH   | AGM Group Holdings Inc.                  | $2.2M        | 23.0559
+ 716 | CLFD   | Clearfield, Inc.                         | $400.2M      | 23.0559
+ 717 | AIRE   | reAlpha Tech Corp.                       | $8.6M        | 22.9814
+ 718 | ATCX   | Atlas Critical Minerals Corporation      | $18.8M       | 22.9814
+ 719 | CRMD   | CorMedix Inc.                            | $601.7M      | 22.7826
+ 720 | CRWV   | CoreWeave, Inc.                          | $58.46B      | 22.7578
+ 721 | CHSN   | Chanson International Holding            | $2.6M        | 22.6832
+ 722 | BGL    | Blue Gold Limited - Class A ordinary sha | $8.6M        | 22.6584
+ 723 | CMND   | Clearmind Medicine Inc.                  | $2.8M        | 22.6335
+ 724 | ARCT   | Arcturus Therapeutics Holdings Inc.      | $231.4M      | 22.5590
+ 725 | BETR   | Better Home & Finance Holding Company    | $257.2M      | 22.5093
+ 726 | APRE   | Aprea Therapeutics, Inc.                 | $8.7M        | 22.5093
+ 727 | AXG    | Solowin Holdings - Class A Ordinary Shar | $511.7M      | 22.2609
+ 728 | COCP   | Cocrystal Pharma, Inc.                   | $21.0M       | 21.8882
+ 729 | BYRN   | Byrna Technologies, Inc.                 | $90.3M       | 21.6646
+ 730 | ACTU   | Actuate Therapeutics, Inc. - Common stoc | $23.8M       | 21.4907
+ 731 | BIRD   | Smartbird, Inc.                          | $21.8M       | 21.4907
+ 732 | AAPG   | Ascentage Pharma Group International     | $1.70B       | 21.3665
+ 733 | AIIR   | Air Global PLC - Ordinary shares         | $1.23B       | 21.2919
+ 734 | AIOT   | PowerFleet, Inc.                         | $386.6M      | 21.0683
+ 735 | ATXG   | Addentax Group Corp.                     | $4.2M        | 20.9441
+ 736 | CRGO   | Freightos Limited - Ordinary shares      | $86.3M       | 20.5714
+ 737 | BOLT   | Bolt Biotherapeutics, Inc.               | $6.2M        | 20.1491
+ 738 | ATLX   | Atlas Lithium Corporation                | $93.6M       | 20.1242
+ 739 | CTOR   | Citius Oncology, Inc.                    | $78.3M       | 19.9752
+ 740 | BIVI   | BioVie Inc. - Common stock               | $8.8M        | 19.9006
+ 741 | ABTC   | American Bitcoin Corp.                   | $518.5M      | 19.8509
+ 742 | CVGI   | Commercial Vehicle Group, Inc.           | $137.7M      | 19.5528
+ 743 | CRDF   | Cardiff Oncology, Inc.                   | $70.3M       | 19.5031
+ 744 | CETX   | Cemtrex Inc.                             | $5.2M        | 19.4534
+ 745 | ANGI   | Angi Inc.                                | $180.9M      | 19.3043
+ 746 | ACXP   | Acurx Pharmaceuticals, Inc.              | $7.1M        | 19.2795
+ 747 | BEAT   | Heartbeam, Inc.                          | $28.2M       | 19.1304
+ 748 | ADGM   | Adagio Medical Holdings, Inc             | $14.5M       | 18.7329
+ 749 | CDNL   | Cardinal Infrastructure Group Inc.       | $801.4M      | 18.5342
+ 750 | BTCT   | BTC Digital Ltd.                         | $7.5M        | 18.3354
+ 751 | BTTC   | Black Titan Corp                         | $6.5M        | 18.2360
+ 752 | CD     | Chaince Digital Holdings Inc. - American | $387.2M      | 18.1615
+ 753 | BODI   | The Beachbody Company, Inc.              | $46.6M       | 17.4410
+ 754 | BTAI   | BioXcel Therapeutics, Inc.               | $27.5M       | 17.2174
+ 755 | CCOI   | Cogent Communications Holdings, Inc.     | $550.6M      | 16.7702
+ 756 | DAIC   | CID HoldCo, Inc.                         | $675,394     | 16.7702
+ 757 | CMCT   | Creative Media                           | $15.0M       | 16.3478
+ 758 | ALPS   | ALPS Group Inc - Ordinary Share          | $53.2M       | 16.3478
+ 759 | AMIX   | Autonomix Medical, Inc.                  | $6.2M        | 16.1988
+ 760 | ARKO   | ARKO Corp.                               | $545.2M      | 16.0994
+ 761 | CLBT   | Cellebrite DI Ltd.                       | $2.62B       | 16.0000
+ 762 | BMGL   | Basel Medical Group Ltd - ordinary share | $8.2M        | 15.6273
+ 763 | COLL   | Collegium Pharmaceutical, Inc.           | $910.4M      | 15.5031
+ 764 | CWD    | CaliberCos Inc.                          | $4.6M        | 14.6087
+ 765 | BRBI   | BRBI BR Partners S.A. - ADSs             | $239.8M      | 14.5590
+ 766 | CCHH   | CCH Holdings Ltd                         | $5.3M        | 14.2360
+ 767 | CPOP   | Pop Culture Group Co., Ltd               | $4.8M        | 13.9130
+ 768 | BSEM   | BioStem Technologies, Inc.               | $51.0M       | 13.7143
+ 769 | BAER   | Bridger Aerospace Group Holdings, Inc.   | $70.0M       | 13.6398
+ 770 | BGIN   | Bgin Blockchain Limited                  | $246.6M      | 13.4161
+ 771 | CAPS   | Capstone Holding Corp.                   | $3.3M        | 13.3665
+ 772 | ARDX   | Ardelyx, Inc.                            | $1.05B       | 13.1925
+ 773 | AZI    | Autozi Internet Technology (Global) Ltd. | $3.1M        | 13.0932
+ 774 | DFDV   | DeFi Development Corp.                   | $98.0M       | 13.0186
+ 775 | AUID   | authID Inc.                              | $6.7M        | 12.9193
+ 776 | BTMD   | Biote Corp. - Class A common stock       | $39.3M       | 12.9193
+ 777 | CMRC   | Commerce.com, Inc. - Series 1            | $170.7M      | 12.8199
+ 778 | BGLC   | BioNexus Gene Lab Corp - Common stock    | $3.8M        | 11.8509
+ 779 | APP    | Applovin Corporation                     | $104.81B     | 11.6770
+ 780 | AKAN   | Akanda Corp.                             | $2.9M        | 11.3292
+ 781 | AIRS   | AirSculpt Technologies, Inc.             | $222.4M      | 10.9317
+ 782 | AKBA   | Akebia Therapeutics, Inc.                | $238.3M      | 10.8323
+ 783 | BRFH   | Barfresh Food Group Inc.                 | $21.7M       | 10.7826
+ 784 | DFSC   | DEFSEC Technologies Inc. - common stock, | $5.8M        | 9.3665
+ 785 | CAPR   | Capricor Therapeutics, Inc.              | $433.1M      | 9.0435
+ 786 | BBLG   | Bone Biologics Corp                      | $1.2M        | 9.0435
+ 787 | CXAI   | CXApp Inc.                               | $9.7M        | 8.7950
+ 788 | CNTX   | Context Therapeutics Inc.                | $48.7M       | 8.4472
+ 789 | BJDX   | Bluejay Diagnostics, Inc.                | $1.1M        | 8.4224
+ 790 | BYSI   | BeyondSpring, Inc.                       | $29.3M       | 8.1242
+ 791 | ATOS   | Atossa Therapeutics, Inc.                | $27.8M       | 8.0248
+ 792 | CGTL   | Creative Global Technology Holdings Limi | $8.2M        | 7.6522
+ 793 | CELZ   | Creative Medical Technology Holdings, In | $7.1M        | 5.9876
+ 794 | AUUD   | Auddia Inc.                              | $5.2M        | 5.9876
+ 795 | APVO   | Aptevo Therapeutics Inc.                 | $4.3M        | 5.7888
+ 796 | BZAI   | Blaize Holdings, Inc.                    | $75.4M       | 5.7143
+ 797 | CDTG   | CDT Environmental Technology Investment  | $8.5M        | 5.6646
+ 798 | DARE   | Dare Bioscience, Inc.                    | $15.7M       | 4.7950
+ 799 | BAOS   | Baosheng Media Group Holdings Limited -  | $736,554     | 4.4472
+ 800 | CVRX   | CVRx, Inc.                               | $73.3M       | 4.4224
+ 801 | BIAF   | bioAffinity Technologies, Inc.           | $2.7M        | 4.3975
+ 802 | ALP    | Alpha Compute Corp                       | $3.7M        | 4.1242
+ 803 | BYAH   | Park Ha Biological Technology Co., Ltd.  | $2.4M        | 3.3292
+ 804 | ATGL   | Alpha Technology Group Limited           | $115.2M      | 3.2298
+ 805 | AIFU   | AIFU Inc. - Class A Ordinary Share       | $102.2M      | 2.8820
+ 806 | CRIS   | Curis, Inc.                              | $4.4M        | 0.8696

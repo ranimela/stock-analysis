@@ -187,8 +187,8 @@ def test_manual_vs_screener_score_consistency():
         screener_row = df_screener[df_screener["ticker"] == target_ticker].iloc[0]
         manual_row = df_manual[df_manual["ticker"] == target_ticker].iloc[0]
 
-        # Verify composite_score and rs_score match exactly
+        # Verify composite_score and rs_score match exactly, and composite_score is bounded in [0, 100]
         assert abs(screener_row["rs_score"] - manual_row["rs_score"]) < 1e-5
         assert abs(screener_row["composite_score"] - manual_row["composite_score"]) < 1e-5
-        assert abs(manual_row["composite_score"] - (manual_row["rs_score"] * 100.0)) < 1e-5
+        assert 0.0 <= manual_row["composite_score"] <= 100.0
 

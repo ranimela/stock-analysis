@@ -131,14 +131,17 @@ composite_scoring AS (
     SELECT
         sf.*,
         (0.70 * sf.rs_63 + 0.30 * sf.rs_252) AS rs_score,
-        ((0.70 * sf.rs_63 + 0.30 * sf.rs_252) * 100.0) AS composite_score
+        (
+            0.60 * (PERCENT_RANK() OVER (ORDER BY (0.70 * sf.rs_63 + 0.30 * sf.rs_252) ASC) * 100.0) +
+            0.40 * (PERCENT_RANK() OVER (ORDER BY (CASE WHEN sf.tightness_ratio > 0 THEN 1.0 / sf.tightness_ratio ELSE 0 END) ASC) * 100.0)
+        ) AS composite_score
     FROM stage_filters sf
     WHERE sf.tightness_ratio <= {max_tightness}  -- Hard VCP Coiling Gating Filter
 ),
 final_ranked AS (
     SELECT
         cs.*,
-        ROW_NUMBER() OVER (ORDER BY cs.rs_score DESC) AS rank
+        ROW_NUMBER() OVER (ORDER BY cs.composite_score DESC) AS rank
     FROM composite_scoring cs
 )
 SELECT
@@ -303,14 +306,17 @@ def run_screener(
             SELECT
                 sf.*,
                 (0.70 * sf.rs_63 + 0.30 * sf.rs_252) AS rs_score,
-                ((0.70 * sf.rs_63 + 0.30 * sf.rs_252) * 100.0) AS composite_score
+                (
+                    0.60 * (PERCENT_RANK() OVER (ORDER BY (0.70 * sf.rs_63 + 0.30 * sf.rs_252) ASC) * 100.0) +
+                    0.40 * (PERCENT_RANK() OVER (ORDER BY (CASE WHEN sf.tightness_ratio > 0 THEN 1.0 / sf.tightness_ratio ELSE 0 END) ASC) * 100.0)
+                ) AS composite_score
             FROM stage_filters sf
             WHERE sf.tightness_ratio <= 3.5 OR sf.ticker IN ({placeholders})
         ),
         final_ranked AS (
             SELECT
                 cs.*,
-                ROW_NUMBER() OVER (ORDER BY cs.rs_score DESC) AS rank
+                ROW_NUMBER() OVER (ORDER BY cs.composite_score DESC) AS rank
             FROM composite_scoring cs
         )
         SELECT
