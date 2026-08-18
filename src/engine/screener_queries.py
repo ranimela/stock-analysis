@@ -169,7 +169,7 @@ LIMIT 10;
 def run_screener(
     db_manager: DatabaseManager,
     cutoff_date: str,
-    max_tightness: float = 2.0,
+    max_tightness: float = 3.5,
     manual_tickers: list[str] | None = None,
 ) -> pd.DataFrame:
     """Executes the quantitative momentum screener query for a cutoff date.
@@ -177,7 +177,7 @@ def run_screener(
     Args:
         db_manager: DatabaseManager instance.
         cutoff_date: YYYY-MM-DD cutoff date string.
-        max_tightness: Tightness ratio threshold ceiling. Defaults to 2.0.
+        max_tightness: Tightness ratio threshold ceiling. Defaults to 3.5.
         manual_tickers: Optional list of manual ticker symbols to force-include or evaluate.
 
     Returns:
