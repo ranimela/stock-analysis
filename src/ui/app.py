@@ -333,14 +333,71 @@ def main() -> None:
         if not manual_tickers:
             st.warning("Please enter one or more stock tickers in the sidebar field (e.g. `NVDA, AAPL`).")
             return
+
         st.header(f"View D: Custom Analysis for {', '.join(manual_tickers)}")
-        df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=manual_tickers)
+
+        # Check ticker presence in DuckDB
+        db_tickers_query = f"SELECT DISTINCT ticker FROM daily_bars WHERE ticker IN ({', '.join(['?']*len(manual_tickers))});"
+        existing_rows = db_manager.execute_read(db_tickers_query, manual_tickers)
+        existing_set = {r[0] for r in existing_rows}
+
+        missing_tickers = [t for t in manual_tickers if t not in existing_set]
+        found_tickers = [t for t in manual_tickers if t in existing_set]
+
+        # Display Ticker Status Badges
+        bcol1, bcol2 = st.columns(2)
+        with bcol1:
+            if found_tickers:
+                st.success(f"✅ Found in Database: **{', '.join(found_tickers)}**")
+        with bcol2:
+            if missing_tickers:
+                st.error(f"❌ Missing / Not Ingested: **{', '.join(missing_tickers)}**")
+
+        # Handle missing tickers: Offer 1-click fetch button
+        if missing_tickers:
+            st.warning(
+                f"The following ticker(s) do not currently have historical bars in the local database: **{', '.join(missing_tickers)}**"
+            )
+            if st.button("📥 Download Historical Data for Missing Tickers"):
+                from src.ingestion.data_ingestor import DataIngestor
+
+                with st.spinner("Downloading price history from Yahoo Finance..."):
+                    write_db = DatabaseManager(db_path=db_manager.db_path, read_only=False)
+                    ingestor = DataIngestor(db_manager=write_db)
+                    synced_any = False
+                    for m_tick in missing_tickers:
+                        ok = ingestor.sync_single_ticker(m_tick)
+                        if ok:
+                            st.success(f"Downloaded and stored price history for **{m_tick}**!")
+                            synced_any = True
+                        else:
+                            st.error(f"Failed to fetch data for **{m_tick}**. Please verify ticker symbol on Yahoo Finance.")
+                    if synced_any:
+                        st.rerun()
+
+        if not found_tickers:
+            st.info("Enter a valid ticker symbol above and click download to analyze.")
+            return
+
+        df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
         if not df_manual.empty:
             df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
             df_manual["yahoo_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
             st.dataframe(
                 df_manual[
-                    ["rank", "ticker", "yahoo_url", "name", "exchange", "close", "adv_20", "rs_score", "tightness_ratio", "pct_off_52w_high", "composite_score"]
+                    [
+                        "rank",
+                        "ticker",
+                        "yahoo_url",
+                        "name",
+                        "exchange",
+                        "close",
+                        "adv_20",
+                        "rs_score",
+                        "tightness_ratio",
+                        "pct_off_52w_high",
+                        "composite_score",
+                    ]
                 ].rename(
                     columns={
                         "rank": "Rank",
@@ -370,13 +427,11 @@ def main() -> None:
                         "Yahoo Finance",
                         help="Click to view live chart and fundamentals on Yahoo Finance",
                         validate="^https://finance\\.yahoo\\.com/quote/",
-                        display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+                        display_text=r"https://finance\\.yahoo\\.com/quote/(.*)",
                     ),
                 },
                 width="stretch",
             )
-        else:
-            st.warning(f"No price data found in DuckDB for {', '.join(manual_tickers)}. Please run `python -m src.cli seed` or `update`.")
     elif view_option.startswith("View A"):
         render_live_recommendations(db_manager, latest_date)
     elif view_option.startswith("View B"):

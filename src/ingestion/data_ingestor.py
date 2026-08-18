@@ -344,3 +344,33 @@ class DataIngestor:
         }
         logger.info("Sync complete summary: %s", summary)
         return summary
+
+    def sync_single_ticker(self, ticker: str) -> bool:
+        """Fetch and store 2 years of daily bar data for a single ticker on-demand.
+
+        Args:
+            ticker: Ticker symbol string.
+
+        Returns:
+            bool: True if data was successfully downloaded and stored, False otherwise.
+        """
+        ticker_clean = ticker.strip().upper()
+        today = datetime.date.today()
+        start_date = today - datetime.timedelta(days=365 * self.lookback_years)
+
+        # Register metadata entry if missing
+        self.db_manager.execute_write(
+            """
+            INSERT INTO symbol_metadata (ticker, name, exchange, asset_class, is_active, first_added_date, last_updated_date)
+            VALUES (?, ?, 'NASDAQ', 'Common Stock', true, CURRENT_DATE, CURRENT_DATE)
+            ON CONFLICT (ticker) DO NOTHING;
+            """,
+            [ticker_clean, ticker_clean],
+        )
+
+        df = self.fetch_ticker_chunk([ticker_clean], start_date=start_date)
+        if df.empty:
+            return False
+
+        bars_count = self.parse_and_store_bars(df, [ticker_clean])
+        return bars_count > 0
