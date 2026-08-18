@@ -79,12 +79,9 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     # Calculate % Off 52W High & Market Cap formatting helper
     df["pct_off_52w_high"] = ((df["close"] / df["high_52w"]) - 1.0) * 100.0
     df["yahoo_url"] = df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+    df["Company Name"] = df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
     df["market_cap_str"] = df["market_cap"].apply(
         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
-    )
-    # Format Company Name as Markdown Link: [Company Full Name](https://finance.yahoo.com/quote/TICKER)
-    df["Company Name"] = df.apply(
-        lambda r: f"[{r.get('name', r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
     )
 
     # Key metrics for top recommendation
@@ -108,6 +105,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     # Select columns without Rank, sorted by Composite Score descending
     display_df = display_df[
         [
+            "yahoo_url",
             "Company Name",
             "market_cap_str",
             "exchange",
@@ -131,8 +129,22 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         }
     ).sort_values(by="Composite Score", ascending=False)
 
+    display_df["Company Name"] = display_df["yahoo_url"]
+
     st.dataframe(
-        display_df.style.format(
+        display_df[
+            [
+                "Company Name",
+                "Market Cap",
+                "Exchange",
+                "Price ($)",
+                "ADV20 ($)",
+                "RS Score",
+                "Tightness Ratio",
+                "% Off 52W High",
+                "Composite Score",
+            ]
+        ].style.format(
             {
                 "Price ($)": "${:.2f}",
                 "ADV20 ($)": "${:,.0f}",
@@ -146,6 +158,8 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
+                validate=r"^https://finance\.yahoo\.com/quote/",
+                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
             ),
         },
         width="stretch",
@@ -217,16 +231,15 @@ def render_backtest_view(
     st.subheader("Historical Position Performance Table")
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
-        disp_pos["Company Name"] = disp_pos.apply(
-            lambda r: f"[{r.get('name', r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
-        )
+        disp_pos["company_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos["company_name"] = disp_pos.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
         disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
 
         disp_pos = disp_pos[
             [
-                "Company Name",
+                "company_url",
                 "market_cap_str",
                 "entry_price",
                 "exit_price",
@@ -238,6 +251,7 @@ def render_backtest_view(
             ]
         ].rename(
             columns={
+                "company_url": "Company Name",
                 "market_cap_str": "Market Cap",
                 "entry_price": "Entry Price ($)",
                 "exit_price": "Exit Price ($)",
@@ -264,6 +278,8 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
+                    validate=r"^https://finance\.yahoo\.com/quote/",
+                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                 ),
             },
             width="stretch",
@@ -483,14 +499,19 @@ def main() -> None:
                     else:
                         st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
-            df_manual["Company Name"] = df_manual.apply(
-                lambda r: f"[{r.get('name', r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
+            df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
+            df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+            df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+            df_manual["market_cap_str"] = df_manual["market_cap"].apply(
+                lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
             )
+
+            manual_url_map = dict(zip(df_manual["company_url"], df_manual["company_name"]))
 
             st.dataframe(
                 df_manual[
                     [
-                        "Company Name",
+                        "company_url",
                         "market_cap_str",
                         "exchange",
                         "close",
@@ -502,6 +523,7 @@ def main() -> None:
                     ]
                 ].rename(
                     columns={
+                        "company_url": "Company Name",
                         "market_cap_str": "Market Cap",
                         "exchange": "Exchange",
                         "close": "Price ($)",
@@ -525,6 +547,8 @@ def main() -> None:
                     "Company Name": st.column_config.LinkColumn(
                         "Company Name",
                         help="Click to view live chart and fundamentals on Yahoo Finance",
+                        validate=r"^https://finance\.yahoo\.com/quote/",
+                        display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                     ),
                 },
                 width="stretch",
