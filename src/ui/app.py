@@ -68,7 +68,11 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     )
 
     with st.spinner("Executing Stage-2 Screener..."):
-        df = run_screener(db_manager, cutoff_date=latest_date)
+        try:
+            df = run_screener(db_manager, cutoff_date=latest_date)
+        except Exception as e:
+            st.error(f"Database error executing screener: {e}")
+            return
 
     if df.empty:
         st.warning("No stocks passed all screening filters for the latest trade date.")
@@ -133,7 +137,24 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
                 "Composite Score": "{:.2f}",
             }
         ),
-        use_container_width=True,
+        width="stretch",
+    )
+
+    # Parameter Explanations Callout
+    st.markdown("### ℹ️ Parameter Definitions")
+    st.markdown(
+        """
+- **Rank**: Priority order (#1–10) determined by the composite momentum score across passing candidates.
+- **Ticker**: Public US stock exchange symbol trading on NYSE, NASDAQ, or AMEX.
+- **Company Name**: Registered corporate title of the asset.
+- **Exchange**: Primary US listing market (NASDAQ, NYSE, or AMEX).
+- **Price ($)**: End-of-Day (EOD) closing price on the cutoff evaluation date.
+- **ADV20 ($)**: 20-Day Average Daily Dollar Volume ($\text{Close} \times \text{Volume}$), enforced to be $\ge \$20,000,000$ for institutional liquidity.
+- **RS Score**: Mansfield Relative Strength measuring multi-timeframe price outperformance vs the SPY benchmark (70% 63-day weight + 30% 252-day weight).
+- **Tightness Ratio**: Volatility Contraction Ratio measuring 10-day price range relative to 14-day ATR ($\le 2.0$ signifies tight coiling).
+- **% Off 52W High**: Percentage distance from the stock's 252-day rolling peak (must be within 25% of 52-week high).
+- **Composite Score**: Weighted percentile score combining Relative Strength (60% weight) and Consolidation Tightness (40% weight).
+"""
     )
 
     # CSV Download Button
@@ -209,20 +230,40 @@ def render_backtest_view(
                     "Max Drawdown (%)": "{:.2f}%",
                 }
             ),
-            use_container_width=True,
+            width="stretch",
         )
     else:
-        st.info("No position data available for this backtest period.")
+        st.info("No position data available for this historical backtest date.")
+
+    # Backtest Parameter Explanations Callout
+    st.markdown("### ℹ️ Backtest Parameter Definitions")
+    st.markdown(
+        """
+- **Cutoff Date**: Historical date ($T_{-5}$ or $T_{-22}$) when screener recommendations were computed without lookahead bias.
+- **Evaluation Date**: Target date ($T_0$) up to which forward performance is tracked.
+- **Entry Price ($)**: Closing price of recommended stock on the historical Cutoff Date.
+- **Exit Price ($)**: Closing price of stock on Evaluation Date ($T_0$).
+- **Return (%)**: Total percentage price change from Entry Price to Exit Price.
+- **SPY Return (%)**: Benchmark S&P 500 ETF percentage return over the identical time window.
+- **Alpha (%)**: Excess return achieved by the stock or basket relative to SPY ($\text{Stock Return} - \text{SPY Return}$).
+- **Max Drawdown (%)**: Maximum percentage price dip from Entry Price to the lowest intraday low during holding period.
+- **Win Rate (%)**: Percentage of recommended stocks in the basket yielding positive forward return ($\text{Return} > 0$).
+"""
+    )
 
 
 def main() -> None:
     """Main Streamlit application entry point."""
     st.title("📊 Quantitative Momentum Screener & PIT Backtest")
 
+    # Render Sidebar FIRST to guarantee it never disappears on sub-view errors
+    st.sidebar.title("Navigation")
+
     db_manager = get_db_manager()
     latest_date = check_db_availability(db_manager)
 
     if not latest_date:
+        st.sidebar.error("Database: Offline / Missing")
         st.warning(
             "⚠️ Database file missing or contains no trade data.\n\n"
             "Please initialize the database using the CLI command:\n"
@@ -230,8 +271,6 @@ def main() -> None:
         )
         return
 
-    # Sidebar Navigation
-    st.sidebar.title("Navigation")
     view_option = st.sidebar.radio(
         "Select View:",
         [
