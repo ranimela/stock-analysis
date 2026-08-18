@@ -2,802 +2,802 @@ Rank | Ticker | Company Name | Market Cap | Composite Score (Mansfield RS vs SPY
 =====================================================================================
    1 | DFNS   | T3 Defense Inc. - Common Stock           | N/A        | 5043.9353
    2 | CCG    | Cheche Group Inc. - Class A Ordinary Sha | N/A        | 2118.9686
-   3 | BANL   | CBL International Limited - Class B Ordi | N/A        | 1948.8835
-   4 | AXTI   | AXT Inc - Common Stock                   | N/A        | 1287.1895
-   5 | BYND   | Beyond Meat, Inc. - Common stock         | N/A        | 1071.9901
+   3 | BANL   | CBL International Limited                | M          | 1948.8835
+   4 | AXTI   | AXT, Inc.                                | B          | 1287.1895
+   5 | BYND   | Beyond Meat, Inc.                        | M          | 1071.9901
    6 | DBGI   | Digital Brands Group, Inc. - Common Stoc | N/A        | 821.7124
-   7 | BVC    | BitVentures Limited - Ordinary Share     | N/A        | 821.0036
-   8 | CSAI   | Cloudastructure, Inc. - Class A Common S | N/A        | 637.8814
-   9 | CLYM   | Climb Bio, Inc. - Common Stock           | B          | 249.3128
-  10 | AEHR   | Aehr Test Systems - Common Stock         | N/A        | 234.0564
-  11 | APPS   | Digital Turbine, Inc. - Common Stock     | N/A        | 188.4285
+   7 | BVC    | BitVentures Limited                      | B          | 821.0036
+   8 | CSAI   | Cloudastructure Inc.                     | M          | 637.8814
+   9 | CLYM   | Climb Bio Inc                            | B          | 249.3128
+  10 | AEHR   | Aehr Test Systems, Inc.                  | B          | 234.0564
+  11 | APPS   | Digital Turbine, Inc.                    | B          | 188.4285
   12 | AAOI   | Applied Optoelectronics, Inc. - Common S | B          | 178.1229
   13 | ASTC   | Astrotech Corporation - Common Stock     | M          | 172.8819
-  14 | ADIL   | Adial Pharmaceuticals, Inc - Common Stoc | N/A        | 171.8082
-  15 | BLZE   | Backblaze, Inc. - Common Stock           | N/A        | 169.4111
-  16 | ABCL   | AbCellera Biologics Inc. - Common Shares | N/A        | 166.3537
-  17 | BBGI   | Beasley Broadcast Group, Inc. - Class A  | N/A        | 164.5235
-  18 | CHRN   | ChronoScale Holdings Corporation - Commo | N/A        | 156.4767
-  19 | ANTX   | AN2 Therapeutics, Inc. - Common Stock    | M          | 150.1583
-  20 | ALMS   | Alumis Inc. - Common Stock               | N/A        | 145.5495
-  21 | APLM   | Apollomics Inc. - Class A Ordinary Share | M          | 143.0236
-  22 | DFTX   | Definium Therapeutics, Inc.  - Common Sh | N/A        | 141.2541
-  23 | ATEX   | Anterix Inc. - Common Stock              | N/A        | 138.9890
-  24 | CDNA   | CareDx, Inc. - Common Stock              | N/A        | 138.9814
-  25 | CRNX   | Crinetics Pharmaceuticals, Inc. - Common | N/A        | 126.5646
-  26 | ARWR   | Arrowhead Pharmaceuticals, Inc. - Common | N/A        | 122.6767
-  27 | APGE   | Apogee Therapeutics, Inc. - Common Stock | N/A        | 120.3541
-  28 | ABSI   | Absci Corporation - Common Stock         | N/A        | 118.4819
-  29 | ALOT   | AstroNova, Inc. - Common Stock           | N/A        | 117.9751
-  30 | ARTV   | Artiva Biotherapeutics, Inc. - Common St | N/A        | 114.4731
+  14 | ADIL   | Adial Pharmaceuticals, Inc.              | M          | 171.8082
+  15 | BLZE   | Backblaze, Inc.                          | B          | 169.4111
+  16 | ABCL   | AbCellera Biologics Inc.                 | B          | 166.3537
+  17 | BBGI   | Beasley Broadcast Group, Inc.            | M          | 164.5235
+  18 | CHRN   | ChronoScale Holdings Corporation - Commo | B          | 156.4767
+  19 | ANTX   | AN2 Therapeutics, Inc.                   | M          | 150.1583
+  20 | ALMS   | Alumis Inc.                              | B          | 145.5495
+  21 | APLM   | Apollomics, Inc.                         | M          | 143.0236
+  22 | DFTX   | Definium Therapeutics, Inc.              | B          | 141.2541
+  23 | ATEX   | Anterix Inc.                             | B          | 138.9890
+  24 | CDNA   | CareDx, Inc.                             | B          | 138.9814
+  25 | CRNX   | Crinetics Pharmaceuticals, Inc.          | B          | 126.5646
+  26 | ARWR   | Arrowhead Pharmaceuticals, Inc.          | B          | 122.6767
+  27 | APGE   | Apogee Therapeutics, Inc.                | B          | 120.3541
+  28 | ABSI   | Absci Corporation                        | B          | 118.4819
+  29 | ALOT   | AstroNova, Inc.                          | M          | 117.9751
+  30 | ARTV   | Artiva Biotherapeutics, Inc.             | M          | 114.4731
   31 | ATRO   | Astronics Corporation - Common Stock     | N/A        | 110.2273
   32 | BNAI   | Brand Engagement Network Inc. - Common S | N/A        | 108.1598
-  33 | CSTE   | Caesarstone Ltd. - Ordinary Shares       | N/A        | 107.7018
+  33 | CSTE   | Caesarstone Ltd.                         | M          | 107.7018
   34 | CIIT   | Tianci International, Inc. - Common Stoc | N/A        | 106.3996
-  35 | ALNT   | Allient Inc. - Common Stock              | N/A        | 106.0563
-  36 | BDSX   | Biodesix, Inc. - Common Stock            | N/A        | 101.0845
-  37 | BOLD   | Boundless Bio, Inc. - Common Stock       | N/A        | 100.3706
-  38 | ANAB   | AnaptysBio, Inc. - Common Stock          | N/A        | 96.8217
-  39 | ACRS   | Aclaris Therapeutics, Inc. - Common Stoc | N/A        | 96.7702
-  40 | ACMR   | ACM Research, Inc. - Class A Common Stoc | N/A        | 94.9863
-  41 | AYA    | Aya Gold & Silver Inc. - Common Shares   | N/A        | 89.7942
-  42 | ADPT   | Adaptive Biotechnologies Corporation - C | N/A        | 88.7169
-  43 | ACHV   | Achieve Life Sciences, Inc.  - Common Sh | N/A        | 87.4792
-  44 | AGEN   | Agenus Inc. - Common Stock               | N/A        | 86.9473
-  45 | CLMT   | Calumet, Inc - Common Stock              | N/A        | 85.9702
-  46 | AMLX   | Amylyx Pharmaceuticals, Inc. - Common St | N/A        | 85.5342
-  47 | ALTO   | Alto Ingredients, Inc. - Common Stock    | N/A        | 84.9856
-  48 | AXGN   | Axogen, Inc. - Common Stock              | N/A        | 82.8948
-  49 | CAMP   | CAMP4 Therapeutics Corporation - Common  | N/A        | 82.6484
-  50 | BAND   | Bandwidth Inc. - Class A Common Stock    | N/A        | 80.6016
+  35 | ALNT   | Allient Inc.                             | B          | 106.0563
+  36 | BDSX   | Biodesix, Inc.                           | M          | 101.0845
+  37 | BOLD   | Boundless Bio, Inc.                      | M          | 100.3706
+  38 | ANAB   | AnaptysBio, Inc.                         | B          | 96.8217
+  39 | ACRS   | Aclaris Therapeutics, Inc.               | M          | 96.7702
+  40 | ACMR   | ACM Research, Inc.                       | B          | 94.9863
+  41 | AYA    | Aya Gold & Silver Inc.                   | B          | 89.7942
+  42 | ADPT   | Adaptive Biotechnologies Corporation     | B          | 88.7169
+  43 | ACHV   | Achieve Life Sciences, Inc.              | M          | 87.4792
+  44 | AGEN   | Agenus Inc.                              | M          | 86.9473
+  45 | CLMT   | Calumet, Inc.                            | B          | 85.9702
+  46 | AMLX   | Amylyx Pharmaceuticals, Inc.             | B          | 85.5342
+  47 | ALTO   | Alto Ingredients, Inc.                   | M          | 84.9856
+  48 | AXGN   | Axogen, Inc.                             | B          | 82.8948
+  49 | CAMP   | CAMP4 THERAPEUTICS CORPORATION           | M          | 82.6484
+  50 | BAND   | Bandwidth Inc.                           | B          | 80.6016
   51 | ATAI   | AtaiBeckley Inc. - Common Stock          | N/A        | 80.3912
-  52 | CAKE   | The Cheesecake Factory Incorporated - Co | N/A        | 79.9741
+  52 | CAKE   | The Cheesecake Factory Incorporated      | B          | 79.9741
   53 | AZTA   | Azenta, Inc. - Common Stock              | N/A        | 79.6614
-  54 | AMPL   | Amplitude, Inc. - Class A Common Stock   | N/A        | 78.9611
-  55 | ALOY   | REalloys Inc. - Common Stock             | N/A        | 75.7092
-  56 | ANIK   | Anika Therapeutics Inc. - Common Stock   | N/A        | 75.3467
-  57 | CPIX   | Cumberland Pharmaceuticals Inc. - Common | N/A        | 73.0676
+  54 | AMPL   | Amplitude, Inc.                          | B          | 78.9611
+  55 | ALOY   | REalloys Inc.                            | M          | 75.7092
+  56 | ANIK   | Anika Therapeutics, Inc.                 | M          | 75.3467
+  57 | CPIX   | Cumberland Pharmaceuticals Inc.          | M          | 73.0676
   58 | AVAH   | Aveanna Healthcare Holdings Inc. - Commo | B          | 72.6399
-  59 | CJMB   | Callan JMB Inc. - Common Stock           | N/A        | 72.3142
-  60 | CORT   | Corcept Therapeutics Incorporated - Comm | N/A        | 71.6399
+  59 | CJMB   | Callan JMB Inc.                          | M          | 72.3142
+  60 | CORT   | Corcept Therapeutics Incorporated        | B          | 71.6399
   61 | CTRN   | Citi Trends, Inc. - Common Stock         | N/A        | 71.5117
   62 | AMAT   | Applied Materials, Inc. - Common Stock   | N/A        | 71.1351
-  63 | ALM    | Almonty Industries Inc. - Common Shares  | N/A        | 69.8313
+  63 | ALM    | Almonty Industries Inc.                  | B          | 69.8313
   64 | BBNX   | Beta Bionics, Inc. - Common Stock        | M          | 68.4961
   65 | OKTA   | Okta, Inc.                               | B          | 68.3105
-  66 | AQB    | AquaBounty Technologies, Inc. - Common S | N/A        | 67.4912
-  67 | AMD    | Advanced Micro Devices, Inc. - Common St | B          | 67.4086
-  68 | AMRX   | Amneal Pharmaceuticals, Inc. - Class A C | N/A        | 66.9303
-  69 | BJRI   | BJ's Restaurants, Inc. - Common Stock    | B          | 66.3584
-  70 | ACCL   | Acco Group Holdings Limited - Class A Or | N/A        | 65.7143
-  71 | CMPS   | COMPASS Pathways Plc - American Deposito | N/A        | 63.5670
+  66 | AQB    | AquaBounty Technologies, Inc.            | M          | 67.4912
+  67 | AMD    | Advanced Micro Devices, Inc.             | B          | 67.4086
+  68 | AMRX   | Amneal Pharmaceuticals, Inc.             | B          | 66.9303
+  69 | BJRI   | BJ's Restaurants, Inc.                   | B          | 66.3584
+  70 | ACCL   | Acco Group Holdings Limited - Class A Or | M          | 65.7143
+  71 | CMPS   | COMPASS Pathways plc                     | B          | 63.5670
   72 | ASML   | ASML Holding N.V. - New York Registry Sh | N/A        | 62.5782
-  73 | APPN   | Appian Corporation - Class A Common Stoc | N/A        | 62.3944
-  74 | BLFS   | BioLife Solutions, Inc. - Common Stock   | N/A        | 61.5351
-  75 | AVR    | Anteris Technologies Global Corp. - Comm | N/A        | 60.5576
-  76 | BFRI   | Biofrontera Inc. - Common Stock          | N/A        | 60.0505
+  73 | APPN   | Appian Corporation                       | B          | 62.3944
+  74 | BLFS   | BioLife Solutions, Inc.                  | B          | 61.5351
+  75 | AVR    | Anteris Technologies Global Corp.        | M          | 60.5576
+  76 | BFRI   | Biofrontera Inc.                         | M          | 60.0505
   77 | COAG   | Hemab Therapeutics Holdings, Inc. - Comm | N/A        | 59.7707
-  78 | ADVB   | Advanced Biomed Inc. - Common Stock      | N/A        | 59.1167
-  79 | CADL   | Candel Therapeutics, Inc. - Common Stock | N/A        | 57.4555
+  78 | ADVB   | Advanced Biomed Inc.                     | M          | 59.1167
+  79 | CADL   | Candel Therapeutics, Inc.                | M          | 57.4555
   80 | AUGO   | Aura Minerals Inc. - Common Shares       | N/A        | 57.3767
-  81 | CBRL   | Cracker Barrel Old Country Store, Inc. - | N/A        | 57.3619
-  82 | ALXO   | ALX Oncology Holdings Inc. - Common Stoc | N/A        | 57.0080
-  83 | COGT   | Cogent Biosciences, Inc. - Common Stock  | B          | 56.4593
-  84 | ASYS   | Amtech Systems, Inc. - Common Stock      | N/A        | 56.1451
+  81 | CBRL   | Cracker Barrel Old Country Store, Inc.   | B          | 57.3619
+  82 | ALXO   | ALX Oncology Holdings Inc.               | M          | 57.0080
+  83 | COGT   | Cogent Biosciences, Inc.                 | B          | 56.4593
+  84 | ASYS   | Amtech Systems, Inc.                     | M          | 56.1451
   85 | ANGO   | AngioDynamics, Inc. - Common Stock       | N/A        | 55.6965
-  86 | CGEM   | Cullinan Therapeutics, Inc. - Common Sto | N/A        | 53.7478
-  87 | CRSR   | Corsair Gaming, Inc. - Common Stock      | N/A        | 53.6853
+  86 | CGEM   | Cullinan Therapeutics, Inc.              | B          | 53.7478
+  87 | CRSR   | Corsair Gaming, Inc.                     | B          | 53.6853
   88 | AMCX   | AMC Global Media Inc. - Class A Common S | N/A        | 53.1927
   89 | COHU   | Cohu, Inc. - Common Stock                | B          | 51.6446
-  90 | AGPU   | Axe Compute Inc. - Common Stock          | N/A        | 51.4907
-  91 | CRWD   | CrowdStrike Holdings, Inc. - Class A Com | N/A        | 50.9889
-  92 | BCAX   | Bicara Therapeutics Inc. - Common Stock  | N/A        | 50.5794
+  90 | AGPU   | Axe Compute Inc.                         | M          | 51.4907
+  91 | CRWD   | CrowdStrike Holdings, Inc.               | B          | 50.9889
+  92 | BCAX   | Bicara Therapeutics Inc.                 | B          | 50.5794
   93 | DGII   | Digi International Inc. - Common Stock   | N/A        | 50.4569
   94 | ARQQ   | Arqit Quantum Inc. - Ordinary Shares     | M          | 50.2782
   95 | BWEN   | Broadwind, Inc. - Common Stock           | N/A        | 50.0566
   96 | ATRC   | AtriCure, Inc. - Common Stock            | N/A        | 49.3773
-  97 | ASRV   | AmeriServ Financial Inc. - Common Stock  | N/A        | 49.2396
-  98 | BELFB  | Bel Fuse Inc. - Class B Common Stock     | N/A        | 48.8715
-  99 | CRDO   | Credo Technology Group Holding Ltd - Ord | B          | 48.4783
- 100 | CVV    | CVD Equipment Corporation - Common Stock | N/A        | 48.2957
- 101 | CSTL   | Castle Biosciences, Inc. - Common stock  | N/A        | 48.2584
- 102 | CRVS   | Corvus Pharmaceuticals, Inc. - Common St | N/A        | 47.7742
- 103 | CHYM   | Chime Financial, Inc. - Class A Common S | N/A        | 47.4076
- 104 | AGYS   | Agilysys, Inc. - Common Stock            | N/A        | 47.1887
- 105 | BVS    | Bioventus Inc. - Class A Common Stock    | N/A        | 46.8728
- 106 | ALAB   | Astera Labs, Inc. - Common Stock         | N/A        | 46.6909
- 107 | ATNI   | ATN International, Inc. - Common Stock   | N/A        | 46.1314
+  97 | ASRV   | AmeriServ Financial, Inc.                | M          | 49.2396
+  98 | BELFB  | Bel Fuse Inc.                            | B          | 48.8715
+  99 | CRDO   | Credo Technology Group Holding Ltd       | B          | 48.4783
+ 100 | CVV    | CVD Equipment Corporation                | M          | 48.2957
+ 101 | CSTL   | Castle Biosciences, Inc.                 | M          | 48.2584
+ 102 | CRVS   | Corvus Pharmaceuticals, Inc.             | B          | 47.7742
+ 103 | CHYM   | Chime Financial, Inc.                    | B          | 47.4076
+ 104 | AGYS   | Agilysys, Inc.                           | B          | 47.1887
+ 105 | BVS    | Bioventus Inc.                           | B          | 46.8728
+ 106 | ALAB   | Astera Labs, Inc.                        | B          | 46.6909
+ 107 | ATNI   | ATN International, Inc.                  | M          | 46.1314
  108 | ALKS   | Alkermes plc - Ordinary Shares           | N/A        | 46.0223
- 109 | BMHL   | Bluemount Holdings Limited - Class B Ord | N/A        | 45.9317
- 110 | BRKR   | Bruker Corporation - Common Stock        | N/A        | 45.5740
- 111 | AREC   | American Resources Corporation - Class A | N/A        | 45.0197
- 112 | CIFR   | Cipher Digital Inc. - Common Stock       | N/A        | 44.8445
+ 109 | BMHL   | Bluemount Holdings Limited               | M          | 45.9317
+ 110 | BRKR   | Bruker Corporation                       | B          | 45.5740
+ 111 | AREC   | American Resources Corporation           | M          | 45.0197
+ 112 | CIFR   | Cipher Digital Inc.                      | B          | 44.8445
  113 | AIRJ   | AirJoule Technologies Corporation - Clas | M          | 43.7560
- 114 | BOTJ   | Bank of the James Financial Group, Inc.  | N/A        | 43.5383
- 115 | CGON   | CG Oncology, Inc. - Common stock         | N/A        | 43.3399
- 116 | BWFG   | Bankwell Financial Group, Inc. - Common  | N/A        | 43.3032
+ 114 | BOTJ   | Bank of the James Financial Group, Inc.  | M          | 43.5383
+ 115 | CGON   | CG Oncology, Inc.                        | B          | 43.3399
+ 116 | BWFG   | Bankwell Financial Group, Inc.           | M          | 43.3032
  117 | ADAG   | Adagene Inc. - ADS, each representing 1. | N/A        | 42.8877
- 118 | ARCB   | ArcBest Corporation - Common Stock       | N/A        | 42.7423
- 119 | CCXI   | Churchill Capital Corp XI - Class A Ordi | N/A        | 42.4553
+ 118 | ARCB   | ArcBest Corporation                      | B          | 42.7423
+ 119 | CCXI   | Churchill Capital Corp XI                | M          | 42.4553
  120 | ARXS   | Arxis, Inc. - Class A Common Stock       | N/A        | 41.6898
- 121 | ABOS   | Acumen Pharmaceuticals, Inc. - Common St | N/A        | 40.7426
- 122 | BELFA  | Bel Fuse Inc. - Class A Common Stock     | N/A        | 40.7124
- 123 | AEIS   | Advanced Energy Industries, Inc. - Commo | N/A        | 40.0520
- 124 | AVTX   | Avalo Therapeutics, Inc. - Common Stock  | N/A        | 39.4118
- 125 | AMAL   | Amalgamated Financial Corp. - Common Sto | N/A        | 39.2924
- 126 | ATLC   | Atlanticus Holdings Corporation - Common | B          | 39.1855
- 127 | DAVE   | Dave Inc.  - Class A Common Stock        | N/A        | 39.1707
- 128 | CNET   | ZW Data Action Technologies Inc. - Commo | N/A        | 38.8585
+ 121 | ABOS   | Acumen Pharmaceuticals, Inc.             | M          | 40.7426
+ 122 | BELFA  | Bel Fuse Inc.                            | B          | 40.7124
+ 123 | AEIS   | Advanced Energy Industries, Inc.         | B          | 40.0520
+ 124 | AVTX   | Avalo Therapeutics, Inc.                 | B          | 39.4118
+ 125 | AMAL   | Amalgamated Financial Corp.              | B          | 39.2924
+ 126 | ATLC   | Atlanticus Holdings Corporation          | B          | 39.1855
+ 127 | DAVE   | Dave Inc.                                | B          | 39.1707
+ 128 | CNET   | ZW Data Action Technologies Inc.         | M          | 38.8585
  129 | CARE   | Carter Bankshares, Inc. - Common Stock   | M          | 37.8803
- 130 | BSIN   | Big Sky Industrial Inc. - Common Stock   | N/A        | 37.6808
- 131 | ABNB   | Airbnb, Inc. - Class A Common Stock      | B          | 37.6236
- 132 | CBLL   | CeriBell, Inc. - Common Stock            | N/A        | 37.5667
+ 130 | BSIN   | Big Sky Industrial Inc.                  | M          | 37.6808
+ 131 | ABNB   | Airbnb, Inc.                             | B          | 37.6236
+ 132 | CBLL   | CeriBell, Inc.                           | M          | 37.5667
  133 | BLMN   | Bloomin' Brands, Inc. - Common Stock     | N/A        | 36.8447
- 134 | AVT    | Avnet, Inc. - Common Stock               | N/A        | 36.8161
+ 134 | AVT    | Avnet, Inc.                              | B          | 36.8161
  135 | DCTH   | Delcath Systems, Inc. - Common Stock     | N/A        | 36.0086
  136 | AMKR   | Amkor Technology, Inc. - Common Stock    | N/A        | 35.9950
- 137 | CERS   | Cerus Corporation - Common Stock         | N/A        | 35.9286
+ 137 | CERS   | Cerus Corporation                        | M          | 35.9286
  138 | ARHS   | Arhaus, Inc. - Class A Common Stock      | N/A        | 35.9111
- 139 | BWIN   | The Baldwin Insurance Group, Inc. - Clas | N/A        | 35.7270
- 140 | APA    | APA Corporation - Common Stock           | N/A        | 35.5475
- 141 | ACOG   | Alpha Cognition Inc. - Common Stock      | N/A        | 35.4902
- 142 | CERT   | Certara, Inc. - Common Stock             | B          | 34.9153
- 143 | AEVA   | Aeva Technologies, Inc. - Common Stock   | B          | 34.8487
- 144 | AIP    | Arteris, Inc.  - Common Stock            | N/A        | 34.6719
+ 139 | BWIN   | The Baldwin Insurance Group, Inc.        | B          | 35.7270
+ 140 | APA    | APA Corporation                          | B          | 35.5475
+ 141 | ACOG   | Alpha Cognition Inc.                     | M          | 35.4902
+ 142 | CERT   | Certara, Inc.                            | B          | 34.9153
+ 143 | AEVA   | Aeva Technologies, Inc.                  | B          | 34.8487
+ 144 | AIP    | Arteris, Inc.                            | B          | 34.6719
  145 | DDOG   | Datadog, Inc. - Class A Common Stock     | N/A        | 34.4215
- 146 | ALMR   | Alamar Biosciences, Inc. - Class A commo | B          | 34.4150
+ 146 | ALMR   | Alamar Biosciences, Inc.                 | B          | 34.4150
  147 | CLBK   | Columbia Financial, Inc. - Common Stock  | N/A        | 34.3958
- 148 | CLRO   | ClearOne, Inc. - Common Stock            | N/A        | 34.0889
- 149 | ALRS   | Alerus Financial Corporation - Common St | M          | 33.9450
+ 148 | CLRO   | ClearOne, Inc.                           | M          | 34.0889
+ 149 | ALRS   | Alerus Financial Corporation             | M          | 33.9450
  150 | CLWT   | Euro Tech Holdings Company Limited - Ord | N/A        | 33.6734
- 151 | CHEF   | The Chefs' Warehouse, Inc. - Common Stoc | N/A        | 33.3318
+ 151 | CHEF   | The Chefs' Warehouse, Inc.               | B          | 33.3318
  152 | AMGN   | Amgen Inc. - Common Stock                | B          | 33.3062
- 153 | CLOV   | Clover Health Investments, Corp.  - Clas | N/A        | 32.6691
- 154 | ARQT   | Arcutis Biotherapeutics, Inc. - Common s | N/A        | 32.1642
+ 153 | CLOV   | Clover Health Investments, Corp.         | B          | 32.6691
+ 154 | ARQT   | Arcutis Biotherapeutics, Inc.            | B          | 32.1642
  155 | BBCP   | Concrete Pumping Holdings, Inc.  - Commo | N/A        | 32.1588
- 156 | AXON   | Axon Enterprise, Inc. - Common Stock     | N/A        | 32.1256
- 157 | BRZE   | Braze, Inc. - Class A Common Stock       | N/A        | 31.6073
- 158 | ALLO   | Allogene Therapeutics, Inc. - Common Sto | M          | 31.1177
- 159 | CROX   | Crocs, Inc. - Common Stock               | N/A        | 30.8143
- 160 | CAC    | Camden National Corporation - Common Sto | N/A        | 30.7312
- 161 | ATLO   | Ames National Corporation - Common Stock | N/A        | 30.7254
- 162 | CAMT   | Camtek Ltd. - Ordinary Shares            | N/A        | 30.6419
+ 156 | AXON   | Axon Enterprise, Inc.                    | B          | 32.1256
+ 157 | BRZE   | Braze, Inc.                              | B          | 31.6073
+ 158 | ALLO   | Allogene Therapeutics, Inc.              | M          | 31.1177
+ 159 | CROX   | Crocs, Inc.                              | B          | 30.8143
+ 160 | CAC    | Camden National Corporation              | M          | 30.7312
+ 161 | ATLO   | Ames National Corporation - Common Stock | M          | 30.7254
+ 162 | CAMT   | Camtek Ltd.                              | B          | 30.6419
  163 | BPOP   | Popular, Inc. - Common Stock             | N/A        | 30.4685
  164 | ACAD   | ACADIA Pharmaceuticals Inc. - Common Sto | N/A        | 30.3715
- 165 | AVIR   | Atea Pharmaceuticals, Inc. - common stoc | M          | 30.3166
+ 165 | AVIR   | Atea Pharmaceuticals, Inc.               | M          | 30.3166
  166 | CCSI   | Consensus Cloud Solutions, Inc. - Common | N/A        | 30.2115
- 167 | CCC    | CCC Intelligent Solutions Holdings Inc.  | N/A        | 30.0178
- 168 | AOUT   | American Outdoor Brands, Inc. - Common S | N/A        | 29.7106
- 169 | AIRT   | Air T, Inc. - Common Stock               | N/A        | 29.6970
- 170 | ACNB   | ACNB Corporation - Common Stock          | N/A        | 29.4012
- 171 | ADEA   | Adeia Inc.  - Common Stock               | N/A        | 29.0747
- 172 | CRDL   | Cardiol Therapeutics Inc. - Class A Comm | N/A        | 29.0450
- 173 | CLDX   | Celldex Therapeutics, Inc. - Common Stoc | N/A        | 29.0426
- 174 | DGICB  | Donegal Group, Inc. - Class B Common Sto | N/A        | 28.9742
- 175 | BSET   | Bassett Furniture Industries, Incorporat | N/A        | 28.7411
+ 167 | CCC    | CCC Intelligent Solutions Holdings Inc.  | B          | 30.0178
+ 168 | AOUT   | American Outdoor Brands, Inc. - Common S | M          | 29.7106
+ 169 | AIRT   | Air T, Inc.                              | M          | 29.6970
+ 170 | ACNB   | ACNB Corporation                         | M          | 29.4012
+ 171 | ADEA   | Adeia Inc.                               | B          | 29.0747
+ 172 | CRDL   | Cardiol Therapeutics Inc.                | M          | 29.0450
+ 173 | CLDX   | Celldex Therapeutics, Inc.               | B          | 29.0426
+ 174 | DGICB  | Donegal Group Inc.                       | M          | 28.9742
+ 175 | BSET   | Bassett Furniture Industries, Incorporat | M          | 28.7411
  176 | CASS   | Cass Information Systems, Inc - Common S | M          | 28.5668
- 177 | BBIO   | BridgeBio Pharma, Inc. - Common Stock    | N/A        | 27.8524
- 178 | BOF    | BranchOut Food Inc. - Common Stock       | N/A        | 27.5289
- 179 | BWB    | Bridgewater Bancshares, Inc. - Common St | N/A        | 27.1818
- 180 | ALZN   | Alzamend Neuro, Inc. - Common Stock      | N/A        | 26.9654
- 181 | AVNW   | Aviat Networks, Inc. - Common Stock      | N/A        | 26.3707
- 182 | ANNX   | Annexon, Inc. - common stock             | N/A        | 26.0638
- 183 | ADAM   | Adamas Trust, Inc. - Common Stock        | N/A        | 25.6895
+ 177 | BBIO   | BridgeBio Pharma, Inc.                   | B          | 27.8524
+ 178 | BOF    | BranchOut Food Inc.                      | M          | 27.5289
+ 179 | BWB    | Bridgewater Bancshares, Inc.             | M          | 27.1818
+ 180 | ALZN   | Alzamend Neuro, Inc.                     | M          | 26.9654
+ 181 | AVNW   | Aviat Networks, Inc.                     | M          | 26.3707
+ 182 | ANNX   | Annexon, Inc.                            | M          | 26.0638
+ 183 | ADAM   | Adamas Trust, Inc.                       | M          | 25.6895
  184 | AHMA   | Ambitions Enterprise Management Co. L.L. | M          | 25.5652
  185 | CFBK   | CF Bankshares Inc. - Common Stock        | N/A        | 25.4320
- 186 | CABR   | Caring Brands, Inc. - Common Stock       | N/A        | 25.0000
- 187 | ACHC   | Acadia Healthcare Company, Inc. - Common | N/A        | 24.9263
- 188 | CCCC   | C4 Therapeutics, Inc. - Common Stock     | N/A        | 24.8964
- 189 | CHMG   | Chemung Financial Corp  - Common Stock   | M          | 24.5990
+ 186 | CABR   | Caring Brands, Inc.                      | M          | 25.0000
+ 187 | ACHC   | Acadia Healthcare Company, Inc.          | B          | 24.9263
+ 188 | CCCC   | C4 Therapeutics, Inc.                    | M          | 24.8964
+ 189 | CHMG   | Chemung Financial Corporation            | M          | 24.5990
  190 | BMRN   | BioMarin Pharmaceutical Inc. - Common St | N/A        | 24.5056
- 191 | AXSM   | Axsome Therapeutics, Inc. - Common Stock | N/A        | 24.4897
- 192 | CRCT   | Cricut, Inc. - Class A common stock      | N/A        | 24.4385
- 193 | BUSE   | First Busey Corporation - Common Stock   | N/A        | 24.0711
- 194 | BPRN   | Princeton Bancorp, Inc. - Common Stock   | N/A        | 24.0181
+ 191 | AXSM   | Axsome Therapeutics, Inc.                | B          | 24.4897
+ 192 | CRCT   | Cricut, Inc.                             | B          | 24.4385
+ 193 | BUSE   | First Busey Corporation                  | B          | 24.0711
+ 194 | BPRN   | Princeton Bancorp, Inc.                  | M          | 24.0181
  195 | CZFS   | Citizens Financial Services, Inc. - Comm | M          | 23.7068
  196 | BYFC   | Broadway Financial Corporation - Class A | M          | 22.9052
- 197 | DHC    | Diversified Healthcare Trust  - Common S | N/A        | 22.8016
+ 197 | DHC    | Diversified Healthcare Trust             | B          | 22.8016
  198 | CASY   | Caseys General Stores, Inc. - Common Sto | N/A        | 22.7772
- 199 | BUUU   | BUUU Group Limited - Class A Ordinary Sh | N/A        | 22.6273
- 200 | CURR   | Currenc Group Inc. - Ordinary Shares     | N/A        | 22.4140
- 201 | BIIB   | Biogen Inc. - Common Stock               | N/A        | 22.3756
+ 199 | BUUU   | BUUU Group Limited                       | M          | 22.6273
+ 200 | CURR   | CURRENC Group Inc.                       | M          | 22.4140
+ 201 | BIIB   | Biogen Inc.                              | B          | 22.3756
  202 | AERT   | Aeries Technology, Inc. - Class A Ordina | N/A        | 22.3214
  203 | BWMN   | Bowman Consulting Group Ltd. - Common St | N/A        | 22.1892
  204 | BTQ    | BTQ Technologies Corp. - Common Stock    | N/A        | 21.9795
- 205 | BOKF   | BOK Financial Corporation - Common Stock | N/A        | 21.9431
- 206 | BFST   | Business First Bancshares, Inc. - Common | N/A        | 21.8978
- 207 | ANIX   | Anixa Biosciences, Inc. - Common Stock   | N/A        | 21.8837
+ 205 | BOKF   | BOK Financial Corporation                | B          | 21.9431
+ 206 | BFST   | Business First Bancshares, Inc.          | B          | 21.8978
+ 207 | ANIX   | Anixa Biosciences, Inc.                  | M          | 21.8837
  208 | ACRV   | Acrivon Therapeutics, Inc. - Common Stoc | N/A        | 21.6861
  209 | CART   | Maplebear Inc. - Common Stock            | N/A        | 21.3995
- 210 | AVPT   | AvePoint, Inc. - Class A Common Stock    | N/A        | 21.2572
+ 210 | AVPT   | AvePoint, Inc.                           | B          | 21.2572
  211 | ADUR   | Aduro Clean Technologies Inc. - Common S | N/A        | 21.2386
  212 | ANDE   | The Andersons, Inc. - Common Stock       | B          | 21.2152
- 213 | ACIW   | ACI Worldwide, Inc. - Common Stock       | N/A        | 21.1453
- 214 | CATY   | Cathay General Bancorp - Common Stock    | N/A        | 21.0480
- 215 | CYCN   | Cyclerion Therapeutics, Inc. - Common St | N/A        | 21.0382
+ 213 | ACIW   | ACI Worldwide, Inc.                      | B          | 21.1453
+ 214 | CATY   | Cathay General Bancorp                   | B          | 21.0480
+ 215 | CYCN   | Cyclerion Therapeutics, Inc.             | M          | 21.0382
  216 | ALGT   | Allegiant Travel Company - Common Stock  | N/A        | 21.0054
- 217 | BKNG   | Booking Holdings Inc. - Common Stock     | B          | 20.9936
- 218 | BCAL   | California BanCorp - Common Stock        | N/A        | 20.4697
- 219 | ACT    | Enact Holdings, Inc. - Common Stock      | N/A        | 20.2188
- 220 | BSVN   | Bank7 Corp. - Common stock               | N/A        | 20.2043
- 221 | CLMB   | Climb Global Solutions, Inc. - Common St | N/A        | 20.1377
+ 217 | BKNG   | Booking Holdings Inc.                    | B          | 20.9936
+ 218 | BCAL   | California BanCorp                       | M          | 20.4697
+ 219 | ACT    | Enact Holdings, Inc.                     | B          | 20.2188
+ 220 | BSVN   | Bank7 Corp.                              | M          | 20.2043
+ 221 | CLMB   | Climb Global Solutions, Inc.             | M          | 20.1377
  222 | CTNM   | Contineum Therapeutics, Inc. - Common st | N/A        | 20.0389
  223 | DBX    | Dropbox, Inc. - Class A Common Stock     | N/A        | 20.0102
- 224 | BEEP   | Mobile Infrastructure Corporation - Comm | N/A        | 19.9814
- 225 | AVBH   | Avidbank Holdings, Inc. - Common Stock   | N/A        | 19.8086
- 226 | AVBP   | ArriVent BioPharma, Inc. - Common Stock  | B          | 19.7495
- 227 | ABUS   | Arbutus Biopharma Corporation - Common S | M          | 19.6882
- 228 | CARL   | Carlsmed, Inc. - Common Stock            | N/A        | 19.6468
- 229 | CYRX   | CryoPort, Inc. - Common Stock            | M          | 19.6142
- 230 | ALRM   | Alarm.com Holdings, Inc. - Common Stock  | N/A        | 19.5998
- 231 | BRUN   | Boost Run Inc. - Class A Common Stock    | N/A        | 19.4936
- 232 | BLKB   | Blackbaud, Inc. - Common Stock           | B          | 19.2677
+ 224 | BEEP   | Mobile Infrastructure Corporation - Comm | M          | 19.9814
+ 225 | AVBH   | Avidbank Holdings, Inc.                  | M          | 19.8086
+ 226 | AVBP   | ArriVent BioPharma, Inc.                 | B          | 19.7495
+ 227 | ABUS   | Arbutus Biopharma Corporation            | M          | 19.6882
+ 228 | CARL   | Carlsmed, Inc.                           | M          | 19.6468
+ 229 | CYRX   | Cryoport, Inc.                           | M          | 19.6142
+ 230 | ALRM   | Alarm.com Holdings, Inc.                 | B          | 19.5998
+ 231 | BRUN   | Boost Run, Inc.                          | B          | 19.4936
+ 232 | BLKB   | Blackbaud, Inc.                          | B          | 19.2677
  233 | AMPG   | Amplitech Group, Inc. - Common Stock     | N/A        | 19.0642
- 234 | COKE   | Coca-Cola Consolidated, Inc. - Common St | B          | 19.0045
- 235 | AUDC   | AudioCodes Ltd. - Ordinary Shares        | M          | 18.8126
+ 234 | COKE   | Coca-Cola Consolidated, Inc.             | B          | 19.0045
+ 235 | AUDC   | AudioCodes Ltd.                          | M          | 18.8126
  236 | AKTS   | Aktis Oncology, Inc. - Common stock      | B          | 18.7385
- 237 | ADUS   | Addus HomeCare Corporation - Common Stoc | N/A        | 18.6781
+ 237 | ADUS   | Addus HomeCare Corporation               | B          | 18.6781
  238 | DIBS   | 1stdibs.com, Inc. - Common Stock         | N/A        | 18.5552
  239 | BHRB   | Burke & Herbert Financial Services Corp. | B          | 18.3282
- 240 | CMCO   | Columbus McKinnon Corporation - Common S | N/A        | 18.3275
- 241 | CAI    | Caris Life Sciences, Inc. - Common Stock | N/A        | 18.2146
- 242 | AROW   | Arrow Financial Corporation - Common Sto | M          | 18.1626
+ 240 | CMCO   | Columbus McKinnon Corporation            | M          | 18.3275
+ 241 | CAI    | Caris Life Sciences, Inc.                | B          | 18.2146
+ 242 | AROW   | Arrow Financial Corporation              | M          | 18.1626
  243 | BSRR   | Sierra Bancorp - Common Stock            | N/A        | 18.1505
- 244 | CMTV   | Community Bancorp.  - Common stock       | N/A        | 18.0185
+ 244 | CMTV   | Community Bancorp                        | M          | 18.0185
  245 | AVLN   | Avalyn Pharma Inc. - common stock        | N/A        | 17.4428
- 246 | CTBI   | Community Trust Bancorp, Inc. - Common S | N/A        | 17.2269
- 247 | CBK    | Commercial Bancgroup, Inc. - Common Stoc | N/A        | 17.2139
- 248 | CLAR   | Clarus Corporation - Common Stock        | N/A        | 17.1103
+ 246 | CTBI   | Community Trust Bancorp, Inc.            | B          | 17.2269
+ 247 | CBK    | Commercial Bancgroup, Inc.               | M          | 17.2139
+ 248 | CLAR   | Clarus Corporation                       | M          | 17.1103
  249 | CZNC   | Citizens & Northern Corp - Common Stock  | N/A        | 17.0387
- 250 | CARG   | CarGurus, Inc. - Class A Common Stock    | N/A        | 16.7821
+ 250 | CARG   | CarGurus, Inc.                           | B          | 16.7821
  251 | CNXN   | PC Connection, Inc. - Common Stock       | N/A        | 16.7583
- 252 | AGMB   | AgomAb Therapeutics NV - ADRs representi | N/A        | 16.7391
- 253 | ACLS   | Axcelis Technologies, Inc. - Common Stoc | N/A        | 16.6218
+ 252 | AGMB   | AgomAb Therapeutics NV                   | M          | 16.7391
+ 253 | ACLS   | Axcelis Technologies, Inc. - Common Stoc | B          | 16.6218
  254 | DASH   | DoorDash, Inc. - Common Stock            | N/A        | 16.5271
- 255 | CVLT   | Commvault Systems, Inc. - Common Stock   | N/A        | 16.3808
+ 255 | CVLT   | Commvault Systems, Inc.                  | B          | 16.3808
  256 | BANR   | Banner Corporation - Common Stock        | N/A        | 16.1051
  257 | CVCO   | Cavco Industries, Inc. - Common Stock    | N/A        | 16.0714
- 258 | BKR    | Baker Hughes Company - Common Stock      | B          | 15.8689
- 259 | AAL    | American Airlines Group, Inc. - Common S | N/A        | 15.8228
- 260 | BFC    | Bank First Corporation - Common Stock    | N/A        | 15.8165
- 261 | APOG   | Apogee Enterprises, Inc. - Common Stock  | N/A        | 15.8053
- 262 | AIRO   | AIRO Group Holdings, Inc. - Common Stock | N/A        | 15.7126
+ 258 | BKR    | Baker Hughes Company                     | B          | 15.8689
+ 259 | AAL    | American Airlines Group Inc.             | B          | 15.8228
+ 260 | BFC    | Bank First Corporation                   | B          | 15.8165
+ 261 | APOG   | Apogee Enterprises, Inc. - Common Stock  | M          | 15.8053
+ 262 | AIRO   | AIRO Group Holdings, Inc.                | M          | 15.7126
  263 | APLD   | Applied Digital Corporation - Common Sto | N/A        | 15.5716
  264 | BVFL   | BV Financial, Inc. - Common Stock        | N/A        | 15.4981
- 265 | ADI    | Analog Devices, Inc. - Common Stock      | N/A        | 15.0055
- 266 | CTKB   | Cytek Biosciences, Inc. - Common Stock   | N/A        | 14.9765
- 267 | CPBI   | Central Plains Bancshares, Inc. - Common | N/A        | 14.9733
- 268 | CDW    | CDW Corporation - Common Stock           | N/A        | 14.8556
- 269 | CBC    | Central Bancompany, Inc. - Class A Commo | N/A        | 14.7972
- 270 | API    | Agora, Inc. - ADS                        | N/A        | 14.7368
- 271 | ALGM   | Allegro MicroSystems, Inc. - Common Stoc | B          | 14.5526
- 272 | CBUS   | Cibus, Inc. - Class A Common Stock       | M          | 14.2612
- 273 | CUE    | Cue Biopharma, Inc. - Common Stock       | N/A        | 14.2486
- 274 | BEAM   | Beam Therapeutics Inc. - Common Stock    | N/A        | 14.0344
- 275 | BMRC   | Bank of Marin Bancorp - Common Stock     | N/A        | 13.8964
+ 265 | ADI    | Analog Devices, Inc.                     | B          | 15.0055
+ 266 | CTKB   | Cytek Biosciences, Inc.                  | M          | 14.9765
+ 267 | CPBI   | Central Plains Bancshares, Inc.          | M          | 14.9733
+ 268 | CDW    | CDW Corporation                          | B          | 14.8556
+ 269 | CBC    | Central Bancompany, Inc.                 | B          | 14.7972
+ 270 | API    | Agora, Inc.                              | M          | 14.7368
+ 271 | ALGM   | Allegro MicroSystems, Inc.               | B          | 14.5526
+ 272 | CBUS   | Cibus, Inc.                              | M          | 14.2612
+ 273 | CUE    | Cue Biopharma, Inc.                      | M          | 14.2486
+ 274 | BEAM   | Beam Therapeutics Inc.                   | B          | 14.0344
+ 275 | BMRC   | Bank of Marin Bancorp                    | M          | 13.8964
  276 | CYTK   | Cytokinetics, Incorporated - Common Stoc | N/A        | 13.6820
- 277 | ADP    | Automatic Data Processing, Inc. - Common | N/A        | 13.2920
- 278 | ACTG   | Acacia Research Corporation - Common Sto | M          | 13.1901
+ 277 | ADP    | Automatic Data Processing, Inc.          | B          | 13.2920
+ 278 | ACTG   | Acacia Research Corporation              | M          | 13.1901
  279 | APPF   | AppFolio, Inc. - Class A Common Stock    | N/A        | 13.1818
- 280 | CLPT   | ClearPoint Neuro Inc. - Common Stock     | M          | 13.1069
- 281 | CBNK   | Capital Bancorp, Inc. - Common Stock     | N/A        | 13.0965
- 282 | ASTH   | Astrana Health Inc. - Common Stock       | B          | 13.0951
+ 280 | CLPT   | ClearPoint Neuro, Inc.                   | M          | 13.1069
+ 281 | CBNK   | Capital Bancorp, Inc.                    | M          | 13.0965
+ 282 | ASTH   | Astrana Health, Inc.                     | B          | 13.0951
  283 | CIVB   | Civista Bancshares, Inc.  - Common Stock | N/A        | 12.9100
- 284 | CCNE   | CNB Financial Corporation - Common Stock | N/A        | 12.5991
+ 284 | CCNE   | CNB Financial Corporation                | B          | 12.5991
  285 | AFRI   | Forafric Global PLC - Ordinary Shares    | N/A        | 12.4822
  286 | BCRX   | BioCryst Pharmaceuticals, Inc. - Common  | B          | 12.4296
- 287 | ACNT   | Ascent Industries Co. - Common Stock     | M          | 12.3904
- 288 | CFFN   | Capitol Federal Financial, Inc. - Common | B          | 12.3447
- 289 | ALGN   | Align Technology, Inc. - Common Stock    | B          | 12.1299
+ 287 | ACNT   | Ascent Industries Co.                    | M          | 12.3904
+ 288 | CFFN   | Capitol Federal Financial, Inc.          | B          | 12.3447
+ 289 | ALGN   | Align Technology, Inc.                   | B          | 12.1299
  290 | ALKT   | Alkami Technology, Inc. - Common Stock   | N/A        | 11.9398
  291 | BCPC   | Balchem Corporation - Common Stock       | B          | 11.7731
- 292 | CBFV   | CB Financial Services, Inc. - Common Sto | N/A        | 11.2715
- 293 | DCBO   | Docebo Inc. - Common Shares              | N/A        | 11.2266
- 294 | CHCO   | City Holding Company - Common Stock      | N/A        | 10.8691
+ 292 | CBFV   | CB Financial Services, Inc.              | M          | 11.2715
+ 293 | DCBO   | Docebo Inc.                              | M          | 11.2266
+ 294 | CHCO   | City Holding Company                     | B          | 10.8691
  295 | CFFI   | C&F Financial Corporation - Common Stock | N/A        | 10.7605
  296 | COO    | The Cooper Companies, Inc.  - Common Sto | N/A        | 10.6594
- 297 | AAPL   | Apple Inc. - Common Stock                | N/A        | 10.6332
- 298 | ARTNA  | Artesian Resources Corporation - Class A | N/A        | 9.5308
+ 297 | AAPL   | Apple Inc.                               | B          | 10.6332
+ 298 | ARTNA  | Artesian Resources Corporation           | M          | 9.5308
  299 | AGIO   | Agios Pharmaceuticals, Inc. - Common Sto | N/A        | 9.4968
- 300 | ASMB   | Assembly Biosciences, Inc. - Common Stoc | N/A        | 9.3926
- 301 | ASND   | Ascendis Pharma A/S - Ordinary Share     | N/A        | 9.3870
- 302 | CACC   | Credit Acceptance Corporation - Common S | B          | 9.2239
- 303 | CCEP   | Coca-Cola Europacific Partners plc - Ord | N/A        | 9.1144
- 304 | COCO   | The Vita Coco Company, Inc. - Common Sto | N/A        | 9.0373
- 305 | CTRM   | Castor Maritime Inc. - Common Shares     | N/A        | 8.9874
- 306 | BOOM   | DMC Global Inc. - Common Stock           | N/A        | 8.9464
- 307 | BRCB   | Black Rock Coffee Bar, Inc. - Class A Co | N/A        | 8.8873
- 308 | CNOB   | ConnectOne Bancorp, Inc. - Common Stock  | N/A        | 8.8036
- 309 | CVBF   | CVB Financial Corporation - Common Stock | N/A        | 8.5677
- 310 | BNTC   | Benitec Biopharma Inc. - Common Stock    | N/A        | 8.5497
+ 300 | ASMB   | Assembly Biosciences, Inc.               | M          | 9.3926
+ 301 | ASND   | Ascendis Pharma A/S - Ordinary Share     | B          | 9.3870
+ 302 | CACC   | Credit Acceptance Corporation            | B          | 9.2239
+ 303 | CCEP   | Coca-Cola Europacific Partners PLC       | B          | 9.1144
+ 304 | COCO   | The Vita Coco Company, Inc.              | B          | 9.0373
+ 305 | CTRM   | Castor Maritime Inc.                     | M          | 8.9874
+ 306 | BOOM   | DMC Global Inc.                          | M          | 8.9464
+ 307 | BRCB   | Black Rock Coffee Bar, Inc. - Class A Co | M          | 8.8873
+ 308 | CNOB   | ConnectOne Bancorp, Inc.                 | B          | 8.8036
+ 309 | CVBF   | CVB Financial Corp.                      | B          | 8.5677
+ 310 | BNTC   | Benitec Biopharma Inc.                   | M          | 8.5497
  311 | AEBI   | Aebi Schmidt Holding AG - Common Stock   | N/A        | 8.3644
- 312 | CSX    | CSX Corporation - Common Stock           | N/A        | 8.3343
- 313 | AIHS   | Senmiao Technology Limited - Common Stoc | N/A        | 8.3246
+ 312 | CSX    | CSX Corporation                          | B          | 8.3343
+ 313 | AIHS   | Senmiao Technology Limited               | M          | 8.3246
  314 | AGNC   | AGNC Investment Corp. - Common Stock     | N/A        | 8.3127
  315 | AFRM   | Affirm Holdings, Inc. - Class A Common S | B          | 8.2787
- 316 | CASH   | Pathward Financial, Inc. - Common Stock  | N/A        | 8.2349
- 317 | CCBG   | Capital City Bank Group - Common Stock   | N/A        | 8.1429
- 318 | BATRK  | Atlanta Braves Holdings, Inc. - Series C | B          | 8.0092
+ 316 | CASH   | Pathward Financial, Inc.                 | B          | 8.2349
+ 317 | CCBG   | Capital City Bank Group - Common Stock   | M          | 8.1429
+ 318 | BATRK  | Atlanta Braves Holdings, Inc.            | B          | 8.0092
  319 | CCLD   | CareCloud, Inc. - Common Stock           | M          | 7.9271
- 320 | AYTU   | Aytu BioPharma, Inc.  - Common Stock     | N/A        | 7.7625
+ 320 | AYTU   | Aytu BioPharma, Inc.                     | M          | 7.7625
  321 | CLST   | Catalyst Bancorp, Inc. - common stock    | N/A        | 7.7339
- 322 | BATRA  | Atlanta Braves Holdings, Inc. - Series A | B          | 7.6937
- 323 | DDI    | DoubleDown Interactive Co., Ltd. - Ameri | N/A        | 7.6835
- 324 | BSBK   | Bogota Financial Corp. - Common Stock    | N/A        | 7.5243
+ 322 | BATRA  | Atlanta Braves Holdings, Inc.            | B          | 7.6937
+ 323 | DDI    | DoubleDown Interactive Co., Ltd.         | M          | 7.6835
+ 324 | BSBK   | Bogota Financial Corp.                   | M          | 7.5243
  325 | ALTI   | AlTi Global, Inc. - Class A Common Stock | N/A        | 7.3574
  326 | CENT   | Central Garden & Pet Company - Common St | N/A        | 7.3427
- 327 | BIOA   | BioAge Labs, Inc. - Common Stock         | N/A        | 7.3203
- 328 | ARVN   | Arvinas, Inc. - Common Stock             | N/A        | 7.2932
- 329 | ALLT   | Allot Ltd. - Ordinary Shares             | N/A        | 7.2669
- 330 | CMPR   | Cimpress plc - Ordinary Shares           | N/A        | 7.1799
- 331 | CRON   | Cronos Group Inc. - Common Share         | N/A        | 7.1746
- 332 | CTMX   | CytomX Therapeutics, Inc. - Common Stock | N/A        | 7.1377
+ 327 | BIOA   | BioAge Labs, Inc. - Common Stock         | M          | 7.3203
+ 328 | ARVN   | Arvinas, Inc.                            | M          | 7.2932
+ 329 | ALLT   | Allot Ltd.                               | M          | 7.2669
+ 330 | CMPR   | Cimpress plc - Ordinary Shares           | B          | 7.1799
+ 331 | CRON   | Cronos Group Inc.                        | B          | 7.1746
+ 332 | CTMX   | CytomX Therapeutics, Inc.                | M          | 7.1377
  333 | CWBC   | Community West Bancshares - Common Stock | N/A        | 7.0055
- 334 | DERM   | Journey Medical Corporation - Common Sto | N/A        | 6.9565
+ 334 | DERM   | Journey Medical Corporation              | M          | 6.9565
  335 | CTSH   | Cognizant Technology Solutions Corporati | N/A        | 6.9279
- 336 | AUBN   | Auburn National Bancorporation, Inc. - C | N/A        | 6.9150
- 337 | COLB   | Columbia Banking System, Inc. - Common S | N/A        | 6.9071
- 338 | AFCG   | Advanced Flower Capital Inc. - Common St | N/A        | 6.8774
- 339 | ASBP   | Aspire Biopharma Holdings, Inc.  - Commo | N/A        | 6.8487
- 340 | CABA   | Cabaletta Bio, Inc. - Common Stock       | N/A        | 6.7405
- 341 | AKAM   | Akamai Technologies, Inc. - Common Stock | B          | 6.7228
+ 336 | AUBN   | Auburn National Bancorporation, Inc.     | M          | 6.9150
+ 337 | COLB   | Columbia Banking System, Inc.            | B          | 6.9071
+ 338 | AFCG   | Advanced Flower Capital Inc.             | M          | 6.8774
+ 339 | ASBP   | Aspire Biopharma Holdings, Inc.          | M          | 6.8487
+ 340 | CABA   | Cabaletta Bio, Inc.                      | M          | 6.7405
+ 341 | AKAM   | Akamai Technologies, Inc.                | B          | 6.7228
  342 | ALGS   | Aligos Therapeutics, Inc. - Common stock | N/A        | 6.6095
- 343 | AEHL   | Antelope Enterprise Holdings Limited - C | N/A        | 6.2427
- 344 | CDT    | CDT Equity Inc. - Common Stock           | N/A        | 6.1049
- 345 | ARTW   | Art's-Way Manufacturing Co., Inc. - Comm | N/A        | 6.0110
+ 343 | AEHL   | Antelope Enterprise Holdings Limited     | M          | 6.2427
+ 344 | CDT    | CDT Equity Inc.                          | M          | 6.1049
+ 345 | ARTW   | Art's-Way Manufacturing Co., Inc.        | M          | 6.0110
  346 | AUPH   | Aurinia Pharmaceuticals Inc - Common Sha | N/A        | 5.7626
- 347 | CECO   | CECO Environmental Corp. - Common Stock  | N/A        | 5.4447
+ 347 | CECO   | CECO Environmental Corp.                 | B          | 5.4447
  348 | CBSH   | Commerce Bancshares, Inc. - Common Stock | N/A        | 5.0793
  349 | CZR    | Caesars Entertainment, Inc. - Common Sto | N/A        | 5.0021
- 350 | AMPH   | Amphastar Pharmaceuticals, Inc. - Common | N/A        | 4.9361
- 351 | ACGL   | Arch Capital Group Ltd. - Common Stock   | N/A        | 4.9356
+ 350 | AMPH   | Amphastar Pharmaceuticals, Inc.          | M          | 4.9361
+ 351 | ACGL   | Arch Capital Group Ltd. - Common Stock   | B          | 4.9356
  352 | BLLN   | BillionToOne, Inc. - Class A common stoc | N/A        | 4.7521
- 353 | CSCO   | Cisco Systems, Inc. - Common Stock       | N/A        | 4.7447
- 354 | APEI   | American Public Education, Inc. - Common | N/A        | 4.6830
- 355 | ATEC   | Alphatec Holdings, Inc. - Common Stock   | B          | 4.5658
- 356 | AEP    | American Electric Power Company, Inc. -  | N/A        | 4.4056
- 357 | AVO    | Mission Produce, Inc. - Common Stock     | N/A        | 4.3966
- 358 | COFS   | ChoiceOne Financial Services, Inc. - Com | N/A        | 4.2323
+ 353 | CSCO   | Cisco Systems, Inc.                      | B          | 4.7447
+ 354 | APEI   | American Public Education, Inc.          | M          | 4.6830
+ 355 | ATEC   | Alphatec Holdings, Inc.                  | B          | 4.5658
+ 356 | AEP    | American Electric Power Company, Inc.    | B          | 4.4056
+ 357 | AVO    | Mission Produce, Inc.                    | B          | 4.3966
+ 358 | COFS   | ChoiceOne Financial Services, Inc.       | M          | 4.2323
  359 | ACFN   | Acorn Energy, Inc. - Common Stock        | M          | 4.1808
  360 | CGNX   | Cognex Corporation - Common Stock        | N/A        | 4.0101
- 361 | BCML   | BayCom Corp - Common Stock               | N/A        | 3.8455
+ 361 | BCML   | BayCom Corp                              | M          | 3.8455
  362 | CAE    | CAE Inc - Common Shares                  | N/A        | 3.5994
  363 | ASTS   | AST SpaceMobile, Inc. - Class A Common S | N/A        | 3.5213
  364 | CRAI   | CRA International,Inc. - Common Stock    | N/A        | 3.4490
  365 | AQST   | Aquestive Therapeutics, Inc. - Common St | N/A        | 3.3283
  366 | CENTA  | Central Garden & Pet Company - Class A C | N/A        | 3.3057
- 367 | ALCO   | Alico, Inc. - Common Stock               | N/A        | 3.2286
- 368 | AEYE   | AudioEye, Inc. - Common Stock            | N/A        | 3.1998
+ 367 | ALCO   | Alico, Inc.                              | M          | 3.2286
+ 368 | AEYE   | AudioEye, Inc.                           | M          | 3.1998
  369 | CTAS   | Cintas Corporation - Common Stock        | N/A        | 3.1950
  370 | AMZN   | Amazon.com, Inc. - Common Stock          | N/A        | 3.1893
- 371 | AEMD   | Aethlon Medical, Inc. - Common Stock     | M          | 3.1632
- 372 | ADSE   | ADS-TEC ENERGY PLC - Ordinary Shares     | N/A        | 3.1375
+ 371 | AEMD   | Aethlon Medical, Inc.                    | M          | 3.1632
+ 372 | ADSE   | ADS-TEC Energy PLC                       | M          | 3.1375
  373 | CURI   | CuriosityStream Inc.  - Class A Common S | N/A        | 3.0245
  374 | BANF   | BancFirst Corporation - Common Stock     | B          | 2.9185
  375 | AVGO   | Broadcom Inc. - Common Stock             | N/A        | 2.4337
- 376 | ALLR   | Allarity Therapeutics, Inc. - Common sto | N/A        | 2.3192
- 377 | AMBA   | Ambarella, Inc. - Ordinary Shares        | N/A        | 2.0972
- 378 | BBOT   | BridgeBio Oncology Therapeutics, Inc. -  | M          | 2.0613
- 379 | AVAV   | AeroVironment, Inc. - Common Stock       | B          | 2.0066
+ 376 | ALLR   | Allarity Therapeutics, Inc.              | M          | 2.3192
+ 377 | AMBA   | Ambarella, Inc.                          | B          | 2.0972
+ 378 | BBOT   | BridgeBio Oncology Therapeutics, Inc.    | M          | 2.0613
+ 379 | AVAV   | AeroVironment, Inc.                      | B          | 2.0066
  380 | BGC    | BGC Group, Inc. - Class A Common Stock   | N/A        | 2.0046
  381 | ANGH   | Anghami Inc. - Ordinary Shares           | M          | 1.9767
- 382 | BOXL   | Boxlight Corporation - Class A Common St | N/A        | 1.9509
- 383 | ALDF   | Aldel Financial II Inc. - Class A Ordina | M          | 1.9159
+ 382 | BOXL   | Boxlight Corporation                     | M          | 1.9509
+ 383 | ALDF   | Aldel Financial II Inc.                  | M          | 1.9159
  384 | CV     | CapsoVision, Inc. - Common Stock         | N/A        | 1.9076
  385 | CAAS   | China Automotive Systems, Inc. - Ordinar | M          | 1.0192
- 386 | BPAC   | Blueport Acquisition Ltd - Class A Ordin | N/A        | 0.9771
- 387 | CING   | Cingulate Inc. - Common Stock            | N/A        | 0.8043
+ 386 | BPAC   | Blueport Acquisition Ltd                 | M          | 0.9771
+ 387 | CING   | Cingulate Inc.                           | M          | 0.8043
  388 | APAC   | StoneBridge Acquisition II Corporation - | M          | 0.7624
- 389 | APXT   | Apex Treasury Corporation - Class A Ordi | N/A        | 0.6993
- 390 | CZWI   | Citizens Community Bancorp, Inc. - Commo | N/A        | 0.5508
- 391 | CCTG   | CCSC Technology International Holdings L | N/A        | 0.4473
- 392 | ABEO   | Abeona Therapeutics Inc. - Common Stock  | N/A        | 0.3850
+ 389 | APXT   | Apex Treasury Corporation                | M          | 0.6993
+ 390 | CZWI   | Citizens Community Bancorp, Inc. - Commo | M          | 0.5508
+ 391 | CCTG   | CCSC Technology International Holdings L | M          | 0.4473
+ 392 | ABEO   | Abeona Therapeutics Inc.                 | M          | 0.3850
  393 | CENX   | Century Aluminum Company - Common Stock  | N/A        | 0.1760
- 394 | DGICA  | Donegal Group, Inc. - Class A Common Sto | N/A        | 0.1284
- 395 | APUR   | Aperture AC - Class A Ordinary Shares    | N/A        | 0.0000
- 396 | CEPL   | Capstone Energy Plus, Inc. - Common Stoc | N/A        | 0.0000
- 397 | BIOT   | Instinct Bio Technical Company Holdings  | N/A        | 0.0000
- 398 | CNXU   | Conexeu Sciences Inc. - Common Stock     | N/A        | 0.0000
- 399 | APMD   | Apnimed, Inc. - Common Stock             | N/A        | 0.0000
- 400 | CIGL   | Concorde International Group Ltd - Class | N/A        | 0.0000
- 401 | CXII   | Churchill Capital Corp XII - Class A Ord | N/A        | 0.0000
- 402 | SPY    | SPY                                      | N/A        | 0.0000
- 403 | BLSM   | BlossomHill Therapeutics, Inc. - Common  | N/A        | 0.0000
- 404 | AESP   | Aeon Acquisition I Corp. - Class A Ordin | N/A        | 0.0000
- 405 | AMPGZ  | Amplitech Group, Inc. - Series B Right   | N/A        | 0.0000
- 406 | ATTO   | Attovia Therapeutics, Inc. - Common Stoc | M          | 0.0000
- 407 | ARCL   | ARC Group Acquisition I Corp - Class A O | N/A        | 0.0000
- 408 | AIBZ   | Bitzero Holdings Inc. - Common Shares    | M          | 0.0000
- 409 | BSP    | Bending Spoons S.p.A. - Ordinary Shares  | B          | 0.0000
- 410 | AMSS   | AMASS Brands Inc. - Common Stock         | M          | 0.0000
- 411 | CAES   | Cantor Equity Partners VII, Inc. - Class | N/A        | 0.0000
- 412 | AFJKR  | Aimei Health Technology Co., Ltd - Right | N/A        | 0.0000
- 413 | CGCF   | Cartesian Growth Corporation IV - Class  | N/A        | 0.0000
- 414 | CCCT   | Columbus Circle Capital Corp III - Class | N/A        | 0.0000
- 415 | BRVE   | Braveheart Bio, Inc. - Common Stock      | N/A        | 0.0000
- 416 | ARCLR  | ARC Group Acquisition I Corp - Right     | N/A        | 0.0000
- 417 | BGDE   | Big Digital Energy, Inc. - Common Stock  | M          | -0.3472
- 418 | CRTO   | Criteo S.A. - Ordinary Shares            | N/A        | -0.6400
+ 394 | DGICA  | Donegal Group Inc.                       | M          | 0.1284
+ 395 | CIGL   | Concorde International Group Ltd - Class | M          | 0.0000
+ 396 | BLSM   | BlossomHill Therapeutics, Inc.           | M          | 0.0000
+ 397 | BRVE   | Braveheart Bio, Inc.                     | B          | 0.0000
+ 398 | CGCF   | Cartesian Growth Corporation IV - Class  | N/A        | 0.0000
+ 399 | AMPGZ  | AmpliTech Group, Inc.                    | N/A        | 0.0000
+ 400 | ARCLR  | ARC Group Acquisition I Corp - Right     | N/A        | 0.0000
+ 401 | AIBZ   | Bitzero Holdings Inc.                    | M          | 0.0000
+ 402 | ATTO   | Attovia Therapeutics, Inc.               | M          | 0.0000
+ 403 | AMSS   | AMASS Brands Inc. - Common Stock         | M          | 0.0000
+ 404 | CNXU   | Conexeu Sciences Inc. - Common Stock     | N/A        | 0.0000
+ 405 | AFJKR  | Aimei Health Technology Co., Ltd         | N/A        | 0.0000
+ 406 | BSP    | Bending Spoons S.p.A.                    | B          | 0.0000
+ 407 | CCCT   | Columbus Circle Capital Corp III         | M          | 0.0000
+ 408 | ARCL   | ARC Group Acquisition I Corp - Class A O | N/A        | 0.0000
+ 409 | CEPL   | Capstone Energy+, Inc.                   | M          | 0.0000
+ 410 | AESP   | Aeon Acquisition I Corp.                 | M          | 0.0000
+ 411 | CXII   | Churchill Capital Corp XII               | M          | 0.0000
+ 412 | SPY    | SPY                                      | N/A        | 0.0000
+ 413 | APMD   | Apnimed, Inc. - Common Stock             | N/A        | 0.0000
+ 414 | APUR   | Aperture AC - Class A Ordinary Shares    | N/A        | 0.0000
+ 415 | BIOT   | Instinct Bio Technical Company Holdings  | M          | 0.0000
+ 416 | CAES   | Cantor Equity Partners VII, Inc.         | M          | 0.0000
+ 417 | BGDE   | Big Digital Energy, Inc.                 | M          | -0.3472
+ 418 | CRTO   | Criteo S.A.                              | M          | -0.6400
  419 | BOSC   | B.O.S. Better Online Solutions - Ordinar | N/A        | -0.7123
- 420 | AURA   | Aura Biosciences, Inc. - Common Stock    | M          | -0.7644
- 421 | ACIU   | AC Immune SA - Common Stock              | N/A        | -0.8895
+ 420 | AURA   | Aura Biosciences, Inc.                   | M          | -0.7644
+ 421 | ACIU   | AC Immune SA                             | M          | -0.8895
  422 | BHF    | Brighthouse Financial, Inc. - Common Sto | N/A        | -0.8947
  423 | CEPS   | Cantor Equity Partners VI, Inc. - Class  | M          | -1.0144
  424 | BTBD   | BT Brands, Inc. - Common Stock           | N/A        | -1.0149
- 425 | CTW    | CTW - Class A Ordinary Shares            | N/A        | -1.2210
- 426 | CHRD   | Chord Energy Corporation - Common Stock  | N/A        | -1.2389
- 427 | CINF   | Cincinnati Financial Corporation - Commo | N/A        | -1.3118
- 428 | DAKT   | Daktronics, Inc. - Common Stock          | N/A        | -1.5132
- 429 | CEPV   | Cantor Equity Partners V, Inc. - Class A | N/A        | -1.5834
+ 425 | CTW    | CTW - Class A Ordinary Shares            | M          | -1.2210
+ 426 | CHRD   | Chord Energy Corporation                 | B          | -1.2389
+ 427 | CINF   | Cincinnati Financial Corporation         | B          | -1.3118
+ 428 | DAKT   | Daktronics, Inc.                         | M          | -1.5132
+ 429 | CEPV   | Cantor Equity Partners V, Inc.           | M          | -1.5834
  430 | DBCA   | D. Boral Acquisition I Corp. - Class A O | N/A        | -1.5851
  431 | CEPF   | Cantor Equity Partners IV, Inc. - Class  | N/A        | -1.6877
- 432 | CMII   | Columbus Circle Capital Corp II - Class  | N/A        | -1.7223
- 433 | CHEC   | Chenghe Acquisition III Co. - Class A Or | N/A        | -1.7393
- 434 | CCEC   | Capital Clean Energy Carriers Corp. - Co | N/A        | -1.7512
- 435 | ALT    | Altimmune, Inc. - Common Stock           | N/A        | -1.8593
- 436 | ASUR   | Asure Software Inc - Common Stock        | M          | -1.8875
+ 432 | CMII   | Columbus Circle Capital Corp II          | M          | -1.7223
+ 433 | CHEC   | Chenghe Acquisition III Co.              | M          | -1.7393
+ 434 | CCEC   | Capital Clean Energy Carriers Corp.      | B          | -1.7512
+ 435 | ALT    | Altimmune, Inc.                          | M          | -1.8593
+ 436 | ASUR   | Asure Software, Inc.                     | M          | -1.8875
  437 | AZ     | A2Z Cust2Mate Solutions Corp. - Common S | N/A        | -1.9263
  438 | ALOV   | Aldabra 4 Liquidity Opportunity Vehicle, | N/A        | -1.9938
  439 | CUPR   | Cuprina Holdings (Cayman) Limited - Clas | N/A        | -2.0645
- 440 | BDCI   | BTC Development Corp. - Class A Ordinary | N/A        | -2.1364
+ 440 | BDCI   | BTC Development Corp.                    | M          | -2.1364
  441 | AIFA   | All In FutureTech Alliance, Inc. - Commo | N/A        | -2.2766
- 442 | AFYA   | Afya Limited - Class A Common Shares     | N/A        | -2.3735
- 443 | ABTS   | Abits Group Inc - Ordinary Shares        | N/A        | -2.6016
+ 442 | AFYA   | Afya Limited                             | B          | -2.3735
+ 443 | ABTS   | Abits Group Inc.                         | M          | -2.6016
  444 | APWC   | Asia Pacific Wire & Cable Corporation Li | M          | -2.7334
- 445 | DAIO   | Data I/O Corporation - Common Stock      | N/A        | -2.7358
+ 445 | DAIO   | Data I/O Corporation                     | M          | -2.7358
  446 | ADSK   | Autodesk, Inc. - Common Stock            | B          | -2.9671
- 447 | CSWC   | Capital Southwest Corporation - Common S | N/A        | -3.1148
- 448 | BULL   | Webull Corporation - Class A Ordinary Sh | N/A        | -3.2488
+ 447 | CSWC   | Capital Southwest Corporation            | B          | -3.1148
+ 448 | BULL   | Webull Corporation - Class A Ordinary Sh | B          | -3.2488
  449 | BZ     | KANZHUN LIMITED - American Depository Sh | N/A        | -3.3047
  450 | ACET   | Adicet Bio, Inc. - Common Stock          | N/A        | -3.3648
- 451 | BSY    | Bentley Systems, Incorporated - Class B  | B          | -3.3761
- 452 | BCBP   | BCB Bancorp, Inc. (NJ) - Common Stock    | N/A        | -3.4725
+ 451 | BSY    | Bentley Systems, Incorporated            | B          | -3.3761
+ 452 | BCBP   | BCB Bancorp, Inc.                        | M          | -3.4725
  453 | CNTB   | Connect Biopharma Holdings Limited - Ord | N/A        | -3.7092
  454 | APYX   | Apyx Medical Corporation - Common Stock  | N/A        | -3.8092
- 455 | CODA   | Coda Octopus Group, Inc. - Common stock  | N/A        | -3.9655
+ 455 | CODA   | Coda Octopus Group, Inc.                 | M          | -3.9655
  456 | ACB    | Aurora Cannabis Inc. - Common Shares     | N/A        | -4.0593
- 457 | BLBD   | Blue Bird Corporation - Common Stock     | N/A        | -4.3496
- 458 | CALM   | Cal-Maine Foods, Inc. - Common Stock     | N/A        | -4.4180
- 459 | COCH   | Envoy Medical, Inc. - Class A Common Sto | N/A        | -4.4196
- 460 | ADMA   | ADMA Biologics Inc - Common Stock        | N/A        | -4.4317
+ 457 | BLBD   | Blue Bird Corporation                    | B          | -4.3496
+ 458 | CALM   | Cal-Maine Foods, Inc.                    | B          | -4.4180
+ 459 | COCH   | Envoy Medical, Inc.                      | M          | -4.4196
+ 460 | ADMA   | ADMA Biologics, Inc.                     | B          | -4.4317
  461 | CPB    | The Campbell's Company - Common Stock    | N/A        | -4.5692
- 462 | CWCO   | Consolidated Water Co. Ltd. - Ordinary S | N/A        | -4.6187
- 463 | CBIO   | Crescent Biopharma, Inc. - Common Stock  | M          | -4.6380
- 464 | AEI    | Alset Inc. - Common Stock                | N/A        | -4.6508
- 465 | NVDA   | NVIDIA Corporation - Common Stock        | N/A        | -4.6679
- 466 | APC    | ARKO Petroleum Corp. - Class A Common St | N/A        | -4.7202
- 467 | CRWS   | Crown Crafts, Inc. - Common Stock        | N/A        | -4.7215
- 468 | CRVL   | CorVel Corp. - Common Stock              | N/A        | -4.7854
- 469 | AUR    | Aurora Innovation, Inc.  - Class A Commo | N/A        | -4.8436
- 470 | ASTI   | Ascent Solar Technologies, Inc - Common  | N/A        | -5.0218
+ 462 | CWCO   | Consolidated Water Co. Ltd.              | M          | -4.6187
+ 463 | CBIO   | Crescent Biopharma, Inc.                 | M          | -4.6380
+ 464 | AEI    | Alset Inc.                               | M          | -4.6508
+ 465 | NVDA   | NVIDIA Corporation                       | B          | -4.6679
+ 466 | APC    | ARKO Petroleum Corp.                     | M          | -4.7202
+ 467 | CRWS   | Crown Crafts, Inc.                       | M          | -4.7215
+ 468 | CRVL   | CorVel Corporation                       | B          | -4.7854
+ 469 | AUR    | Aurora Innovation, Inc.                  | B          | -4.8436
+ 470 | ASTI   | Ascent Solar Technologies, Inc.          | M          | -5.0218
  471 | CRSP   | CRISPR Therapeutics AG - Common Shares   | N/A        | -5.1175
  472 | CDRO   | Codere Online Luxembourg, S.A. - Ordinar | N/A        | -5.1940
- 473 | CMPX   | Compass Therapeutics, Inc. - Common Stoc | N/A        | -5.2535
- 474 | BRNX   | BrenX Ltd. - Ordinary Shares             | N/A        | -5.3242
+ 473 | CMPX   | Compass Therapeutics, Inc.               | M          | -5.2535
+ 474 | BRNX   | Brenmiller Energy Ltd                    | M          | -5.3242
  475 | BLIN   | Bridgeline Digital, Inc. - Common Stock  | N/A        | -5.5319
- 476 | ACDC   | ProFrac Holding Corp. - Class A Common S | M          | -5.5944
+ 476 | ACDC   | ProFrac Holding Corp.                    | M          | -5.5944
  477 | DGNX   | Diginex Limited - Ordinary Shares        | N/A        | -5.6890
- 478 | CGEN   | Compugen Ltd. - Ordinary Shares          | N/A        | -5.7639
+ 478 | CGEN   | Compugen Ltd.                            | M          | -5.7639
  479 | CHCI   | Comstock Holding Companies, Inc. - Class | M          | -5.9825
- 480 | CNL    | Collective Mining Ltd. - Common Stock    | N/A        | -6.1047
+ 480 | CNL    | Collective Mining Ltd.                   | B          | -6.1047
  481 | COLM   | Columbia Sportswear Company - Common Sto | B          | -6.2400
- 482 | ADBE   | Adobe Inc. - Common Stock                | B          | -6.3158
- 483 | CWST   | Casella Waste Systems, Inc. - Class A Co | N/A        | -6.3740
+ 482 | ADBE   | Adobe Inc.                               | B          | -6.3158
+ 483 | CWST   | Casella Waste Systems, Inc.              | B          | -6.3740
  484 | CUB    | Lionheart Holdings - Class A Ordinary Sh | N/A        | -6.4275
- 485 | BL     | BlackLine, Inc. - Common Stock           | N/A        | -6.4347
+ 485 | BL     | BlackLine, Inc.                          | B          | -6.4347
  486 | ANIP   | ANI Pharmaceuticals, Inc. - Common Stock | N/A        | -6.4703
- 487 | BLIV   | BeLive Holdings - ordinary shares        | N/A        | -6.6055
+ 487 | BLIV   | BeLive Holdings                          | M          | -6.6055
  488 | CHRW   | C.H. Robinson Worldwide, Inc. - Common S | N/A        | -6.6719
- 489 | CHDN   | Churchill Downs, Incorporated - Common S | N/A        | -6.7072
- 490 | BOT    | RoboStrategy, Inc. - Common Stock        | M          | -6.8425
- 491 | BBSI   | Barrett Business Services, Inc. - Common | M          | -6.8634
+ 489 | CHDN   | Churchill Downs, Incorporated - Common S | B          | -6.7072
+ 490 | BOT    | Robostrategy, Inc.                       | M          | -6.8425
+ 491 | BBSI   | Barrett Business Services, Inc.          | M          | -6.8634
  492 | CEVA   | CEVA, Inc. - Common Stock                | N/A        | -6.8721
  493 | ASTE   | Astec Industries, Inc. - Common Stock    | M          | -7.2668
- 494 | CAR    | Avis Budget Group, Inc. - Common Stock   | N/A        | -7.3378
+ 494 | CAR    | Avis Budget Group, Inc.                  | B          | -7.3378
  495 | CHNR   | China Natural Resources, Inc. - Common S | N/A        | -7.4500
  496 | CEPO   | Cantor Equity Partners I, Inc. - Class A | N/A        | -7.5356
  497 | CPSH   | CPS Technologies Corp. - Common Stock    | N/A        | -7.6333
- 498 | CLIR   | ClearSign Technologies Corporation - Com | N/A        | -7.6440
- 499 | BCTX   | BriaCell Therapeutics Corp. - Common Sha | N/A        | -7.6806
- 500 | ALVO   | Alvotech - Ordinary Shares               | B          | -7.8253
- 501 | CIGI   | Colliers International Group Inc.  - Sub | N/A        | -7.8662
- 502 | UUUU   | Energy Fuels Inc Ordinary Shares (Canada | N/A        | -8.1931
- 503 | AMST   | Amesite Inc. - Common Stock              | N/A        | -8.2424
- 504 | BON    | Bon Natural Life Limited - Class A Ordin | N/A        | -8.4833
- 505 | ALEC   | Alector, Inc. - Common Stock             | N/A        | -8.5648
+ 498 | CLIR   | ClearSign Technologies Corporation       | M          | -7.6440
+ 499 | BCTX   | BriaCell Therapeutics Corp.              | M          | -7.6806
+ 500 | ALVO   | Alvotech                                 | B          | -7.8253
+ 501 | CIGI   | Colliers International Group Inc.        | B          | -7.8662
+ 502 | UUUU   | Energy Fuels Inc.                        | B          | -8.1931
+ 503 | AMST   | Amesite Inc.                             | M          | -8.2424
+ 504 | BON    | Bon Natural Life Limited                 | M          | -8.4833
+ 505 | ALEC   | Alector, Inc.                            | M          | -8.5648
  506 | ARAY   | Accuray Incorporated - Common Stock      | N/A        | -8.6150
  507 | CHKP   | Check Point Software Technologies Ltd. - | N/A        | -8.6563
- 508 | CMCSA  | Comcast Corporation - Class A Common Sto | N/A        | -8.6998
- 509 | AEC    | Anfield Energy Inc. - Common Shares      | N/A        | -9.0472
+ 508 | CMCSA  | Comcast Corporation                      | B          | -8.6998
+ 509 | AEC    | Anfield Energy Inc.                      | M          | -9.0472
  510 | CORZ   | Core Scientific, Inc. - Common Stock     | N/A        | -9.0615
- 511 | CULP   | Culp, Inc. - Common Shares               | N/A        | -9.2664
- 512 | CEG    | Constellation Energy Corporation - Commo | B          | -9.2780
+ 511 | CULP   | Culp, Inc.                               | M          | -9.2664
+ 512 | CEG    | Constellation Energy Corporation         | B          | -9.2780
  513 | COYA   | Coya Therapeutics, Inc. - Common Stock   | N/A        | -9.3524
  514 | CREX   | Creative Realities, Inc. - Common Stock  | M          | -9.4374
  515 | CETY   | Clean Energy Technologies, Inc. - Common | N/A        | -9.5118
- 516 | CDIO   | Cardio Diagnostics Holdings Inc. - Commo | N/A        | -9.5253
- 517 | AOSL   | Alpha and Omega Semiconductor Limited -  | N/A        | -9.6011
- 518 | CPSS   | Consumer Portfolio Services, Inc. - Comm | N/A        | -9.8020
- 519 | AIRG   | Airgain, Inc. - Common Stock             | N/A        | -10.1523
+ 516 | CDIO   | Cardio Diagnostics Holdings, Inc.        | M          | -9.5253
+ 517 | AOSL   | Alpha and Omega Semiconductor Limited    | M          | -9.6011
+ 518 | CPSS   | Consumer Portfolio Services, Inc.        | M          | -9.8020
+ 519 | AIRG   | Airgain, Inc.                            | M          | -10.1523
  520 | CELC   | Celcuity Inc. - Common Stock             | B          | -10.1533
  521 | ARBB   | ARB IOT Group Limited - Ordinary Shares  | N/A        | -10.1533
- 522 | CSIQ   | Canadian Solar Inc. - Common Shares      | N/A        | -10.3275
- 523 | BMEA   | Biomea Fusion, Inc. - Common Stock       | N/A        | -10.3696
- 524 | CGNT   | Cognyte Software Ltd. - Ordinary Shares  | N/A        | -10.4256
+ 522 | CSIQ   | Canadian Solar Inc.                      | B          | -10.3275
+ 523 | BMEA   | Biomea Fusion, Inc. - Common Stock       | M          | -10.3696
+ 524 | CGNT   | Cognyte Software Ltd.                    | M          | -10.4256
  525 | DETX   | Liberty Defense Holdings, Ltd. - Common  | N/A        | -11.3179
- 526 | DIOD   | Diodes Incorporated - Common Stock       | N/A        | -11.4278
- 527 | CLSK   | CleanSpark, Inc. - Common Stock          | N/A        | -11.4407
- 528 | CNSP   | CNS Pharmaceuticals, Inc. - Common Stock | N/A        | -11.6023
+ 526 | DIOD   | Diodes Incorporated - Common Stock       | B          | -11.4278
+ 527 | CLSK   | CleanSpark, Inc.                         | B          | -11.4407
+ 528 | CNSP   | CNS Pharmaceuticals, Inc.                | M          | -11.6023
  529 | ASO    | Academy Sports and Outdoors, Inc. - Comm | B          | -11.7352
- 530 | AARD   | Aardvark Therapeutics, Inc. - Common Sto | N/A        | -11.8424
+ 530 | AARD   | Aardvark Therapeutics, Inc.              | M          | -11.8424
  531 | CBAT   | CBAK Energy Technology Limited - Ordinar | N/A        | -12.1619
- 532 | CPHC   | Canterbury Park Holding Corporation - Co | N/A        | -12.2110
+ 532 | CPHC   | Canterbury Park Holding Corporation - Co | M          | -12.2110
  533 | BRLT   | Brilliant Earth Group, Inc. - Class A Co | N/A        | -12.3187
  534 | ALHC   | Alignment Healthcare, Inc. - Common Stoc | N/A        | -12.8548
  535 | AVXL   | Anavex Life Sciences Corp. - Common Stoc | N/A        | -13.2583
- 536 | COST   | Costco Wholesale Corporation - Common St | N/A        | -13.2642
- 537 | CSHR   | CoinShares PLC - Ordinary Shares         | N/A        | -13.3857
+ 536 | COST   | Costco Wholesale Corporation             | B          | -13.2642
+ 537 | CSHR   | CoinShares PLC                           | M          | -13.3857
  538 | CG     | The Carlyle Group Inc. - Common Stock    | N/A        | -13.4118
- 539 | ACIC   | American Coastal Insurance Corporation - | N/A        | -13.4225
- 540 | DCGO   | DocGo Inc. - Common Stock                | M          | -13.4633
+ 539 | ACIC   | American Coastal Insurance Corporation   | M          | -13.4225
+ 540 | DCGO   | DocGo Inc.                               | M          | -13.4633
  541 | AUC    | ATIF Holdings Limited - Ordinary Shares  | N/A        | -13.7865
  542 | CNDT   | Conduent Incorporated - Common Stock     | N/A        | -14.2792
- 543 | CME    | CME Group Inc. - Class A Common Stock    | N/A        | -14.3167
- 544 | CTXR   | Citius Pharmaceuticals, Inc. - Common St | N/A        | -14.4484
- 545 | ARCT   | Arcturus Therapeutics Holdings Inc. - Co | M          | -14.5165
- 546 | CDNS   | Cadence Design Systems, Inc. - Common St | N/A        | -14.7113
+ 543 | CME    | CME Group Inc.                           | B          | -14.3167
+ 544 | CTXR   | Citius Pharmaceuticals, Inc.             | M          | -14.4484
+ 545 | ARCT   | Arcturus Therapeutics Holdings Inc.      | M          | -14.5165
+ 546 | CDNS   | Cadence Design Systems, Inc.             | B          | -14.7113
  547 | AMCI   | AMC Robotics Corporation - Common Stock  | N/A        | -15.1680
- 548 | AENT   | Alliance Entertainment Holding Corporati | N/A        | -15.2263
+ 548 | AENT   | Alliance Entertainment Holding Corporati | M          | -15.2263
  549 | ADV    | Advantage Solutions Inc.  - Class A Comm | N/A        | -15.3708
- 550 | CHTR   | Charter Communications, Inc. - Class A C | N/A        | -15.3904
+ 550 | CHTR   | Charter Communications, Inc.             | B          | -15.3904
  551 | ATOM   | Atomera Incorporated - Common Stock      | N/A        | -15.4356
- 552 | BRTX   | BioRestorative Therapies, Inc. - Common  | N/A        | -15.4751
- 553 | CRWV   | CoreWeave, Inc. - Class A Common Stock   | N/A        | -15.5540
- 554 | CNXC   | Concentrix Corporation - Common Stock    | B          | -15.7834
- 555 | ASLE   | AerSale Corporation - Common Stock       | N/A        | -15.9087
+ 552 | BRTX   | BioRestorative Therapies, Inc.           | M          | -15.4751
+ 553 | CRWV   | CoreWeave, Inc.                          | B          | -15.5540
+ 554 | CNXC   | Concentrix Corporation                   | B          | -15.7834
+ 555 | ASLE   | AerSale Corporation                      | M          | -15.9087
  556 | CRBP   | Corbus Pharmaceuticals Holdings, Inc. -  | N/A        | -15.9144
- 557 | BAFN   | BayFirst Financial Corp. - Common Stock  | N/A        | -16.1439
+ 557 | BAFN   | BayFirst Financial Corp.                 | M          | -16.1439
  558 | BIVI   | BioVie Inc. - Common stock               | N/A        | -16.3363
- 559 | AGCC   | Agencia Comercial Spirits Ltd - Class A  | N/A        | -16.3583
- 560 | CYPH   | Cypherpunk Technologies Inc. - Common St | N/A        | -16.4551
+ 559 | AGCC   | Agencia Comercial Spirits Ltd            | M          | -16.3583
+ 560 | CYPH   | Cypherpunk Technologies Inc.             | M          | -16.4551
  561 | BLDP   | Ballard Power Systems, Inc. - Common Sha | M          | -16.4782
  562 | ASTL   | Algoma Steel Group Inc. - Common Shares  | M          | -16.9031
  563 | CRNT   | Ceragon Networks Ltd. - Ordinary Shares  | M          | -16.9881
  564 | BRAI   | Braiin Limited - Common Stock            | N/A        | -17.3554
- 565 | CVGI   | Commercial Vehicle Group, Inc. - Common  | N/A        | -17.4013
+ 565 | CVGI   | Commercial Vehicle Group, Inc. - Common  | M          | -17.4013
  566 | CLPS   | CLPS Incorporation - Common Stock        | N/A        | -17.6007
  567 | CNCK   | Coincheck Group N.V. - Ordinary Shares   | M          | -17.9870
  568 | AIOT   | PowerFleet, Inc. - Common Stock          | N/A        | -18.1257
- 569 | CPRT   | Copart, Inc. - Common Stock              | N/A        | -18.1571
- 570 | CNVS   | Cineverse Corp. - Class A Common Stock   | N/A        | -18.1801
- 571 | ATRA   | Atara Biotherapeutics, Inc. - Common Sto | N/A        | -18.3021
- 572 | ARKR   | Ark Restaurants Corp. - Common Stock     | N/A        | -18.4689
- 573 | BRID   | Bridgford Foods Corporation - Common Sto | N/A        | -18.7370
+ 569 | CPRT   | Copart, Inc.                             | B          | -18.1571
+ 570 | CNVS   | Cineverse Corp.                          | M          | -18.1801
+ 571 | ATRA   | Atara Biotherapeutics, Inc.              | M          | -18.3021
+ 572 | ARKR   | Ark Restaurants Corp.                    | M          | -18.4689
+ 573 | BRID   | Bridgford Foods Corporation              | M          | -18.7370
  574 | CHR    | Cheer Holding, Inc.  - Class A Ordinary  | M          | -18.7839
  575 | ABAT   | American Battery Technology Company - Co | N/A        | -18.8535
  576 | ATPC   | Agape ATP Corporation - Common Stock     | N/A        | -18.9314
- 577 | BNGO   | Bionano Genomics, Inc. - Common Stock    | N/A        | -18.9815
- 578 | ATHR   | Aether Holdings, Inc. - Common Stock     | N/A        | -19.2391
- 579 | CELH   | Celsius Holdings, Inc. - Common Stock    | N/A        | -19.4249
- 580 | AGRZ   | Agroz Inc. - Class A Ordinary Shares     | N/A        | -19.8209
+ 577 | BNGO   | Bionano Genomics, Inc.                   | M          | -18.9815
+ 578 | ATHR   | Aether Holdings, Inc.                    | M          | -19.2391
+ 579 | CELH   | Celsius Holdings, Inc.                   | B          | -19.4249
+ 580 | AGRZ   | Agroz Inc.                               | M          | -19.8209
  581 | CHRS   | Coherus Oncology, Inc. - Common Stock    | N/A        | -19.8740
- 582 | BCDA   | BioCardia, Inc. - Common Stock           | N/A        | -19.9308
+ 582 | BCDA   | BioCardia, Inc.                          | M          | -19.9308
  583 | CGC    | Canopy Growth Corporation - Common Share | M          | -20.1931
  584 | CLNE   | Clean Energy Fuels Corp. - Common Stock  | N/A        | -20.2906
- 585 | CRMD   | CorMedix Inc. - Common Stock             | N/A        | -20.3031
- 586 | ALMU   | Aeluma, Inc. - Common Stock              | N/A        | -20.4660
+ 585 | CRMD   | CorMedix Inc. - Common Stock             | M          | -20.3031
+ 586 | ALMU   | Aeluma, Inc. - Common Stock              | M          | -20.4660
  587 | ATCX   | Atlas Critical Minerals Corporation - Co | N/A        | -20.4780
  588 | AWRE   | Aware, Inc. - Common Stock               | M          | -20.6389
  589 | BMM    | Blue Moon Metals Inc. - Common Shares    | N/A        | -20.9328
- 590 | CDNL   | Cardinal Infrastructure Group Inc. - Cla | N/A        | -21.2418
- 591 | BCG    | Binah Capital Group, Inc. - Common Stock | N/A        | -21.5505
- 592 | BODI   | The Beachbody Company, Inc. - Class A Co | N/A        | -21.7572
+ 590 | CDNL   | Cardinal Infrastructure Group Inc.       | M          | -21.2418
+ 591 | BCG    | Binah Capital Group, Inc.                | M          | -21.5505
+ 592 | BODI   | The Beachbody Company, Inc.              | M          | -21.7572
  593 | CALC   | CalciMedica, Inc. - Common Stock         | M          | -21.7991
- 594 | ARKO   | ARKO Corp. - Common Stock                | N/A        | -22.0534
+ 594 | ARKO   | Arko Corp.                               | M          | -22.0534
  595 | CSGP   | CoStar Group, Inc. - Common Stock        | N/A        | -22.2018
  596 | AMSF   | AMERISAFE, Inc. - Common Stock           | N/A        | -22.2791
- 597 | CBRS   | Cerebras Systems Inc. - Class A Common S | N/A        | -22.5110
- 598 | CRUS   | Cirrus Logic, Inc. - Common Stock        | N/A        | -22.5666
- 599 | CGTX   | Cognition Therapeutics, Inc. - Common St | M          | -22.5904
+ 597 | CBRS   | Cerebras Systems Inc.                    | B          | -22.5110
+ 598 | CRUS   | Cirrus Logic, Inc.                       | B          | -22.5666
+ 599 | CGTX   | Cognition Therapeutics, Inc.             | M          | -22.5904
  600 | AAON   | AAON, Inc. - Common Stock                | B          | -22.6913
- 601 | CLBT   | Cellebrite DI Ltd. - Ordinary Shares     | N/A        | -22.8770
- 602 | BTBT   | Bit Digital, Inc. - Ordinary Share       | M          | -22.9031
- 603 | CURX   | Curanex Pharmaceuticals Inc - Common Sto | M          | -23.2306
- 604 | CCAP   | Crescent Capital BDC, Inc. - Common Stoc | N/A        | -23.4183
- 605 | AAPG   | Ascentage Pharma Group International - A | N/A        | -23.5997
+ 601 | CLBT   | Cellebrite DI Ltd.                       | B          | -22.8770
+ 602 | BTBT   | Bit Digital, Inc.                        | M          | -22.9031
+ 603 | CURX   | Curanex Pharmaceuticals Inc              | M          | -23.2306
+ 604 | CCAP   | Crescent Capital BDC, Inc.               | M          | -23.4183
+ 605 | AAPG   | Ascentage Pharma Group Internat          | B          | -23.5997
  606 | ABLV   | Able View Global Inc. - Class B Ordinary | N/A        | -23.6308
  607 | BRBI   | BRBI BR Partners S.A. - ADSs             | N/A        | -23.6656
  608 | CRE    | Cre8 Enterprise Limited - Class A Ordina | N/A        | -23.8997
  609 | ASPS   | Altisource Portfolio Solutions S.A. - Co | M          | -23.9089
  610 | COCP   | Cocrystal Pharma, Inc. - Common Stock    | M          | -24.0568
- 611 | BFRG   | Bullfrog AI Holdings, Inc. - Common Stoc | N/A        | -24.3449
+ 611 | BFRG   | Bullfrog AI Holdings, Inc.               | M          | -24.3449
  612 | CNTY   | Century Casinos, Inc. - Common Stock     | M          | -24.3624
- 613 | CTOR   | Citius Oncology, Inc.  - Common Stock    | N/A        | -24.3842
- 614 | DGXX   | Digi Power X Inc. - Common Subordinate V | N/A        | -25.0006
- 615 | ANY    | Sphere 3D Corp. - Common Shares          | N/A        | -25.1118
- 616 | CRNC   | Cerence Inc. - Common Stock              | N/A        | -25.2274
+ 613 | CTOR   | Citius Oncology, Inc.                    | M          | -24.3842
+ 614 | DGXX   | Digi Power X Inc.                        | M          | -25.0006
+ 615 | ANY    | Sphere 3D Corp.                          | M          | -25.1118
+ 616 | CRNC   | Cerence Inc.                             | M          | -25.2274
  617 | ALDX   | Aldeyra Therapeutics, Inc. - Common Stoc | M          | -25.5018
- 618 | CNTN   | Canton Strategic Holdings, Inc. - Common | N/A        | -25.5258
+ 618 | CNTN   | Canton Strategic Holdings, Inc.          | M          | -25.5258
  619 | BENF   | Beneficient - Class A Common Stock       | N/A        | -25.5576
- 620 | BZFD   | BuzzFeed, Inc. - Class A Common Stock    | N/A        | -25.5693
+ 620 | BZFD   | BuzzFeed, Inc.                           | M          | -25.5693
  621 | CDZI   | Cadiz, Inc. - Common Stock               | N/A        | -25.5964
- 622 | BDTX   | Black Diamond Therapeutics, Inc. - Commo | M          | -25.7752
- 623 | AMTX   | Aemetis, Inc - Common Stock              | N/A        | -25.8182
+ 622 | BDTX   | Black Diamond Therapeutics, Inc.         | M          | -25.7752
+ 623 | AMTX   | Aemetis, Inc.                            | M          | -25.8182
  624 | ATXG   | Addentax Group Corp. - Common Stock      | N/A        | -25.9508
- 625 | CXDO   | Crexendo, Inc. - Common Stock            | N/A        | -25.9752
- 626 | CSPI   | CSP Inc. - Common Stock                  | N/A        | -26.2046
- 627 | AMIX   | Autonomix Medical, Inc. - Common Stock   | N/A        | -26.2679
+ 625 | CXDO   | Crexendo, Inc.                           | M          | -25.9752
+ 626 | CSPI   | CSP Inc.                                 | M          | -26.2046
+ 627 | AMIX   | Autonomix Medical, Inc.                  | M          | -26.2679
  628 | CSBR   | Champions Oncology, Inc. - Common Stock  | N/A        | -26.4523
- 629 | COLL   | Collegium Pharmaceutical, Inc. - Common  | M          | -26.8091
+ 629 | COLL   | Collegium Pharmaceutical, Inc.           | M          | -26.8091
  630 | AGNT   | AGNT, Inc. - Common Stock                | N/A        | -27.3897
- 631 | BTOC   | Armlogi Holding Corp. - common stock     | N/A        | -27.4168
- 632 | ARBE   | Arbe Robotics Ltd. - Ordinary Shares     | N/A        | -27.4617
- 633 | BGIN   | Bgin Blockchain Limited - Class A Ordina | N/A        | -27.4911
+ 631 | BTOC   | Armlogi Holding Corp.                    | M          | -27.4168
+ 632 | ARBE   | Arbe Robotics Ltd. - Ordinary Shares     | M          | -27.4617
+ 633 | BGIN   | Bgin Blockchain Limited - Class A Ordina | M          | -27.4911
  634 | CYAB   | Cyabra, Inc. - Common Stock              | N/A        | -27.5252
  635 | BIOX   | Bioceres Crop Solutions Corp. - Ordinary | N/A        | -27.6524
- 636 | CRBU   | Caribou Biosciences, Inc. - Common Stock | N/A        | -27.7264
- 637 | CRML   | Critical Metals Corp. - Ordinary Shares  | N/A        | -27.9414
+ 636 | CRBU   | Caribou Biosciences, Inc.                | M          | -27.7264
+ 637 | CRML   | Critical Metals Corp.                    | M          | -27.9414
  638 | AZI    | Autozi Internet Technology (Global) Ltd. | M          | -27.9497
  639 | ACON   | Aclarion, Inc. - Common Stock            | M          | -28.0619
- 640 | CAST   | FreeCast, Inc. - Class A common stock    | N/A        | -28.2042
+ 640 | CAST   | FreeCast, Inc.                           | M          | -28.2042
  641 | ARQ    | Arq, Inc. - Common Stock                 | N/A        | -28.8667
  642 | AISP   | Airship AI Holdings, Inc - Class A Commo | N/A        | -29.0116
  643 | CLNN   | Clene Inc. - Common Stock                | N/A        | -29.1493
- 644 | ANNA   | AleAnna, Inc. - Class A Common Stock     | N/A        | -29.1649
- 645 | BMBL   | Bumble Inc. - common stock               | N/A        | -29.1881
- 646 | BRR    | ProCap Financial, Inc. - Common Stock    | N/A        | -29.3137
- 647 | CISO   | CISO Global, Inc. - Common Stock         | N/A        | -29.5290
- 648 | AIMD   | Ainos, Inc. - Common Stock               | N/A        | -29.5307
- 649 | AXG    | Solowin Holdings - Class A Ordinary Shar | N/A        | -29.8102
- 650 | ANGI   | Angi Inc. - Class A Common Stock         | N/A        | -29.9455
- 651 | ACXP   | Acurx Pharmaceuticals, Inc. - Common Sto | N/A        | -29.9766
- 652 | ALNY   | Alnylam Pharmaceuticals, Inc. - Common S | N/A        | -29.9965
+ 644 | ANNA   | AleAnna, Inc.                            | M          | -29.1649
+ 645 | BMBL   | Bumble Inc.                              | M          | -29.1881
+ 646 | BRR    | ProCap Financial, Inc.                   | M          | -29.3137
+ 647 | CISO   | CISO Global Inc.                         | M          | -29.5290
+ 648 | AIMD   | Ainos, Inc.                              | M          | -29.5307
+ 649 | AXG    | Solowin Holdings                         | M          | -29.8102
+ 650 | ANGI   | Angi Inc.                                | M          | -29.9455
+ 651 | ACXP   | Acurx Pharmaceuticals, Inc.              | M          | -29.9766
+ 652 | ALNY   | Alnylam Pharmaceuticals, Inc.            | B          | -29.9965
  653 | BTDR   | Bitdeer Technologies Group - Ordinary Sh | N/A        | -30.3214
- 654 | ADTN   | ADTRAN Holdings, Inc. - Common Stock     | N/A        | -30.3226
- 655 | CLRB   | Cellectar Biosciences, Inc. - Common Sto | M          | -30.5297
- 656 | BCAR   | D. Boral ARC Acquisition I Corp. - Class | M          | -31.0888
- 657 | ADGM   | Adagio Medical Holdings, Inc - Common St | N/A        | -31.5203
- 658 | CD     | Chaince Digital Holdings Inc. - American | N/A        | -31.7827
- 659 | BRAG   | Bragg Gaming Group Inc. - Common Shares  | N/A        | -32.0999
- 660 | ATYR   | aTyr Pharma, Inc. - Common Stock         | N/A        | -32.1148
- 661 | BNC    | CEA Industries Inc. - Common Stock       | N/A        | -32.1687
- 662 | BLNK   | Blink Charging Co. - Common Stock        | N/A        | -32.4281
- 663 | AIOS   | AIOS Tech Inc. - Class A Common Shares   | N/A        | -32.7838
- 664 | BAER   | Bridger Aerospace Group Holdings, Inc. - | N/A        | -33.1198
+ 654 | ADTN   | ADTRAN Holdings, Inc. - Common Stock     | M          | -30.3226
+ 655 | CLRB   | Cellectar Biosciences, Inc.              | M          | -30.5297
+ 656 | BCAR   | D. Boral ARC Acquisition I Corp.         | M          | -31.0888
+ 657 | ADGM   | Adagio Medical Holdings, Inc.            | M          | -31.5203
+ 658 | CD     | Chaince Digital Holdings Inc.            | M          | -31.7827
+ 659 | BRAG   | Bragg Gaming Group Inc.                  | M          | -32.0999
+ 660 | ATYR   | aTyr Pharma, Inc.                        | M          | -32.1148
+ 661 | BNC    | CEA Industries Inc.                      | M          | -32.1687
+ 662 | BLNK   | Blink Charging Co.                       | M          | -32.4281
+ 663 | AIOS   | AIOS Tech Inc.                           | M          | -32.7838
+ 664 | BAER   | Bridger Aerospace Group Holdings, Inc.   | M          | -33.1198
  665 | BGMS   | Bio Green Med Solution, Inc. - Common St | N/A        | -33.2952
- 666 | ARDX   | Ardelyx, Inc. - Common Stock             | N/A        | -33.5259
- 667 | COOT   | Australian Oilseeds Holdings Limited - O | N/A        | -33.8532
+ 666 | ARDX   | Ardelyx, Inc.                            | B          | -33.5259
+ 667 | COOT   | Australian Oilseeds Holdings Limited     | M          | -33.8532
  668 | AZIO   | Azio AI Holdings, Inc. - Common stock    | N/A        | -33.9458
- 669 | CMRC   | Commerce.com, Inc. - Series 1 Common Sto | N/A        | -34.0026
- 670 | AQMS   | Aqua Metals, Inc. - Common Stock         | N/A        | -34.0705
- 671 | CELU   | Celularity Inc. - Class A Common Stock   | N/A        | -34.6722
- 672 | AIIR   | Air Global PLC - Ordinary shares         | N/A        | -34.6766
+ 669 | CMRC   | Commerce.com, Inc.                       | M          | -34.0026
+ 670 | AQMS   | Aqua Metals, Inc.                        | M          | -34.0705
+ 671 | CELU   | Celularity Inc.                          | M          | -34.6722
+ 672 | AIIR   | AIR Global PLC                           | B          | -34.6766
  673 | APP    | Applovin Corporation - Class A Common St | N/A        | -34.8117
- 674 | BGLC   | BioNexus Gene Lab Corp - Common stock    | N/A        | -35.1793
- 675 | CLFD   | Clearfield, Inc. - Common Stock          | N/A        | -35.2164
- 676 | BGM    | BGM Group Ltd. - Class A Ordinary Shares | N/A        | -35.3521
- 677 | AKBA   | Akebia Therapeutics, Inc. - Common Stock | N/A        | -35.3656
- 678 | CCB    | Coastal Financial Corporation - Common S | N/A        | -35.4210
+ 674 | BGLC   | BioNexus Gene Lab Corp.                  | M          | -35.1793
+ 675 | CLFD   | Clearfield, Inc.                         | M          | -35.2164
+ 676 | BGM    | BGM Group Ltd.                           | M          | -35.3521
+ 677 | AKBA   | Akebia Therapeutics, Inc.                | M          | -35.3656
+ 678 | CCB    | Coastal Financial Corporation - Common S | M          | -35.4210
  679 | BKYI   | BIO-key International, Inc. - Common Sto | N/A        | -35.7224
- 680 | ABVC   | ABVC BioPharma, Inc. - Common Stock      | N/A        | -36.3290
- 681 | AGMH   | AGM Group Holdings Inc. - Class A Ordina | N/A        | -36.3950
- 682 | ARRY   | Array Technologies, Inc. - Common Stock  | N/A        | -36.5648
- 683 | APRE   | Aprea Therapeutics, Inc. - Common Stock  | N/A        | -36.5664
- 684 | CENN   | Cenntro Inc. - Common Stock              | N/A        | -36.9936
- 685 | BTTC   | Black Titan Corp - Ordinary Shares       | M          | -37.2422
- 686 | AURE   | Aurelion Inc.  - Class A Ordinary Shares | N/A        | -37.3633
+ 680 | ABVC   | ABVC BioPharma, Inc.                     | M          | -36.3290
+ 681 | AGMH   | AGM Group Holdings Inc.                  | M          | -36.3950
+ 682 | ARRY   | Array Technologies, Inc.                 | M          | -36.5648
+ 683 | APRE   | Aprea Therapeutics, Inc. - Common Stock  | M          | -36.5664
+ 684 | CENN   | Cenntro Inc.                             | M          | -36.9936
+ 685 | BTTC   | Black Titan Corporation                  | M          | -37.2422
+ 686 | AURE   | Aurelion Inc.                            | M          | -37.3633
  687 | BTMD   | Biote Corp. - Class A common stock       | N/A        | -37.4329
- 688 | CODX   | Co-Diagnostics, Inc. - Common Stock      | N/A        | -37.6370
+ 688 | CODX   | Co-Diagnostics, Inc.                     | M          | -37.6370
  689 | ATLX   | Atlas Lithium Corporation - Common Stock | N/A        | -37.7026
- 690 | BOLT   | Bolt Biotherapeutics, Inc. - Common Stoc | N/A        | -38.1181
+ 690 | BOLT   | Bolt Biotherapeutics, Inc.               | M          | -38.1181
  691 | BYRN   | Byrna Technologies, Inc. - Common Stock  | N/A        | -38.1220
  692 | CNEY   | CN Energy Group Inc. - Class A Ordinary  | N/A        | -38.6248
- 693 | BMR    | Beamr Imaging Ltd. - Ordinary Share      | N/A        | -39.2791
- 694 | DFSC   | DEFSEC Technologies Inc. - common stock, | N/A        | -39.3069
- 695 | BEEM   | Beam Global - Common Stock               | N/A        | -39.5031
- 696 | BTAI   | BioXcel Therapeutics, Inc. - Common Stoc | N/A        | -39.7298
- 697 | CMCT   | Creative Media  - Common Stock           | N/A        | -39.7315
- 698 | CLIK   | Click Holdings Limited - Ordinary Share  | N/A        | -39.7443
+ 693 | BMR    | Beamr Imaging Ltd.                       | M          | -39.2791
+ 694 | DFSC   | DEFSEC Technologies Inc. - common stock, | M          | -39.3069
+ 695 | BEEM   | Beam Global                              | M          | -39.5031
+ 696 | BTAI   | BioXcel Therapeutics, Inc.               | M          | -39.7298
+ 697 | CMCT   | Creative Media & Community Trust Corpora | M          | -39.7315
+ 698 | CLIK   | Click Holdings Limited                   | M          | -39.7443
  699 | BMRA   | Biomerica, Inc. - Common Stock           | N/A        | -40.0000
  700 | ASPI   | ASP Isotopes Inc. - Common Stock         | N/A        | -40.0731
- 701 | AIRS   | AirSculpt Technologies, Inc. - Common St | N/A        | -40.1787
+ 701 | AIRS   | AirSculpt Technologies, Inc.             | M          | -40.1787
  702 | BDMD   | Baird Medical Investment Holdings Ltd -  | N/A        | -40.2993
  703 | BETR   | Better Home & Finance Holding Company -  | N/A        | -40.4999
  704 | ASST   | Strive, Inc. - Class A Common Stock      | N/A        | -40.5964
- 705 | AMSC   | American Superconductor Corporation - Co | B          | -40.6722
- 706 | CTSO   | Cytosorbents Corporation - Common Stock  | N/A        | -40.9842
- 707 | AAME   | Atlantic American Corporation - Common S | N/A        | -41.0306
- 708 | AIFF   | Firefly Neuroscience, Inc.  - Common Sto | M          | -41.2323
+ 705 | AMSC   | American Superconductor Corporation      | B          | -40.6722
+ 706 | CTSO   | Cytosorbents Corporation                 | M          | -40.9842
+ 707 | AAME   | Atlantic American Corporation            | M          | -41.0306
+ 708 | AIFF   | Firefly Neuroscience, Inc.               | M          | -41.2323
  709 | AIDX   | 20/20 Biolabs, Inc. - Common Stock       | N/A        | -41.2530
- 710 | COIN   | Coinbase Global, Inc. - Class A Common S | N/A        | -41.4435
- 711 | CAPS   | Capstone Holding Corp. - Common Stock    | N/A        | -41.5506
- 712 | DFLI   | Dragonfly Energy Holdings Corp - Common  | N/A        | -43.4456
+ 710 | COIN   | Coinbase Global, Inc.                    | B          | -41.4435
+ 711 | CAPS   | Capstone Holding Corp.                   | M          | -41.5506
+ 712 | DFLI   | Dragonfly Energy Holdings Corp - Common  | M          | -43.4456
  713 | AHCO   | AdaptHealth Corp.  - Common Stock        | N/A        | -43.4813
  714 | CRVO   | CervoMed Inc. - Common Stock             | N/A        | -43.9624
- 715 | CLGN   | CollPlant Biotechnologies Ltd. - Ordinar | N/A        | -43.9723
- 716 | CCOI   | Cogent Communications Holdings, Inc. - C | N/A        | -44.5477
- 717 | ALPS   | ALPS Group Inc - Ordinary Share          | N/A        | -44.6734
- 718 | COSM   | Cosmos Health Inc. - Common Stock        | N/A        | -45.1916
- 719 | CRGO   | Freightos Limited - Ordinary shares      | N/A        | -45.4723
- 720 | CHSN   | Chanson International Holding - Class A  | N/A        | -45.5984
+ 715 | CLGN   | CollPlant Biotechnologies Ltd.           | M          | -43.9723
+ 716 | CCOI   | Cogent Communications Holdings, Inc.     | M          | -44.5477
+ 717 | ALPS   | ALPS Group Inc - Ordinary Share          | M          | -44.6734
+ 718 | COSM   | Cosmos Health Inc.                       | M          | -45.1916
+ 719 | CRGO   | Freightos Limited                        | M          | -45.4723
+ 720 | CHSN   | Chanson International Holding            | M          | -45.5984
  721 | CTNT   | Cheetah Net Supply Chain Service Inc. -  | N/A        | -45.8489
- 722 | BRLS   | Borealis Foods Inc. - Class A Common Sha | N/A        | -46.1229
- 723 | AIIO   | Robo.ai Inc. - Class B Ordinary Shares   | N/A        | -46.1584
- 724 | BLNE   | Beeline Holdings, Inc. - Common Stock    | N/A        | -46.1731
+ 722 | BRLS   | Borealis Foods Inc.                      | M          | -46.1229
+ 723 | AIIO   | Robo.ai Inc.                             | M          | -46.1584
+ 724 | BLNE   | Beeline Holdings, Inc. - Common Stock    | M          | -46.1731
  725 | BCAB   | BioAtla, Inc. - Common Stock             | N/A        | -46.3003
- 726 | CDXS   | Codexis, Inc. - Common Stock             | N/A        | -46.3053
+ 726 | CDXS   | Codexis, Inc.                            | M          | -46.3053
  727 | AIAI   | AIAI Holdings Corporation - Class A comm | M          | -46.5575
  728 | DH     | Definitive Healthcare Corp. - Class A Co | N/A        | -46.9170
- 729 | AFJK   | Aimei Health Technology Co., Ltd - Ordin | M          | -46.9903
- 730 | CCHH   | CCH Holdings Ltd - Class A Ordinary Shar | N/A        | -47.0173
- 731 | CYCU   | Cycurion, Inc. - Common Stock            | N/A        | -47.6187
- 732 | ANPA   | Rich Sparkle Holdings Limited - Ordinary | N/A        | -48.2647
+ 729 | AFJK   | Aimei Health Technology Co., Ltd         | M          | -46.9903
+ 730 | CCHH   | CCH Holdings Ltd                         | M          | -47.0173
+ 731 | CYCU   | Cycurion, Inc.                           | M          | -47.6187
+ 732 | ANPA   | Rich Sparkle Holdings Limited            | M          | -48.2647
  733 | BRFH   | Barfresh Food Group Inc. - Common Stock  | N/A        | -48.2873
- 734 | CDLX   | Cardlytics, Inc. - Common Stock          | N/A        | -48.6563
- 735 | DCOY   | Decoy Therapeutics Inc. - Common Stock   | N/A        | -48.9937
- 736 | CMTL   | Comtech Telecommunications Corp. - Commo | N/A        | -49.2344
- 737 | BTCS   | BTCS Inc. - Common Stock                 | N/A        | -49.6835
- 738 | AIRE   | reAlpha Tech Corp. - Common Stock        | N/A        | -49.7422
- 739 | BSEM   | BioStem Technologies, Inc. - Common Stoc | N/A        | -49.8535
+ 734 | CDLX   | Cardlytics, Inc.                         | M          | -48.6563
+ 735 | DCOY   | Decoy Therapeutics Inc.                  | M          | -48.9937
+ 736 | CMTL   | Comtech Telecommunications Corp.         | M          | -49.2344
+ 737 | BTCS   | BTCS Inc.                                | M          | -49.6835
+ 738 | AIRE   | reAlpha Tech Corp.                       | M          | -49.7422
+ 739 | BSEM   | BioStem Technologies, Inc.               | M          | -49.8535
  740 | BMGL   | Basel Medical Group Ltd - ordinary share | N/A        | -50.0000
- 741 | BEAT   | Heartbeam, Inc. - Common Stock           | N/A        | -50.2171
- 742 | AIXC   | AIxCrypto Holdings, Inc. - Common Stock  | N/A        | -50.4167
- 743 | CNSY   | Cerenome, Inc. - Common Stock            | N/A        | -50.4650
- 744 | BIRD   | Smartbird, Inc. - Class A Common Stock   | N/A        | -50.9919
- 745 | CXAI   | CXApp Inc. - Class A Common Stock        | N/A        | -51.2706
+ 741 | BEAT   | HeartBeam, Inc.                          | M          | -50.2171
+ 742 | AIXC   | AIxCrypto Holdings, Inc.                 | M          | -50.4167
+ 743 | CNSY   | Cerenome, Inc.                           | M          | -50.4650
+ 744 | BIRD   | Smartbird, Inc                           | M          | -50.9919
+ 745 | CXAI   | CXApp Inc.                               | M          | -51.2706
  746 | BJDX   | Bluejay Diagnostics, Inc. - Common Stock | N/A        | -51.4058
  747 | CYN    | Cyngn Inc. - Common stock                | N/A        | -51.6903
- 748 | CRDF   | Cardiff Oncology, Inc. - Common Stock    | N/A        | -52.8008
- 749 | CAPR   | Capricor Therapeutics, Inc. - Common Sto | N/A        | -53.1586
+ 748 | CRDF   | Cardiff Oncology, Inc.                   | M          | -52.8008
+ 749 | CAPR   | Capricor Therapeutics, Inc.              | M          | -53.1586
  750 | CELZ   | Creative Medical Technology Holdings, In | N/A        | -53.8457
- 751 | CVRX   | CVRx, Inc. - Common Stock                | N/A        | -53.8596
+ 751 | CVRX   | CVRx, Inc.                               | M          | -53.8596
  752 | DEFT   | Defi Technologies, Inc. - Common Stock   | N/A        | -54.3376
  753 | DFDV   | DeFi Development Corp. - Common Stock    | N/A        | -54.9663
- 754 | ATOS   | Atossa Therapeutics, Inc. - Common Stock | N/A        | -55.0144
+ 754 | ATOS   | Atossa Therapeutics, Inc.                | M          | -55.0144
  755 | BBLG   | Bone Biologics Corp - Common Stock       | N/A        | -55.1785
- 756 | BYSI   | BeyondSpring, Inc. - Ordinary Shares     | N/A        | -55.4465
- 757 | CHGA   | Change Agents Corporation  - Common Stoc | N/A        | -56.2317
- 758 | APVO   | Aptevo Therapeutics Inc. - Common Stock  | N/A        | -56.5261
+ 756 | BYSI   | BeyondSpring Inc.                        | M          | -55.4465
+ 757 | CHGA   | Change Agents Corporation                | M          | -56.2317
+ 758 | APVO   | Aptevo Therapeutics Inc.                 | M          | -56.5261
  759 | BHST   | BioHarvest Sciences Inc. - Common Stock  | N/A        | -56.6257
  760 | BXBL   | BOXABL, Inc.  - Common stock             | B          | -57.9616
  761 | ATGL   | Alpha Technology Group Limited - Class A | N/A        | -58.9422
  762 | AVX    | Avax One Technology Ltd. - Common Shares | M          | -60.8243
- 763 | ANTA   | Antalpha Platform Holding Company - Clas | N/A        | -61.4410
- 764 | ATER   | Aterian, Inc. - Common Stock             | M          | -61.6197
- 765 | CWD    | CaliberCos Inc. - Class A Common Stock   | N/A        | -63.2874
+ 763 | ANTA   | Antalpha Platform Holding Compa          | M          | -61.4410
+ 764 | ATER   | Aterian, Inc.                            | M          | -61.6197
+ 765 | CWD    | CaliberCos Inc.                          | M          | -63.2874
  766 | AMOD   | Alpha Modus Holdings, Inc. - Class A Com | M          | -63.2877
- 767 | CGTL   | Creative Global Technology Holdings Limi | N/A        | -63.5261
- 768 | AUUD   | Auddia Inc. - Common Stock               | N/A        | -63.8274
+ 767 | CGTL   | Creative Global Technology Holdings Limi | M          | -63.5261
+ 768 | AUUD   | Auddia Inc. - Common Stock               | M          | -63.8274
  769 | ALP    | Alpha Compute Corp  - Common Stock       | N/A        | -65.7953
  770 | CIRC   | Circle8 Group, Inc. - Common Stock       | M          | -65.8420
- 771 | CNTX   | Context Therapeutics Inc. - Common Stock | N/A        | -65.8835
- 772 | DARE   | Dare Bioscience, Inc. - Common Stock     | N/A        | -66.4925
+ 771 | CNTX   | Context Therapeutics Inc.                | M          | -65.8835
+ 772 | DARE   | Daré Bioscience, Inc.                    | M          | -66.4925
  773 | BNKK   | Bonk, Inc. - Common Stock                | N/A        | -67.3439
  774 | ABTC   | American Bitcoin Corp. - Class A Common  | N/A        | -68.0462
  775 | BZAI   | Blaize Holdings, Inc. - Common Stock     | N/A        | -68.0499
- 776 | BTOG   | Bit Origin Limited - Class A Ordinary Sh | N/A        | -68.7251
- 777 | BTCT   | BTC Digital Ltd. - Ordinary Shares       | N/A        | -68.8833
- 778 | AIFC   | AI Financial Corporation - Common Stock  | N/A        | -68.8864
+ 776 | BTOG   | Bit Origin Ltd                           | M          | -68.7251
+ 777 | BTCT   | BTC Digital Ltd.                         | M          | -68.8833
+ 778 | AIFC   | AI Financial Corporation - Common Stock  | M          | -68.8864
  779 | AIFU   | AIFU Inc. - Class A Ordinary Share       | N/A        | -69.1333
- 780 | DCX    | Digital Currency X Technology Inc. - Cla | N/A        | -69.2972
- 781 | CVKD   | Cadrenal Therapeutics, Inc. - Common Sto | N/A        | -71.9715
+ 780 | DCX    | Digital Currency X Technology Inc.       | M          | -69.2972
+ 781 | CVKD   | Cadrenal Therapeutics, Inc.              | M          | -71.9715
  782 | ACTU   | Actuate Therapeutics, Inc. - Common stoc | N/A        | -72.6216
- 783 | ARAI   | Arrive AI Inc. - Common Stock            | N/A        | -72.9657
- 784 | CETX   | Cemtrex Inc. - Common Stock              | N/A        | -74.6196
- 785 | AUID   | authID Inc. - Common Stock               | N/A        | -75.6703
- 786 | CMND   | Clearmind Medicine Inc. - Common Shares  | N/A        | -75.7565
- 787 | ARTL   | Artelo Biosciences, Inc. - Common Stock  | N/A        | -77.7199
+ 783 | ARAI   | Arrive AI Inc. - Common Stock            | M          | -72.9657
+ 784 | CETX   | Cemtrex, Inc.                            | M          | -74.6196
+ 785 | AUID   | authID Inc.                              | M          | -75.6703
+ 786 | CMND   | Clearmind Medicine Inc.                  | M          | -75.7565
+ 787 | ARTL   | Artelo Biosciences, Inc.                 | M          | -77.7199
  788 | BIYA   | Baiya International Group Inc.  - Ordina | N/A        | -79.0989
- 789 | BYAH   | Park Ha Biological Technology Co., Ltd.  | N/A        | -79.4046
- 790 | CISS   | C3is Inc. - Common Stock                 | N/A        | -80.2235
- 791 | CDTG   | CDT Environmental Technology Investment  | N/A        | -80.8424
- 792 | CRMT   | America's Car-Mart, Inc. - Common Stock  | N/A        | -81.0548
- 793 | CHAI   | Core AI Holdings, Inc. - Common Shares   | N/A        | -82.7662
- 794 | BAOS   | Baosheng Media Group Holdings Limited -  | N/A        | -82.9621
- 795 | AKAN   | Akanda Corp. - Common Shares             | N/A        | -83.1080
- 796 | BIAF   | bioAffinity Technologies, Inc. - Common  | N/A        | -83.8670
+ 789 | BYAH   | Park Ha Biological Technology Co., Ltd.  | M          | -79.4046
+ 790 | CISS   | C3is Inc.                                | N/A        | -80.2235
+ 791 | CDTG   | CDT Environmental Technology Investment  | M          | -80.8424
+ 792 | CRMT   | America's Car-Mart, Inc.                 | M          | -81.0548
+ 793 | CHAI   | Core AI Holdings                         | M          | -82.7662
+ 794 | BAOS   | Baosheng Media Group Holdings Limited    | N/A        | -82.9621
+ 795 | AKAN   | Akanda Corp.                             | M          | -83.1080
+ 796 | BIAF   | bioAffinity Technologies, Inc.           | M          | -83.8670
  797 | BGL    | Blue Gold Limited - Class A ordinary sha | N/A        | -84.8572
- 798 | CRIS   | Curis, Inc. - Common Stock               | M          | -86.7913
+ 798 | CRIS   | Curis, Inc.                              | M          | -86.7913
  799 | CPOP   | Pop Culture Group Co., Ltd - Class A Ord | N/A        | -90.2176
- 800 | DAIC   | CID HoldCo, Inc. - Common Stock          | N/A        | -92.5150
- 801 | AVAT   | Avalanche Treasury Corporation - Class A | N/A        | -96.3199
+ 800 | DAIC   | CID HoldCo, Inc.                         | N/A        | -92.5150
+ 801 | AVAT   | Avalanche Treasury Corporation           | M          | -96.3199
