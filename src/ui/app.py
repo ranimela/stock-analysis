@@ -408,6 +408,9 @@ def main() -> None:
             return
 
         df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
+        # Strictly filter df_manual to user-entered found_tickers only
+        df_manual = df_manual[df_manual["ticker"].isin(found_tickers)].copy()
+
         if not df_manual.empty:
             st.markdown("### 📋 Product Manager & Screener Evaluation Feedback")
 
@@ -499,16 +502,15 @@ def main() -> None:
                     else:
                         st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
-            df_manual_disp = df_manual[df_manual["ticker"].isin(found_tickers)].copy()
-            df_manual_disp["pct_off_52w_high"] = ((df_manual_disp["close"] / df_manual_disp["high_52w"]) - 1.0) * 100.0
-            df_manual_disp["company_url"] = df_manual_disp["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-            df_manual_disp["company_name"] = df_manual_disp.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
-            df_manual_disp["market_cap_str"] = df_manual_disp["market_cap"].apply(
+            df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
+            df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+            df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+            df_manual["market_cap_str"] = df_manual["market_cap"].apply(
                 lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
             )
 
             st.dataframe(
-                df_manual_disp[
+                df_manual[
                     [
                         "company_url",
                         "market_cap_str",
