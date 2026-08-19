@@ -86,17 +86,19 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     # Key metrics for top recommendation
     top_row = df.iloc[0]
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.metric("Top Pick Ticker", str(top_row["ticker"]))
-    with col2:
-        st.metric("Price ($)", f"${top_row['close']:.2f}")
-    with col3:
-        st.metric("ADV20 ($M)", f"${top_row['adv_20'] / 1e6:.2f}M")
-    with col4:
-        st.metric("RS Score", f"{top_row['rs_score']:.4f}")
-    with col5:
-        st.metric("Tightness Ratio", f"{top_row['tightness_ratio']:.2f}")
+    with st.container(border=True):
+        st.markdown(f"### ⭐ Top Recommended Momentum Stock: **{top_row['ticker']}** — *{top_row.get('name', top_row['ticker'])}*")
+        col1, col2, col3, col4, col5 = st.columns(5)
+        with col1:
+            st.metric("Top Pick Ticker", str(top_row["ticker"]), help="Rank #1 Momentum Candidate")
+        with col2:
+            st.metric("Price ($)", f"${top_row['close']:.2f}")
+        with col3:
+            st.metric("ADV20 ($M)", f"${top_row['adv_20'] / 1e6:.2f}M", help="20-day Average Daily Volume in Millions")
+        with col4:
+            st.metric("Mansfield RS", f"{top_row['rs_score']:.4f}", delta="Outperforming SPY" if top_row['rs_score'] > 0 else "Underperforming")
+        with col5:
+            st.metric("Composite Score", f"{top_row['composite_score']:.2f} / 100")
 
     st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
@@ -318,11 +320,13 @@ def main() -> None:
     """Main Streamlit application entry point."""
     st.title("📊 Quantitative Momentum Screener & PIT Backtest")
 
-    # Render Sidebar FIRST to guarantee it never disappears on sub-view errors
-    st.sidebar.title("Navigation")
-
+def main() -> None:
+    """Main entry point for Streamlit dashboard application."""
     db_manager = get_db_manager()
     latest_date = check_db_availability(db_manager)
+
+    # Sidebar Controls & Parameter Customization Panel
+    st.sidebar.title("🎛️ Screener Controls")
 
     if not latest_date:
         st.sidebar.error("Database: Offline / Missing")
@@ -333,23 +337,30 @@ def main() -> None:
         )
         return
 
-    view_option = st.sidebar.radio(
-        "Select View:",
-        [
-            "View A: Live Top-10 Recommendations (T0)",
-            "View B: 1-Week Backtest (T-5)",
-            "View C: 1-Month Backtest (T-22)",
-            "View D: Manual Stock Analysis",
-        ],
+    st.sidebar.markdown("### Strategy Parameters")
+    min_adv20 = st.sidebar.number_input(
+        "Min ADV20 Liquidity ($M)",
+        min_value=1.0,
+        max_value=100.0,
+        value=20.0,
+        step=5.0,
+        help="Minimum 20-day average daily dollar volume in millions",
+    )
+    max_tightness = st.sidebar.slider(
+        "VCP Tightness Ceiling",
+        min_value=1.0,
+        max_value=5.0,
+        value=3.5,
+        step=0.1,
+        help="Maximum allowable 10-day high-low tightness ratio",
     )
 
-    # Manual Stock Input Controls
     st.sidebar.markdown("---")
-    st.sidebar.subheader("➕ Manual Stock Analysis")
+    st.sidebar.subheader("🔬 Custom Stock Analysis")
     manual_input = st.sidebar.text_input(
-        "Add Ticker(s) to Analyze",
+        "Ticker(s) to Analyze",
         placeholder="e.g. NVDA, AAPL, TSLA",
-        help="Comma-separated ticker symbols to force-analyze in View D",
+        help="Comma-separated ticker symbols to evaluate in Tab 4 (Diagnostic Lab)",
     )
     manual_tickers = [t.strip().upper() for t in manual_input.split(",") if t.strip()] if manual_input else None
 
@@ -357,213 +368,212 @@ def main() -> None:
     st.sidebar.caption("Mode: **Read-Only (Zero Write Access)**")
     st.sidebar.caption(f"Latest EOD Date: **{latest_date}**")
 
-    if view_option.startswith("View D"):
-        if not manual_tickers:
-            st.warning("Please enter one or more stock tickers in the sidebar field (e.g. `NVDA, AAPL`).")
-            return
+    # Header Status Banner
+    st.title("📈 Quantitative Stock Screener & PIT Backtest")
+    col_b1, col_b2, col_b3 = st.columns(3)
+    with col_b1:
+        st.caption("🟢 **DuckDB Read-Only Active**")
+    with col_b2:
+        st.caption(f"📅 **Latest EOD Trade Date:** `{latest_date}`")
+    with col_b3:
+        st.caption("⚡ **Stage-2 Momentum Model**")
 
-        st.header(f"View D: Custom Analysis for {', '.join(manual_tickers)}")
+    st.markdown("---")
 
-        # Check ticker presence in DuckDB
-        db_tickers_query = f"SELECT DISTINCT ticker FROM daily_bars WHERE ticker IN ({', '.join(['?']*len(manual_tickers))});"
-        existing_rows = db_manager.execute_read(db_tickers_query, manual_tickers)
-        existing_set = {r[0] for r in existing_rows}
+    # Top-Level Horizontal Tabbed Navigation Architecture
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "📈 View A: Live Top-10 Recommendations",
+        "⏪ View B: 1-Week PIT Backtest",
+        "🗓️ View C: 1-Month PIT Backtest",
+        "🔬 View D: Custom Diagnostic Lab",
+    ])
 
-        missing_tickers = [t for t in manual_tickers if t not in existing_set]
-        found_tickers = [t for t in manual_tickers if t in existing_set]
-
-        # Display Ticker Status Badges
-        bcol1, bcol2 = st.columns(2)
-        with bcol1:
-            if found_tickers:
-                st.success(f"✅ Found in Original Ingested Database: **{', '.join(found_tickers)}**")
-        with bcol2:
-            if missing_tickers:
-                st.error(f"❌ Missing / Not Ingested in Local Database: **{', '.join(missing_tickers)}**")
-
-        # Handle missing tickers: Offer 1-click fetch button
-        if missing_tickers:
-            st.warning(
-                f"The following ticker(s) were not part of the initial database seed: **{', '.join(missing_tickers)}**"
-            )
-            if st.button("📥 Download Historical Data for Missing Tickers"):
-                from src.ingestion.data_ingestor import DataIngestor
-
-                with st.spinner("Downloading price history from Yahoo Finance..."):
-                    write_db = DatabaseManager(db_path=db_manager.db_path, read_only=False)
-                    ingestor = DataIngestor(db_manager=write_db)
-                    synced_any = False
-                    for m_tick in missing_tickers:
-                        ok = ingestor.sync_single_ticker(m_tick)
-                        if ok:
-                            st.success(f"Downloaded and stored price history for **{m_tick}**!")
-                            synced_any = True
-                        else:
-                            st.error(f"Failed to fetch data for **{m_tick}**. Please verify ticker symbol on Yahoo Finance.")
-                    if synced_any:
-                        st.rerun()
-
-        if not found_tickers:
-            st.info("Enter a valid ticker symbol above and click download to analyze.")
-            return
-
-        df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
-        # Strictly filter df_manual to user-entered found_tickers only
-        df_manual = df_manual[df_manual["ticker"].isin(found_tickers)].copy()
-
-        if not df_manual.empty:
-            st.markdown("### 📋 Product Manager & Screener Evaluation Feedback")
-
-            # Dynamic fetch of top 10 recommended tickers for cutoff date
-            df_top10 = run_screener(db_manager, cutoff_date=latest_date)
-            top10_set = set(df_top10["ticker"].tolist()) if not df_top10.empty else set()
-
-            for _, row in df_manual.iterrows():
-                tick = row["ticker"]
-                name_str = row.get("name", tick)
-                close_val = row["close"]
-                adv_val = row["adv_20"]
-                sma50_val = row["sma50"]
-                sma150_val = row["sma150"]
-                sma200_val = row["sma200"]
-                sma200_20d_val = row.get("sma200_20d_ago", None)
-                high52_val = row["high_52w"]
-                low52_val = row["low_52w"]
-                tight_val = row.get("tightness_ratio", None)
-                rs_val = row["rs_score"]
-                comp_val = row["composite_score"]
-
-                reasons = []
-
-                # Price floor check (close >= $10.00)
-                if pd.isna(close_val) or close_val < 10.0:
-                    c_str = f"${close_val:.2f}" if pd.notna(close_val) else "N/A"
-                    reasons.append(f"Price ({c_str}) is below $10.00 minimum price floor")
-
-                # Liquidity floor check (ADV20 >= $20,000,000)
-                if pd.isna(adv_val) or adv_val < 20000000.0:
-                    adv_str = f"${adv_val/1e6:.2f}M" if pd.notna(adv_val) else "N/A"
-                    reasons.append(f"ADV20 ({adv_str}) is below $20M liquidity floor")
-
-                # Moving Average Order (close > sma50 > sma150 > sma200)
-                if pd.notna(close_val) and pd.notna(sma50_val) and close_val <= sma50_val:
-                    reasons.append(f"Price (${close_val:.2f}) is below 50D SMA (${sma50_val:.2f})")
-                if pd.notna(sma50_val) and pd.notna(sma150_val) and sma50_val <= sma150_val:
-                    reasons.append(f"50D SMA (${sma50_val:.2f}) is below/equal to 150D SMA (${sma150_val:.2f})")
-                if pd.notna(sma150_val) and pd.notna(sma200_val) and sma150_val <= sma200_val:
-                    reasons.append(f"150D SMA (${sma150_val:.2f}) is below/equal to 200D SMA (${sma200_val:.2f})")
-
-                # 200D SMA Slope Trajectory (20-day uptrend)
-                if pd.isna(sma200_20d_val):
-                    reasons.append("200D SMA 20-day slope trajectory unavailable (insufficient historical data)")
-                elif pd.notna(sma200_val) and sma200_val <= sma200_20d_val:
-                    reasons.append(f"200D SMA (${sma200_val:.2f}) is not trending upward vs 20 days ago (${sma200_20d_val:.2f})")
-
-                # 52-Week Low Bound (close >= 1.30 * low_52w)
-                if pd.notna(close_val) and pd.notna(low52_val):
-                    pct_above_low = ((close_val / low52_val) - 1.0) * 100.0
-                    if close_val < 1.30 * low52_val:
-                        reasons.append(
-                            f"52W Low Bound Failure: Price (${close_val:.2f}) is only {pct_above_low:+.1f}% above 52W Low (${low52_val:.2f}) — requires >= +30.0%"
-                        )
-
-                # 52-Week High Bound (close >= 0.75 * high_52w)
-                if pd.notna(close_val) and pd.notna(high52_val):
-                    pct_off_high = ((close_val / high52_val) - 1.0) * 100.0
-                    if close_val < 0.75 * high52_val:
-                        reasons.append(
-                            f"52W High Bound Failure: Price (${close_val:.2f}) is {pct_off_high:.1f}% off 52W High (${high52_val:.2f}) — exceeds 25.0% max distance ceiling"
-                        )
-
-                # VCP Tightness Ratio ceiling (tightness_ratio <= 3.5)
-                if pd.isna(tight_val):
-                    reasons.append("Tightness Ratio unavailable (ATR14 missing or zero)")
-                elif tight_val > 3.5:
-                    reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 VCP coiling ceiling")
-
-                # Mansfield Relative Strength vs SPY
-                if pd.notna(rs_val) and rs_val < 0.0:
-                    reasons.append(f"Mansfield RS ({rs_val:.4f}) shows relative underperformance vs SPY benchmark")
-
-                was_in_top10 = tick in top10_set
-                is_passing_all = len(reasons) == 0
-
-                with st.expander(f"📌 **{tick}** — {name_str}", expanded=True):
-                    ecol1, ecol2 = st.columns(2)
-                    with ecol1:
-                        st.markdown(f"**Database Status:** Part of Original Ingested Database")
-                        st.markdown(f"**Stage-2 Trend Template:** {'✅ Passed All Filters' if is_passing_all else '⚠️ Filter Deficiencies Found'}")
-                    with ecol2:
-                        st.markdown(f"**Composite Score:** `{comp_val:.2f}`")
-                        st.markdown(f"**View A Top 10 Selection:** {'⭐ Qualified in Top 10' if was_in_top10 else ('Outside Top 10 (Ranked below top 10)' if is_passing_all else '❌ Outside Top 10 (Failed filters)')}")
-
-                    if is_passing_all:
-                        st.success(f"**PM Verdict:** {tick} passes all Stage-2 trend template, liquidity, 52W bounds, SMA slope trajectory, and VCP tightness filters!")
-                    else:
-                        st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
-
-            df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-            df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-            df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
-            df_manual["market_cap_str"] = df_manual["market_cap"].apply(
-                lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
-            )
-
-            st.dataframe(
-                df_manual[
-                    [
-                        "company_url",
-                        "market_cap_str",
-                        "exchange",
-                        "close",
-                        "adv_20",
-                        "rs_score",
-                        "tightness_ratio",
-                        "pct_off_52w_high",
-                        "composite_score",
-                    ]
-                ].rename(
-                    columns={
-                        "company_url": "Company Name",
-                        "market_cap_str": "Market Cap",
-                        "exchange": "Exchange",
-                        "close": "Price ($)",
-                        "adv_20": "ADV20 ($)",
-                        "rs_score": "RS Score",
-                        "tightness_ratio": "Tightness Ratio",
-                        "pct_off_52w_high": "% Off 52W High",
-                        "composite_score": "Composite Score",
-                    }
-                ).sort_values(by="Composite Score", ascending=False).style.format(
-                    {
-                        "Price ($)": "${:.2f}",
-                        "ADV20 ($)": "${:,.0f}",
-                        "RS Score": "{:.4f}",
-                        "Tightness Ratio": "{:.2f}",
-                        "% Off 52W High": "{:+.2f}%",
-                        "Composite Score": "{:.2f}",
-                    }
-                ),
-                column_config={
-                    "Company Name": st.column_config.LinkColumn(
-                        "Company Name",
-                        help="Click to view live chart and fundamentals on Yahoo Finance",
-                        validate=r"^https://finance\.yahoo\.com/quote/",
-                        display_text=r"https://finance\.yahoo\.com/quote/(.*)",
-                    ),
-                },
-                width="stretch",
-            )
-    elif view_option.startswith("View A"):
+    with tab1:
         render_live_recommendations(db_manager, latest_date)
-    elif view_option.startswith("View B"):
-        render_backtest_view(
-            db_manager, cutoff_days_ago=5, view_label="View B: 1-Week Backtest"
-        )
-    elif view_option.startswith("View C"):
-        render_backtest_view(
-            db_manager, cutoff_days_ago=22, view_label="View C: 1-Month Backtest"
-        )
+
+    with tab2:
+        render_backtest_view(db_manager, cutoff_days_ago=5, view_label="View B: 1-Week Backtest")
+
+    with tab3:
+        render_backtest_view(db_manager, cutoff_days_ago=22, view_label="View C: 1-Month Backtest")
+
+    with tab4:
+        if not manual_tickers:
+            st.info("👈 Enter one or more stock tickers in the sidebar field **'Ticker(s) to Analyze'** (e.g. `NVDA, AAPL, TSLA`) to launch custom diagnostics.")
+        else:
+            st.header(f"View D: Custom Analysis for {', '.join(manual_tickers)}")
+
+            # Check ticker presence in DuckDB
+            db_tickers_query = f"SELECT DISTINCT ticker FROM daily_bars WHERE ticker IN ({', '.join(['?']*len(manual_tickers))});"
+            existing_rows = db_manager.execute_read(db_tickers_query, manual_tickers)
+            existing_set = {r[0] for r in existing_rows}
+
+            missing_tickers = [t for t in manual_tickers if t not in existing_set]
+            found_tickers = [t for t in manual_tickers if t in existing_set]
+
+            # Display Ticker Status Badges
+            bcol1, bcol2 = st.columns(2)
+            with bcol1:
+                if found_tickers:
+                    st.success(f"✅ Found in Database: **{', '.join(found_tickers)}**")
+            with bcol2:
+                if missing_tickers:
+                    st.error(f"❌ Missing / Not Ingested: **{', '.join(missing_tickers)}**")
+
+            # Handle missing tickers: Offer 1-click fetch button
+            if missing_tickers:
+                st.warning(
+                    f"The following ticker(s) were not part of the initial database seed: **{', '.join(missing_tickers)}**"
+                )
+                if st.button("📥 Download Historical Data for Missing Tickers"):
+                    from src.ingestion.data_ingestor import DataIngestor
+
+                    with st.spinner("Downloading price history from Yahoo Finance..."):
+                        write_db = DatabaseManager(db_path=db_manager.db_path, read_only=False)
+                        ingestor = DataIngestor(db_manager=write_db)
+                        synced_any = False
+                        for m_tick in missing_tickers:
+                            ok = ingestor.sync_single_ticker(m_tick)
+                            if ok:
+                                st.success(f"Downloaded and stored price history for **{m_tick}**!")
+                                synced_any = True
+                            else:
+                                st.error(f"Failed to fetch data for **{m_tick}**. Please verify ticker symbol on Yahoo Finance.")
+                        if synced_any:
+                            st.rerun()
+
+            if found_tickers:
+                df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
+                df_manual = df_manual[df_manual["ticker"].isin(found_tickers)].copy()
+
+                if not df_manual.empty:
+                    st.markdown("### 📋 Stage-2 Diagnostic Evaluation & PM Feedback")
+
+                    df_top10 = run_screener(db_manager, cutoff_date=latest_date)
+                    top10_set = set(df_top10["ticker"].tolist()) if not df_top10.empty else set()
+
+                    for _, row in df_manual.iterrows():
+                        tick = row["ticker"]
+                        name_str = row.get("name", tick)
+                        close_val = row["close"]
+                        adv_val = row["adv_20"]
+                        sma50_val = row["sma50"]
+                        sma150_val = row["sma150"]
+                        sma200_val = row["sma200"]
+                        sma200_20d_val = row.get("sma200_20d_ago", None)
+                        high52_val = row["high_52w"]
+                        low52_val = row["low_52w"]
+                        tight_val = row.get("tightness_ratio", None)
+                        rs_val = row["rs_score"]
+                        comp_val = row["composite_score"]
+
+                        # 8-Point Stage-2 Health Diagnostics
+                        p_price = pd.notna(close_val) and close_val >= 10.0
+                        p_adv = pd.notna(adv_val) and adv_val >= 20000000.0
+                        p_ma = pd.notna(close_val) and pd.notna(sma50_val) and pd.notna(sma150_val) and pd.notna(sma200_val) and (close_val > sma50_val > sma150_val > sma200_val)
+                        p_slope = pd.notna(sma200_val) and pd.notna(sma200_20d_val) and sma200_val > sma200_20d_val
+                        p_low52 = pd.notna(close_val) and pd.notna(low52_val) and close_val >= 1.30 * low52_val
+                        p_high52 = pd.notna(close_val) and pd.notna(high52_val) and close_val >= 0.75 * high52_val
+                        p_tight = pd.notna(tight_val) and tight_val <= 3.5
+                        p_rs = pd.notna(rs_val) and rs_val > 0.0
+
+                        passed_count = sum([p_price, p_adv, p_ma, p_slope, p_low52, p_high52, p_tight, p_rs])
+                        was_in_top10 = tick in top10_set
+                        is_passing_all = passed_count == 8
+
+                        reasons = []
+                        if not p_price: reasons.append(f"Price (${close_val:.2f}) is below $10.00 floor")
+                        if not p_adv: reasons.append(f"ADV20 (${adv_val/1e6:.2f}M) is below $20M liquidity floor")
+                        if not p_ma: reasons.append("Moving averages break Close > SMA50 > SMA150 > SMA200 alignment")
+                        if not p_slope: reasons.append("200D SMA is not trending upward vs 20 days ago")
+                        if not p_low52: reasons.append(f"Price (${close_val:.2f}) is < +30% above 52W Low (${low52_val:.2f})")
+                        if not p_high52: reasons.append(f"Price (${close_val:.2f}) exceeds 25% distance from 52W High (${high52_val:.2f})")
+                        if not p_tight: reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 ceiling")
+                        if not p_rs: reasons.append(f"Mansfield RS ({rs_val:.4f}) shows underperformance vs SPY")
+
+                        with st.expander(f"📌 **{tick}** — {name_str} (Diagnostic Score: {passed_count}/8 Passed)", expanded=True):
+                            # Visual Health Meter Progress Bar
+                            st.progress(passed_count / 8.0, text=f"Stage-2 Health Score: **{passed_count} / 8 Checklist Criteria Passed**")
+
+                            # 8-Point Grid Display
+                            gcol1, gcol2, gcol3, gcol4 = st.columns(4)
+                            with gcol1:
+                                st.markdown(f"**Price Floor ($10):** {'🟢 PASS' if p_price else '🔴 FAIL'}")
+                                st.markdown(f"**Liquidity ($20M):** {'🟢 PASS' if p_adv else '🔴 FAIL'}")
+                            with gcol2:
+                                st.markdown(f"**MA Alignment:** {'🟢 PASS' if p_ma else '🔴 FAIL'}")
+                                st.markdown(f"**200D Slope:** {'🟢 PASS' if p_slope else '🔴 FAIL'}")
+                            with gcol3:
+                                st.markdown(f"**52W Low (+30%):** {'🟢 PASS' if p_low52 else '🔴 FAIL'}")
+                                st.markdown(f"**52W High (-25%):** {'🟢 PASS' if p_high52 else '🔴 FAIL'}")
+                            with gcol4:
+                                st.markdown(f"**VCP Tightness:** {'🟢 PASS' if p_tight else '🔴 FAIL'}")
+                                st.markdown(f"**Relative Strength:** {'🟢 PASS' if p_rs else '🔴 FAIL'}")
+
+                            st.markdown("---")
+                            dcol1, dcol2 = st.columns(2)
+                            with dcol1:
+                                st.markdown(f"**Percentile Composite Rating:** `{comp_val:.2f} / 100`")
+                            with dcol2:
+                                st.markdown(f"**View A Top 10 Qualification:** {'⭐ Qualified in Top 10' if was_in_top10 else ('Outside Top 10' if is_passing_all else '❌ Disqualified (Failed Criteria)')}")
+
+                            if is_passing_all:
+                                st.success(f"**PM Verdict:** {tick} passes all Stage-2 trend template, liquidity, 52W bounds, SMA slope trajectory, and VCP tightness filters!")
+                            else:
+                                st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
+
+                    df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
+                    df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+                    df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+                    df_manual["market_cap_str"] = df_manual["market_cap"].apply(
+                        lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
+                    )
+
+                    st.dataframe(
+                        df_manual[
+                            [
+                                "company_url",
+                                "market_cap_str",
+                                "exchange",
+                                "close",
+                                "adv_20",
+                                "rs_score",
+                                "tightness_ratio",
+                                "pct_off_52w_high",
+                                "composite_score",
+                            ]
+                        ].rename(
+                            columns={
+                                "company_url": "Company Name",
+                                "market_cap_str": "Market Cap",
+                                "exchange": "Exchange",
+                                "close": "Price ($)",
+                                "adv_20": "ADV20 ($)",
+                                "rs_score": "RS Score",
+                                "tightness_ratio": "Tightness Ratio",
+                                "pct_off_52w_high": "% Off 52W High",
+                                "composite_score": "Composite Score",
+                            }
+                        ).sort_values(by="Composite Score", ascending=False).style.format(
+                            {
+                                "Price ($)": "${:.2f}",
+                                "ADV20 ($)": "${:,.0f}",
+                                "RS Score": "{:.4f}",
+                                "Tightness Ratio": "{:.2f}",
+                                "% Off 52W High": "{:+.2f}%",
+                                "Composite Score": "{:.2f}",
+                            }
+                        ),
+                        column_config={
+                            "Company Name": st.column_config.LinkColumn(
+                                "Company Name",
+                                help="Click to view live chart and fundamentals on Yahoo Finance",
+                                validate=r"^https://finance\.yahoo\.com/quote/",
+                                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
+                            ),
+                        },
+                        width="stretch",
+                    )
 
 
 if __name__ == "__main__":
