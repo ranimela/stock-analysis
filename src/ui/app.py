@@ -104,52 +104,40 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     display_df = df.copy()
 
-    # Select columns without Rank, sorted by Composite Score descending
-    display_df = display_df[
-        [
-            "yahoo_url",
-            "Company Name",
-            "market_cap_str",
-            "exchange",
-            "close",
-            "adv_20",
-            "rs_score",
-            "tightness_ratio",
-            "pct_off_52w_high",
-            "composite_score",
-        ]
-    ].rename(
-        columns={
-            "market_cap_str": "Market Cap",
-            "exchange": "Exchange",
-            "close": "Price ($)",
-            "adv_20": "ADV20 ($)",
-            "rs_score": "RS Score",
-            "tightness_ratio": "Tightness Ratio",
-            "pct_off_52w_high": "% Off 52W High",
-            "composite_score": "Composite Score",
-        }
-    ).sort_values(by="Composite Score", ascending=False)
-
-    display_df["Company Name"] = display_df["yahoo_url"]
+    # Format Company Name as Markdown Link with Full Corporate Name and ADV20 in USD M/B
+    display_df["Company Name"] = display_df.apply(
+        lambda r: f"[{r.get('name') or r['ticker']}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
+    )
+    display_df["ADV20"] = display_df["adv_20"].apply(
+        lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
+    )
 
     st.dataframe(
         display_df[
             [
                 "Company Name",
-                "Market Cap",
-                "Exchange",
-                "Price ($)",
-                "ADV20 ($)",
-                "RS Score",
-                "Tightness Ratio",
-                "% Off 52W High",
-                "Composite Score",
+                "market_cap_str",
+                "exchange",
+                "close",
+                "ADV20",
+                "rs_score",
+                "tightness_ratio",
+                "pct_off_52w_high",
+                "composite_score",
             ]
-        ].style.format(
+        ].rename(
+            columns={
+                "market_cap_str": "Market Cap",
+                "exchange": "Exchange",
+                "close": "Price ($)",
+                "rs_score": "RS Score",
+                "tightness_ratio": "Tightness Ratio",
+                "pct_off_52w_high": "% Off 52W High",
+                "composite_score": "Composite Score",
+            }
+        ).sort_values(by="Composite Score", ascending=False).style.format(
             {
                 "Price ($)": "${:.2f}",
-                "ADV20 ($)": "${:,.0f}",
                 "RS Score": "{:.4f}",
                 "Tightness Ratio": "{:.2f}",
                 "% Off 52W High": "{:+.2f}%",
@@ -160,8 +148,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                validate=r"^https://finance\.yahoo\.com/quote/",
-                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
             ),
         },
         width="stretch",
@@ -266,15 +252,16 @@ def render_backtest_view(
     st.subheader("Historical Position Performance Table")
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
-        disp_pos["company_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-        disp_pos["company_name"] = disp_pos.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+        disp_pos["Company Name"] = disp_pos.apply(
+            lambda r: f"[{r.get('name') or r['ticker']}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
+        )
         disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
 
         disp_pos = disp_pos[
             [
-                "company_url",
+                "Company Name",
                 "market_cap_str",
                 "entry_price",
                 "exit_price",
@@ -286,7 +273,6 @@ def render_backtest_view(
             ]
         ].rename(
             columns={
-                "company_url": "Company Name",
                 "market_cap_str": "Market Cap",
                 "entry_price": "Entry Price ($)",
                 "exit_price": "Exit Price ($)",
@@ -313,8 +299,6 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    validate=r"^https://finance\.yahoo\.com/quote/",
-                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                 ),
             },
             width="stretch",
@@ -554,8 +538,12 @@ def main() -> None:
                                 st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
                     df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-                    df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-                    df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+                    df_manual["Company Name"] = df_manual.apply(
+                        lambda r: f"[{r.get('name') or r['ticker']}](https://finance.yahoo.com/quote/{r['ticker']})", axis=1
+                    )
+                    df_manual["ADV20"] = df_manual["adv_20"].apply(
+                        lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
+                    )
                     df_manual["market_cap_str"] = df_manual["market_cap"].apply(
                         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
                     )
@@ -563,11 +551,11 @@ def main() -> None:
                     st.dataframe(
                         df_manual[
                             [
-                                "company_url",
+                                "Company Name",
                                 "market_cap_str",
                                 "exchange",
                                 "close",
-                                "adv_20",
+                                "ADV20",
                                 "rs_score",
                                 "tightness_ratio",
                                 "pct_off_52w_high",
@@ -575,11 +563,9 @@ def main() -> None:
                             ]
                         ].rename(
                             columns={
-                                "company_url": "Company Name",
                                 "market_cap_str": "Market Cap",
                                 "exchange": "Exchange",
                                 "close": "Price ($)",
-                                "adv_20": "ADV20 ($)",
                                 "rs_score": "RS Score",
                                 "tightness_ratio": "Tightness Ratio",
                                 "pct_off_52w_high": "% Off 52W High",
@@ -588,7 +574,6 @@ def main() -> None:
                         ).sort_values(by="Composite Score", ascending=False).style.format(
                             {
                                 "Price ($)": "${:.2f}",
-                                "ADV20 ($)": "${:,.0f}",
                                 "RS Score": "{:.4f}",
                                 "Tightness Ratio": "{:.2f}",
                                 "% Off 52W High": "{:+.2f}%",
@@ -599,8 +584,6 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                validate=r"^https://finance\.yahoo\.com/quote/",
-                                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                             ),
                         },
                         width="stretch",
