@@ -28,13 +28,11 @@ trigger: always_on
 
 &#x20;  f. When utilizing the Browser Subagent, save all screenshots directly to a fixed path (e.g., /.qa/traces/) and reference them in your markdown report.
 
-4\. Output Format: If any issues are found, output a clean, zero-fluff markdown report with the exact stack traces, line-number bugs, or DOM failures. Do not attempt to fix the code yourself; pass the report directly back to the workspace.
+4. Mandatory Visual & String Output Inspection:
+   Subagents MUST inspect actual rendered DOM HTML strings and layout elements before reporting completion. If a component generates raw unparsed Markdown or escaped HTML tags inside table cells, the subagent MUST flag a FAIL status immediately.
 
+## Exit Status Definition
 
+- **FAIL:** Any lint failure, broken test, schema deviation, unparsed HTML/Markdown display bug, or unhandled promise rejection outputs a structural bug report and halts the pipeline.
 
-\## Exit Status Definition
-
-\- \*\*FAIL:\*\* Any lint failure, broken test, schema deviation, or unhandled promise rejection outputs a structural bug report and halts the pipeline.
-
-\- \*\*PASS:\*\* Zero errors found across all five operational phases outputs a simple, clean verification token.
-
+- **PASS:** Zero errors found across all operational and visual verification phases outputs a simple, clean verification token.
