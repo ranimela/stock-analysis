@@ -172,14 +172,11 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
     st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
     display_df = df.copy()
-    display_df["pct_off_52w_high"] = ((display_df["close"] / display_df["high_52w"]) - 1.0) * 100.0
-    display_df["ADV20_str"] = display_df["adv_20"].apply(
+    display_df["company_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+    display_df["company_name"] = display_df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+    display_df["ADV20"] = display_df["adv_20"].apply(
         lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
     )
-    display_df["market_cap_str"] = display_df["market_cap"].apply(
-        lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
-    )
-    display_df = display_df.sort_values(by="composite_score", ascending=False)
 
     tcol1, tcol2 = st.columns([4, 1])
     with tcol1:
@@ -193,58 +190,45 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             mime="text/csv",
         )
 
-    # Render HTML Table Enforcing Left-Aligned Text & Right-Aligned Numbers with Hyperlinked Full Company Name
-    html_rows = []
-    for idx, r in enumerate(display_df.itertuples(), 1):
-        comp_name = getattr(r, "name", None) or getattr(r, "ticker")
-        ticker = getattr(r, "ticker")
-        mcap = getattr(r, "market_cap_str")
-        exch = getattr(r, "exchange", "NASDAQ")
-        price = f"${getattr(r, 'close'):.2f}"
-        adv = getattr(r, "ADV20_str")
-        rs = f"{getattr(r, 'rs_score'):.4f}"
-        tight = f"{getattr(r, 'tightness_ratio'):.2f}"
-        pct_off = f"{getattr(r, 'pct_off_52w_high'):+.2f}%"
-        comp_score = f"{getattr(r, 'composite_score'):.2f}"
-        url = f"https://finance.yahoo.com/quote/{ticker}"
-
-        html_rows.append(f"""
-        <tr>
-            <td style="text-align: left;"><a href="{url}" target="_blank" style="color: #58a6ff; text-decoration: none; font-weight: 600;">{comp_name}</a></td>
-            <td style="text-align: right;">{mcap}</td>
-            <td style="text-align: left;">{exch}</td>
-            <td style="text-align: right; font-family: monospace;">{price}</td>
-            <td style="text-align: right;">{adv}</td>
-            <td style="text-align: right; font-family: monospace;">{rs}</td>
-            <td style="text-align: right; font-family: monospace;">{tight}</td>
-            <td style="text-align: right; font-family: monospace;">{pct_off}</td>
-            <td style="text-align: right; font-family: monospace; font-weight: bold; color: #58a6ff;">{comp_score}</td>
-        </tr>
-        """)
-
-    html_table = f"""
-    <div style="overflow-x: auto; border: 1px solid #30363d; border-radius: 8px; margin-bottom: 20px;">
-        <table style="width: 100%; border-collapse: collapse; font-family: Inter, sans-serif; font-size: 0.9rem;">
-            <thead>
-                <tr style="background-color: #161b22; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 0.8rem; text-transform: uppercase;">
-                    <th style="text-align: left; padding: 10px 12px;">Company Name</th>
-                    <th style="text-align: right; padding: 10px 12px;">Market Cap</th>
-                    <th style="text-align: left; padding: 10px 12px;">Exchange</th>
-                    <th style="text-align: right; padding: 10px 12px;">Price ($)</th>
-                    <th style="text-align: right; padding: 10px 12px;">ADV20</th>
-                    <th style="text-align: right; padding: 10px 12px;">RS Score</th>
-                    <th style="text-align: right; padding: 10px 12px;">Tightness Ratio</th>
-                    <th style="text-align: right; padding: 10px 12px;">% Off 52W High</th>
-                    <th style="text-align: right; padding: 10px 12px;">Composite Score</th>
-                </tr>
-            </thead>
-            <tbody style="background-color: #0d1117; color: #c9d1d9;">
-                {''.join(html_rows)}
-            </tbody>
-        </table>
-    </div>
-    """
-    st.markdown(html_table, unsafe_allow_html=True)
+    st.dataframe(
+        display_df[
+            [
+                "company_url",
+                "market_cap_str",
+                "exchange",
+                "close",
+                "ADV20",
+                "rs_score",
+                "tightness_ratio",
+                "pct_off_52w_high",
+                "composite_score",
+            ]
+        ].rename(
+            columns={
+                "company_url": "Company Name",
+                "market_cap_str": "Market Cap",
+                "exchange": "Exchange",
+                "close": "Price ($)",
+                "rs_score": "RS Score",
+                "tightness_ratio": "Tightness Ratio",
+                "pct_off_52w_high": "% Off 52W High",
+                "composite_score": "Composite Score",
+            }
+        ).sort_values(by="Composite Score", ascending=False),
+        column_config={
+            "Company Name": st.column_config.LinkColumn(
+                "Company Name",
+                help="Click to view live chart and fundamentals on Yahoo Finance",
+                display_text=r"https://finance\.yahoo\.com/quote/.*",
+            ),
+            "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
+            "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
+            "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
+            "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
+            "Composite Score": st.column_config.NumberColumn("Composite Score", format="%.2f"),
+        },
+        width="stretch",
+    )
 
     # Strategy Rationale & Output Guide (from app rationale.txt)
     st.markdown("### 💡 Strategy Rationale & Screener Output Guide")
@@ -348,65 +332,54 @@ def render_backtest_view(
 
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
+        disp_pos["company_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        disp_pos["company_name"] = disp_pos.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
         disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
+        disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
 
-        html_b_rows = []
-        for idx, r in enumerate(disp_pos.itertuples(), 1):
-            comp_name = getattr(r, "name", None) or getattr(r, "ticker")
-            ticker = getattr(r, "ticker")
-            mcap = getattr(r, "market_cap_str")
-            entry_p = f"${getattr(r, 'entry_price'):.2f}"
-            exit_p = f"${getattr(r, 'exit_price'):.2f}"
-            ret_pct = f"{getattr(r, 'return_pct'):+.2f}%"
-            spy_pct = f"{getattr(r, 'spy_return_pct'):+.2f}%"
-            alpha_pct = f"{getattr(r, 'alpha_pct'):+.2f}%"
-            mdd = f"{getattr(r, 'max_drawdown_pct'):.2f}%"
-            is_win = getattr(r, "is_win")
-            status_str = "🟢 WIN" if is_win else "🔴 LOSS"
-            url = f"https://finance.yahoo.com/quote/{ticker}"
-
-            ret_color = "#3fb950" if getattr(r, "return_pct") >= 0 else "#f85149"
-            alpha_color = "#3fb950" if getattr(r, "alpha_pct") >= 0 else "#f85149"
-
-            html_b_rows.append(f"""
-            <tr>
-                <td style="text-align: left;"><a href="{url}" target="_blank" style="color: #58a6ff; text-decoration: none; font-weight: 600;">{comp_name}</a></td>
-                <td style="text-align: right;">{mcap}</td>
-                <td style="text-align: right; font-family: monospace;">{entry_p}</td>
-                <td style="text-align: right; font-family: monospace;">{exit_p}</td>
-                <td style="text-align: right; font-family: monospace; color: {ret_color}; font-weight: 600;">{ret_pct}</td>
-                <td style="text-align: right; font-family: monospace;">{spy_pct}</td>
-                <td style="text-align: right; font-family: monospace; color: {alpha_color}; font-weight: 600;">{alpha_pct}</td>
-                <td style="text-align: right; font-family: monospace;">{mdd}</td>
-                <td style="text-align: left;">{status_str}</td>
-            </tr>
-            """)
-
-        html_b_table = f"""
-        <div style="overflow-x: auto; border: 1px solid #30363d; border-radius: 8px; margin-bottom: 20px;">
-            <table style="width: 100%; border-collapse: collapse; font-family: Inter, sans-serif; font-size: 0.9rem;">
-                <thead>
-                    <tr style="background-color: #161b22; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 0.8rem; text-transform: uppercase;">
-                        <th style="text-align: left; padding: 10px 12px;">Company Name</th>
-                        <th style="text-align: right; padding: 10px 12px;">Market Cap</th>
-                        <th style="text-align: right; padding: 10px 12px;">Entry Price ($)</th>
-                        <th style="text-align: right; padding: 10px 12px;">Exit Price ($)</th>
-                        <th style="text-align: right; padding: 10px 12px;">Return (%)</th>
-                        <th style="text-align: right; padding: 10px 12px;">SPY Return (%)</th>
-                        <th style="text-align: right; padding: 10px 12px;">Alpha (%)</th>
-                        <th style="text-align: right; padding: 10px 12px;">Max Drawdown (%)</th>
-                        <th style="text-align: left; padding: 10px 12px;">Status</th>
-                    </tr>
-                </thead>
-                <tbody style="background-color: #0d1117; color: #c9d1d9;">
-                    {''.join(html_b_rows)}
-                </tbody>
-            </table>
-        </div>
-        """
-        st.markdown(html_b_table, unsafe_allow_html=True)
+        st.dataframe(
+            disp_pos[
+                [
+                    "company_url",
+                    "market_cap_str",
+                    "entry_price",
+                    "exit_price",
+                    "return_pct",
+                    "spy_return_pct",
+                    "alpha_pct",
+                    "max_drawdown_pct",
+                    "win_status",
+                ]
+            ].rename(
+                columns={
+                    "company_url": "Company Name",
+                    "market_cap_str": "Market Cap",
+                    "entry_price": "Entry Price ($)",
+                    "exit_price": "Exit Price ($)",
+                    "return_pct": "Return (%)",
+                    "spy_return_pct": "SPY Return (%)",
+                    "alpha_pct": "Alpha (%)",
+                    "max_drawdown_pct": "Max Drawdown (%)",
+                    "win_status": "Status",
+                }
+            ),
+            column_config={
+                "Company Name": st.column_config.LinkColumn(
+                    "Company Name",
+                    help="Click to view live chart and fundamentals on Yahoo Finance",
+                    display_text=r"https://finance\.yahoo\.com/quote/.*",
+                ),
+                "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
+                "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
+                "Return (%)": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
+                "SPY Return (%)": st.column_config.NumberColumn("SPY Return (%)", format="%+.2f%%"),
+                "Alpha (%)": st.column_config.NumberColumn("Alpha (%)", format="%+.2f%%"),
+                "Max Drawdown (%)": st.column_config.NumberColumn("Max Drawdown (%)", format="%.2f%%"),
+            },
+            width="stretch",
+        )
     else:
         st.info("No position data available for this historical backtest date.")
 
@@ -632,65 +605,54 @@ def main() -> None:
                                 st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
                     df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
-                    df_manual["ADV20_str"] = df_manual["adv_20"].apply(
+                    df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+                    df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+                    df_manual["ADV20"] = df_manual["adv_20"].apply(
                         lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
                     )
                     df_manual["market_cap_str"] = df_manual["market_cap"].apply(
                         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
                     )
-                    df_manual = df_manual.sort_values(by="composite_score", ascending=False)
 
-                    html_d_rows = []
-                    for idx, r in enumerate(df_manual.itertuples(), 1):
-                        comp_name = getattr(r, "name", None) or getattr(r, "ticker")
-                        ticker = getattr(r, "ticker")
-                        mcap = getattr(r, "market_cap_str")
-                        exch = getattr(r, "exchange", "NASDAQ")
-                        price = f"${getattr(r, 'close'):.2f}"
-                        adv = getattr(r, "ADV20_str")
-                        rs = f"{getattr(r, 'rs_score'):.4f}"
-                        tight = f"{getattr(r, 'tightness_ratio'):.2f}"
-                        pct_off = f"{getattr(r, 'pct_off_52w_high'):+.2f}%"
-                        comp_score = f"{getattr(r, 'composite_score'):.2f}"
-                        url = f"https://finance.yahoo.com/quote/{ticker}"
-
-                        html_d_rows.append(f"""
-                        <tr>
-                            <td style="text-align: left;"><a href="{url}" target="_blank" style="color: #58a6ff; text-decoration: none; font-weight: 600;">{comp_name}</a></td>
-                            <td style="text-align: right;">{mcap}</td>
-                            <td style="text-align: left;">{exch}</td>
-                            <td style="text-align: right; font-family: monospace;">{price}</td>
-                            <td style="text-align: right;">{adv}</td>
-                            <td style="text-align: right; font-family: monospace;">{rs}</td>
-                            <td style="text-align: right; font-family: monospace;">{tight}</td>
-                            <td style="text-align: right; font-family: monospace;">{pct_off}</td>
-                            <td style="text-align: right; font-family: monospace; font-weight: bold; color: #58a6ff;">{comp_score}</td>
-                        </tr>
-                        """)
-
-                    html_d_table = f"""
-                    <div style="overflow-x: auto; border: 1px solid #30363d; border-radius: 8px; margin-bottom: 20px;">
-                        <table style="width: 100%; border-collapse: collapse; font-family: Inter, sans-serif; font-size: 0.9rem;">
-                            <thead>
-                                <tr style="background-color: #161b22; border-bottom: 1px solid #30363d; color: #8b949e; font-size: 0.8rem; text-transform: uppercase;">
-                                    <th style="text-align: left; padding: 10px 12px;">Company Name</th>
-                                    <th style="text-align: right; padding: 10px 12px;">Market Cap</th>
-                                    <th style="text-align: left; padding: 10px 12px;">Exchange</th>
-                                    <th style="text-align: right; padding: 10px 12px;">Price ($)</th>
-                                    <th style="text-align: right; padding: 10px 12px;">ADV20</th>
-                                    <th style="text-align: right; padding: 10px 12px;">RS Score</th>
-                                    <th style="text-align: right; padding: 10px 12px;">Tightness Ratio</th>
-                                    <th style="text-align: right; padding: 10px 12px;">% Off 52W High</th>
-                                    <th style="text-align: right; padding: 10px 12px;">Composite Score</th>
-                                </tr>
-                            </thead>
-                            <tbody style="background-color: #0d1117; color: #c9d1d9;">
-                                {''.join(html_d_rows)}
-                            </tbody>
-                        </table>
-                    </div>
-                    """
-                    st.markdown(html_d_table, unsafe_allow_html=True)
+                    st.dataframe(
+                        df_manual[
+                            [
+                                "company_url",
+                                "market_cap_str",
+                                "exchange",
+                                "close",
+                                "ADV20",
+                                "rs_score",
+                                "tightness_ratio",
+                                "pct_off_52w_high",
+                                "composite_score",
+                            ]
+                        ].rename(
+                            columns={
+                                "company_url": "Company Name",
+                                "market_cap_str": "Market Cap",
+                                "exchange": "Exchange",
+                                "close": "Price ($)",
+                                "rs_score": "RS Score",
+                                "tightness_ratio": "Tightness Ratio",
+                                "pct_off_52w_high": "% Off 52W High",
+                                "composite_score": "Composite Score",
+                            }
+                        ).sort_values(by="Composite Score", ascending=False),
+                        column_config={
+                            "Company Name": st.column_config.LinkColumn(
+                                "Company Name",
+                                help="Click to view live chart and fundamentals on Yahoo Finance",
+                                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                            ),
+                            "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
+                            "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
+                            "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
+                            "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
+                            "Composite Score": st.column_config.NumberColumn("Composite Score", format="%.2f"),
+                        },
+                        width="stretch",
+                    )
 
 
 if __name__ == "__main__":
