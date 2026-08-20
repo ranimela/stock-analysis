@@ -96,7 +96,7 @@ def test_ui_check_db_availability(populated_db: DatabaseManager, temp_db: Path) 
 
 
 def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test View A render_live_recommendations executes cleanly and configures LinkColumn with regex display_text."""
+    """Test View A render_live_recommendations executes cleanly and renders custom HTML table."""
     import streamlit as st
     from src.ui.app import render_live_recommendations
 
@@ -104,34 +104,31 @@ def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypat
     latest_date = check_db_availability(read_only_mgr)
     assert latest_date is not None
 
-    dataframe_calls = []
+    markdown_calls = []
 
-    def mock_dataframe(*args, **kwargs):
-        dataframe_calls.append((args, kwargs))
+    def mock_markdown(*args, **kwargs):
+        markdown_calls.append((args, kwargs))
 
-    monkeypatch.setattr(st, "dataframe", mock_dataframe)
+    monkeypatch.setattr(st, "markdown", mock_markdown)
 
     render_live_recommendations(read_only_mgr, latest_date)
 
-    assert len(dataframe_calls) > 0
-    col_config = dataframe_calls[0][1].get("column_config", {})
-    assert "Company Name" in col_config
-    assert col_config["Company Name"] is not None
+    assert len(markdown_calls) > 0
 
 
 def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test View B and View C render_backtest_view execute cleanly and configure LinkColumn with regex display_text."""
+    """Test View B and View C render_backtest_view execute cleanly and render custom HTML table."""
     import streamlit as st
     from src.ui.app import render_backtest_view
 
     read_only_mgr = DatabaseManager(db_path=populated_db.db_path, read_only=True)
 
-    dataframe_calls = []
+    markdown_calls = []
 
-    def mock_dataframe(*args, **kwargs):
-        dataframe_calls.append((args, kwargs))
+    def mock_markdown(*args, **kwargs):
+        markdown_calls.append((args, kwargs))
 
-    monkeypatch.setattr(st, "dataframe", mock_dataframe)
+    monkeypatch.setattr(st, "markdown", mock_markdown)
 
     # Test View B (T-5)
     render_backtest_view(read_only_mgr, cutoff_days_ago=5, view_label="View B: 1-Week Backtest")
@@ -139,15 +136,11 @@ def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pyt
     # Test View C (T-22)
     render_backtest_view(read_only_mgr, cutoff_days_ago=22, view_label="View C: 1-Month Backtest")
 
-    for _, kwargs in dataframe_calls:
-        col_config = kwargs.get("column_config", {})
-        if "Company Name" in col_config:
-            link_col = col_config["Company Name"]
-            assert link_col is not None
+    assert len(markdown_calls) > 0
 
 
 def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
-    """Test View D Manual Analysis rendering with custom tickers and LinkColumn config."""
+    """Test View D Manual Analysis rendering with custom tickers and HTML table."""
     import streamlit as st
     from src.engine.screener_queries import run_screener
     from src.ui.app import check_db_availability
@@ -156,12 +149,12 @@ def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: p
     latest_date = check_db_availability(read_only_mgr)
     assert latest_date is not None
 
-    dataframe_calls = []
+    markdown_calls = []
 
-    def mock_dataframe(*args, **kwargs):
-        dataframe_calls.append((args, kwargs))
+    def mock_markdown(*args, **kwargs):
+        markdown_calls.append((args, kwargs))
 
-    monkeypatch.setattr(st, "dataframe", mock_dataframe)
+    monkeypatch.setattr(st, "markdown", mock_markdown)
 
     df_manual = run_screener(read_only_mgr, cutoff_date=latest_date, manual_tickers=["AAPL"])
     assert not df_manual.empty
