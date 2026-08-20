@@ -221,6 +221,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
+                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
             ),
             "Composite Score": st.column_config.ProgressColumn(
                 "Composite Score",
@@ -388,6 +389,7 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
+                    display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                 ),
                 "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
                 "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
@@ -663,6 +665,7 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
+                                display_text=r"https://finance\.yahoo\.com/quote/(.*)",
                             ),
                             "Composite Score": st.column_config.ProgressColumn(
                                 "Composite Score",
