@@ -150,7 +150,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                display_text=lambda url: url_map.get(url, url),
             ),
         },
         width="stretch",
@@ -304,7 +303,6 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    display_text=lambda url: pos_url_map.get(url, url),
                 ),
             },
             width="stretch",
@@ -592,7 +590,6 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                display_text=lambda url: man_url_map.get(url, url),
                             ),
                         },
                         width="stretch",
