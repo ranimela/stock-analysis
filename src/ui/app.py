@@ -351,6 +351,7 @@ def render_backtest_view(
     bcol1, bcol2 = st.columns([4, 1])
     with bcol1:
         st.subheader("Historical Position Performance Table")
+        st.caption(f"📅 Recommended on **{cutoff_date}** ($T_{{-{cutoff_days_ago}}}$) — Performance tracked through **{eval_date}** ($T_0$)")
     with bcol2:
         if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
             csv_backtest = pos_df.to_csv(index=False).encode("utf-8")
