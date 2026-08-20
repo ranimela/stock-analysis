@@ -159,6 +159,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     display_df = df.copy()
     display_df["company_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+    display_df["Company Name"] = display_df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
     display_df["ADV20"] = display_df["adv_20"].apply(
         lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
     )
@@ -175,12 +176,13 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             mime="text/csv",
         )
 
+    url_map = dict(zip(display_df["company_url"], display_df["Company Name"]))
+
     st.dataframe(
         display_df[
             [
                 "company_url",
                 "market_cap_str",
-                "exchange",
                 "close",
                 "ADV20",
                 "rs_score",
@@ -192,7 +194,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             columns={
                 "company_url": "Company Name",
                 "market_cap_str": "Market Cap",
-                "exchange": "Exchange",
                 "close": "Price ($)",
                 "rs_score": "RS Score",
                 "tightness_ratio": "Tightness Ratio",
@@ -204,10 +205,10 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                display_text=lambda url: url_map.get(url, url),
             ),
             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
-            "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
+            "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
             "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
             "Composite Score": st.column_config.NumberColumn("Composite Score", format="%.2f"),
@@ -324,6 +325,8 @@ def render_backtest_view(
         )
         disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
 
+        pos_url_map = dict(zip(disp_pos["company_url"], disp_pos["company_name"]))
+
         st.dataframe(
             disp_pos[
                 [
@@ -354,7 +357,7 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    display_text=r"https://finance\.yahoo\.com/quote/.*",
+                    display_text=lambda url: pos_url_map.get(url, url),
                 ),
                 "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
                 "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
@@ -599,12 +602,13 @@ def main() -> None:
                         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
                     )
 
+                    man_url_map = dict(zip(df_manual["company_url"], df_manual["company_name"]))
+
                     st.dataframe(
                         df_manual[
                             [
                                 "company_url",
                                 "market_cap_str",
-                                "exchange",
                                 "close",
                                 "ADV20",
                                 "rs_score",
@@ -616,7 +620,6 @@ def main() -> None:
                             columns={
                                 "company_url": "Company Name",
                                 "market_cap_str": "Market Cap",
-                                "exchange": "Exchange",
                                 "close": "Price ($)",
                                 "rs_score": "RS Score",
                                 "tightness_ratio": "Tightness Ratio",
@@ -628,10 +631,10 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                                display_text=lambda url: man_url_map.get(url, url),
                             ),
                             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
-                            "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
+                            "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
                             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
                             "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
                             "Composite Score": st.column_config.NumberColumn("Composite Score", format="%.2f"),
