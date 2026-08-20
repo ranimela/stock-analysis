@@ -94,11 +94,59 @@ def inject_custom_css() -> None:
             font-weight: 600 !important;
         }
 
-        button[aria-selected="true"] {
-            background-color: #1f242d !important;
-            color: #58a6ff !important;
-            border-bottom: 2px solid #58a6ff !important;
+        /* HTML Custom Data Table Styling */
+        .custom-table-container {
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            overflow-x: auto;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            margin: 12px 0 24px 0;
+            background-color: #0d1117;
         }
+
+        .custom-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            color: #f0f6fc;
+            text-align: left;
+        }
+
+        .custom-data-table th {
+            background-color: #161b22;
+            color: #8b949e;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid #30363d;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #21262d;
+            vertical-align: middle;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .custom-data-table tr:hover {
+            background-color: #161b22;
+        }
+
+        .custom-data-table a.company-link {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .custom-data-table a.company-link:hover {
+            text-decoration: underline;
+            color: #79c0ff;
+        }
+
+        .text-left { text-align: left !important; }
+        .text-right { text-align: right !important; font-family: 'JetBrains Mono', monospace; }
     </style>
     """,
         unsafe_allow_html=True,
@@ -177,41 +225,60 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             mime="text/csv",
         )
 
-    st.dataframe(
-        display_df[
-            [
-                "Company Name",
-                "market_cap_str",
-                "close",
-                "ADV20",
-                "rs_score",
-                "tightness_ratio",
-                "pct_off_52w_high",
-                "composite_score",
-            ]
-        ].rename(
-            columns={
-                "market_cap_str": "Market Cap",
-                "close": "Price ($)",
-                "rs_score": "RS Score",
-                "tightness_ratio": "Tightness Ratio",
-                "pct_off_52w_high": "% Off 52W High",
-                "composite_score": "Composite Score",
-            }
-        ).sort_values(by="Composite Score", ascending=False),
-        column_config={
-            "Company Name": st.column_config.LinkColumn(
-                "Company Name",
-                help="Click to view live chart and fundamentals on Yahoo Finance",
-            ),
-            "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
-            "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
-            "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
-            "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
-            "Composite Score": st.column_config.NumberColumn("Composite Score", format="%.2f"),
-        },
-        width="stretch",
-    )
+    # Generate clean HTML table
+    sorted_df = display_df.sort_values(by="composite_score", ascending=False)
+    
+    html_rows = []
+    for row_idx, row in sorted_df.iterrows():
+        comp_name = str(row.get("name") or row["ticker"])
+        ticker = row["ticker"]
+        yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
+        mcap = row["market_cap_str"]
+        price = f"${row['close']:.2f}"
+        adv = row["ADV20"]
+        rs = f"{row['rs_score']:.2f}"
+        tightness = f"{row['tightness_ratio']:.2f}"
+        pct_high = f"{row['pct_off_52w_high']:+.2f}%"
+        comp_score = f"{row['composite_score']:.2f}"
+
+        html_rows.append(
+            f"""
+            <tr>
+                <td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td>
+                <td class="text-right">{mcap}</td>
+                <td class="text-right">{price}</td>
+                <td class="text-right">{adv}</td>
+                <td class="text-right">{rs}</td>
+                <td class="text-right">{tightness}</td>
+                <td class="text-right">{pct_high}</td>
+                <td class="text-right">{comp_score}</td>
+            </tr>
+            """
+        )
+
+    html_table = f"""
+    <div class="custom-table-container">
+        <table class="custom-data-table">
+            <thead>
+                <tr>
+                    <th class="text-left">Company Name</th>
+                    <th class="text-right">Market Cap</th>
+                    <th class="text-right">Price ($)</th>
+                    <th class="text-right">ADV20</th>
+                    <th class="text-right">RS Score</th>
+                    <th class="text-right">Tightness Ratio</th>
+                    <th class="text-right">% Off 52W High</th>
+                    <th class="text-right">Composite Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {''.join(html_rows)}
+            </tbody>
+        </table>
+    </div>
+    """
+
+    st.markdown(html_table, unsafe_allow_html=True)
 
     # Strategy Rationale & Output Guide (from app rationale.txt)
     st.markdown("### 💡 Strategy Rationale & Screener Output Guide")
@@ -327,45 +394,60 @@ def render_backtest_view(
             axis=1
         )
 
-        st.dataframe(
-            disp_pos[
-                [
-                    "Company Name",
-                    "market_cap_str",
-                    "entry_price",
-                    "exit_price",
-                    "return_pct",
-                    "spy_return_pct",
-                    "alpha_pct",
-                    "max_drawdown_pct",
-                    "win_status",
-                ]
-            ].rename(
-                columns={
-                    "market_cap_str": "Market Cap",
-                    "entry_price": "Entry Price ($)",
-                    "exit_price": "Exit Price ($)",
-                    "return_pct": "Return (%)",
-                    "spy_return_pct": "SPY Return (%)",
-                    "alpha_pct": "Alpha (%)",
-                    "max_drawdown_pct": "Max Drawdown (%)",
-                    "win_status": "Status",
-                }
-            ),
-            column_config={
-                "Company Name": st.column_config.LinkColumn(
-                    "Company Name",
-                    help="Click to view live chart and fundamentals on Yahoo Finance",
-                ),
-                "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
-                "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
-                "Return (%)": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
-                "SPY Return (%)": st.column_config.NumberColumn("SPY Return (%)", format="%+.2f%%"),
-                "Alpha (%)": st.column_config.NumberColumn("Alpha (%)", format="%+.2f%%"),
-                "Max Drawdown (%)": st.column_config.NumberColumn("Max Drawdown (%)", format="%.2f%%"),
-            },
-            width="stretch",
-        )
+        html_b_rows = []
+        for row_idx, row in disp_pos.iterrows():
+            comp_name = str(row.get("name") or row["ticker"])
+            ticker = row["ticker"]
+            yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
+            mcap = row["market_cap_str"]
+            entry_p = f"${row['entry_price']:.2f}"
+            exit_p = f"${row['exit_price']:.2f}"
+            ret = f"{row['return_pct']:+.2f}%"
+            spy_ret = f"{row['spy_return_pct']:+.2f}%"
+            alpha_p = f"{row['alpha_pct']:+.2f}%"
+            mdd = f"{row['max_drawdown_pct']:.2f}%"
+            status = row["win_status"]
+
+            html_b_rows.append(
+                f"""
+                <tr>
+                    <td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td>
+                    <td class="text-right">{mcap}</td>
+                    <td class="text-right">{entry_p}</td>
+                    <td class="text-right">{exit_p}</td>
+                    <td class="text-right">{ret}</td>
+                    <td class="text-right">{spy_ret}</td>
+                    <td class="text-right">{alpha_p}</td>
+                    <td class="text-right">{mdd}</td>
+                    <td class="text-left">{status}</td>
+                </tr>
+                """
+            )
+
+        html_b_table = f"""
+        <div class="custom-table-container">
+            <table class="custom-data-table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Company Name</th>
+                        <th class="text-right">Market Cap</th>
+                        <th class="text-right">Entry Price ($)</th>
+                        <th class="text-right">Exit Price ($)</th>
+                        <th class="text-right">Return (%)</th>
+                        <th class="text-right">SPY Return (%)</th>
+                        <th class="text-right">Alpha (%)</th>
+                        <th class="text-right">Max Drawdown (%)</th>
+                        <th class="text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {''.join(html_b_rows)}
+                </tbody>
+            </table>
+        </div>
+        """
+
+        st.markdown(html_b_table, unsafe_allow_html=True)
     else:
         st.info("No position data available for this historical backtest date.")
 
@@ -605,41 +687,59 @@ def main() -> None:
                         axis=1
                     )
 
-                    st.dataframe(
-                        df_manual[
-                            [
-                                "Company Name",
-                                "market_cap_str",
-                                "close",
-                                "ADV20",
-                                "rs_score",
-                                "tightness_ratio",
-                                "pct_off_52w_high",
-                                "composite_score",
-                            ]
-                        ].rename(
-                            columns={
-                                "market_cap_str": "Market Cap",
-                                "close": "Price ($)",
-                                "rs_score": "RS Score",
-                                "tightness_ratio": "Tightness Ratio",
-                                "pct_off_52w_high": "% Off 52W High",
-                                "composite_score": "Composite Score",
-                            }
-                        ).sort_values(by="Composite Score", ascending=False),
-                        column_config={
-                            "Company Name": st.column_config.LinkColumn(
-                                "Company Name",
-                                help="Click to view live chart and fundamentals on Yahoo Finance",
-                            ),
-                            "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
-                            "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
-                            "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
-                            "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
-                            "Composite Score": st.column_config.NumberColumn("Composite Score", format="%.2f"),
-                        },
-                        width="stretch",
-                    )
+                    sorted_d_df = df_manual.sort_values(by="composite_score", ascending=False)
+                    
+                    html_d_rows = []
+                    for row_idx, row in sorted_d_df.iterrows():
+                        comp_name = str(row.get("name") or row["ticker"])
+                        ticker = row["ticker"]
+                        yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
+                        mcap = row["market_cap_str"]
+                        price = f"${row['close']:.2f}"
+                        adv = row["ADV20"]
+                        rs = f"{row['rs_score']:.2f}"
+                        tightness = f"{row['tightness_ratio']:.2f}"
+                        pct_high = f"{row['pct_off_52w_high']:+.2f}%"
+                        comp_score = f"{row['composite_score']:.2f}"
+
+                        html_d_rows.append(
+                            f"""
+                            <tr>
+                                <td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td>
+                                <td class="text-right">{mcap}</td>
+                                <td class="text-right">{price}</td>
+                                <td class="text-right">{adv}</td>
+                                <td class="text-right">{rs}</td>
+                                <td class="text-right">{tightness}</td>
+                                <td class="text-right">{pct_high}</td>
+                                <td class="text-right">{comp_score}</td>
+                            </tr>
+                            """
+                        )
+
+                    html_d_table = f"""
+                    <div class="custom-table-container">
+                        <table class="custom-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Company Name</th>
+                                    <th class="text-right">Market Cap</th>
+                                    <th class="text-right">Price ($)</th>
+                                    <th class="text-right">ADV20</th>
+                                    <th class="text-right">RS Score</th>
+                                    <th class="text-right">Tightness Ratio</th>
+                                    <th class="text-right">% Off 52W High</th>
+                                    <th class="text-right">Composite Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {''.join(html_d_rows)}
+                            </tbody>
+                        </table>
+                    </div>
+                    """
+
+                    st.markdown(html_d_table, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
