@@ -425,15 +425,15 @@ def render_backtest_view(
     st.markdown("### 💡 Backtest Output Guide")
     with st.expander("📊 **What the Backtest Output Tells You**", expanded=True):
         st.markdown(
-            """
-- **1-Week & 1-Month "Time Machine" Backtests ($T_{-5}$ and $T_{-22}$)**
-  - *Meaning:* A simulated report card showing what would have happened if you bought the scanner's top picks 1 week ago ($T_{-5}$) or 1 month ago ($T_{-22}$).
-- **Forward Return & Alpha**
-  - *Meaning:* Shows the exact percentage gained and how much better the picks performed compared to the standard S&P 500 benchmark.
-- **Win Rate**
-  - *Meaning:* Tells you the batting average (e.g., "7 out of 10 picks went up").
-- **Max Drawdown**
-  - *Meaning:* Tracks the deepest intraday dip experienced during the holding window to quantify downside risk.
+            f"""
+- **Point-in-Time Recommendation ($T_{{-{cutoff_days_ago}}}$)**
+  - *Meaning:* Shows the exact list of stocks that the model recommended **{cutoff_days_ago} trading days ago** on **{cutoff_date}**, using strictly the market data available on that day.
+- **Forward Performance Tracking ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$)**
+  - *Meaning:* Tracks the performance of those recommendations from their entry price on **{cutoff_date}** up to **today ({eval_date})**.
+- **Return (%) & Benchmark Alpha (%)**
+  - *Meaning:* Measures your exact stock percentage return and how much better (or worse) each pick performed compared to the S&P 500 (`SPY`) over the exact same period.
+- **Max Drawdown (%)**
+  - *Meaning:* Tracks the deepest intraday price drop from entry peak during the holding period to quantify risk.
 """
         )
 
