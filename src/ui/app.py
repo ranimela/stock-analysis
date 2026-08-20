@@ -252,13 +252,13 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             <thead>
                 <tr>
                     <th class="text-left">Company Name</th>
-                    <th class="text-right">Market Cap</th>
-                    <th class="text-right">Price ($)</th>
-                    <th class="text-right">ADV20</th>
-                    <th class="text-right">RS Score</th>
-                    <th class="text-right">Tightness Ratio</th>
-                    <th class="text-right">% Off 52W High</th>
-                    <th class="text-right">Composite Score</th>
+                    <th class="text-left">Market Cap</th>
+                    <th class="text-left">Price ($)</th>
+                    <th class="text-left">ADV20</th>
+                    <th class="text-left">RS Score</th>
+                    <th class="text-left">Tightness Ratio</th>
+                    <th class="text-left">% Off 52W High</th>
+                    <th class="text-left">Composite Score</th>
                 </tr>
             </thead>
             <tbody>
@@ -303,6 +303,12 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 - **Relative Strength vs. S&P 500**
   - *Meaning:* Measures if the stock is beating the overall market average.
   - *Why:* You only want the top-performing market leaders, not the average laggards.
+
+- **Composite Score Calculation (0 – 100 Percentile Rank)**
+  - *How it is calculated:* The composite score combines two key factors into a single percentile rank score from `0` to `100`:
+    1. **Mansfield Relative Strength Weight (60%):** Weighted combination of 3-month outperformance ($70\%$) and 12-month outperformance ($30\%$) versus the SPY benchmark.
+    2. **VCP Tightness Compression Weight (40%):** Measures how tightly squeezed the stock's 10-day price range is relative to its 14-day Average True Range ($\text{ATR}_{14}$). Tighter consolidations receive higher percentile ranks.
+  - *Final Formula:* $\text{Composite Score} = 0.60 \times (\text{RS Percentile}) + 0.40 \times (\text{Tightness Percentile})$.
 """
         )
 
@@ -408,13 +414,13 @@ def render_backtest_view(
                 <thead>
                     <tr>
                         <th class="text-left">Company Name</th>
-                        <th class="text-right">Market Cap</th>
-                        <th class="text-right">Entry Price ($)</th>
-                        <th class="text-right">Exit Price ($)</th>
-                        <th class="text-right">Return (%)</th>
-                        <th class="text-right">SPY Return (%)</th>
-                        <th class="text-right">Alpha (%)</th>
-                        <th class="text-right">Max Drawdown (%)</th>
+                        <th class="text-left">Market Cap</th>
+                        <th class="text-left">Entry Price ($)</th>
+                        <th class="text-left">Exit Price ($)</th>
+                        <th class="text-left">Return (%)</th>
+                        <th class="text-left">SPY Return (%)</th>
+                        <th class="text-left">Alpha (%)</th>
+                        <th class="text-left">Max Drawdown (%)</th>
                         <th class="text-left">Status</th>
                     </tr>
                 </thead>
@@ -690,13 +696,13 @@ def main() -> None:
                             <thead>
                                 <tr>
                                     <th class="text-left">Company Name</th>
-                                    <th class="text-right">Market Cap</th>
-                                    <th class="text-right">Price ($)</th>
-                                    <th class="text-right">ADV20</th>
-                                    <th class="text-right">RS Score</th>
-                                    <th class="text-right">Tightness Ratio</th>
-                                    <th class="text-right">% Off 52W High</th>
-                                    <th class="text-right">Composite Score</th>
+                                    <th class="text-left">Market Cap</th>
+                                    <th class="text-left">Price ($)</th>
+                                    <th class="text-left">ADV20</th>
+                                    <th class="text-left">RS Score</th>
+                                    <th class="text-left">Tightness Ratio</th>
+                                    <th class="text-left">% Off 52W High</th>
+                                    <th class="text-left">Composite Score</th>
                                 </tr>
                             </thead>
                             <tbody>
