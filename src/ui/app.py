@@ -34,6 +34,77 @@ st.set_page_config(
 )
 
 
+def inject_custom_css() -> None:
+    """Inject custom institutional terminal styling CSS into Streamlit document."""
+    st.markdown(
+        """
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        /* Font and Tabular Numerals */
+        html, body, [class*="css"] {
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Metric Card Containers */
+        div[data-testid="stMetric"] {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-left: 4px solid #2f81f7;
+            padding: 14px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        div[data-testid="stMetricLabel"] {
+            color: #8b949e !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        div[data-testid="stMetricValue"] {
+            color: #f0f6fc !important;
+            font-family: 'JetBrains Mono', monospace !important;
+            font-weight: 700 !important;
+        }
+
+        /* Dataframe Modernization */
+        div[data-testid="stDataFrame"] {
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Tab Bar Styling */
+        div[data-baseweb="tab-list"] {
+            gap: 8px;
+            background-color: #0d1117;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+        }
+
+        button[data-baseweb="tab"] {
+            border-radius: 6px !important;
+            padding: 8px 16px !important;
+            font-weight: 600 !important;
+        }
+
+        button[aria-selected="true"] {
+            background-color: #1f242d !important;
+            color: #58a6ff !important;
+            border-bottom: 2px solid #58a6ff !important;
+        }
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
+
+
 @st.cache_resource
 def get_db_manager() -> DatabaseManager:
     """Initialize DatabaseManager in strictly read-only mode."""
@@ -109,47 +180,70 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
     )
 
-    url_map = dict(zip(display_df["company_url"], display_df["company_name"]))
-
-    display_df = display_df[
-        [
-            "company_url",
-            "market_cap_str",
-            "exchange",
-            "close",
-            "ADV20",
-            "rs_score",
-            "tightness_ratio",
-            "pct_off_52w_high",
-            "composite_score",
-        ]
-    ].rename(
-        columns={
-            "company_url": "Company Name",
-            "market_cap_str": "Market Cap",
-            "exchange": "Exchange",
-            "close": "Price ($)",
-            "rs_score": "RS Score",
-            "tightness_ratio": "Tightness Ratio",
-            "pct_off_52w_high": "% Off 52W High",
-            "composite_score": "Composite Score",
-        }
-    ).sort_values(by="Composite Score", ascending=False)
+    tcol1, tcol2 = st.columns([4, 1])
+    with tcol1:
+        st.caption("📈 Top 10 Quantitative Momentum Recommendations")
+    with tcol2:
+        csv_data = display_df.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="📥 Export CSV",
+            data=csv_data,
+            file_name=f"recommendations_{latest_date}.csv",
+            mime="text/csv",
+        )
 
     st.dataframe(
-        display_df.style.format(
-            {
-                "Price ($)": "${:.2f}",
-                "RS Score": "{:.4f}",
-                "Tightness Ratio": "{:.2f}",
-                "% Off 52W High": "{:+.2f}%",
-                "Composite Score": "{:.2f}",
+        display_df[
+            [
+                "company_url",
+                "market_cap_str",
+                "exchange",
+                "close",
+                "ADV20",
+                "rs_score",
+                "tightness_ratio",
+                "pct_off_52w_high",
+                "composite_score",
+            ]
+        ].rename(
+            columns={
+                "company_url": "Company Name",
+                "market_cap_str": "Market Cap",
+                "exchange": "Exchange",
+                "close": "Price ($)",
+                "rs_score": "RS Score",
+                "tightness_ratio": "Tightness Ratio",
+                "pct_off_52w_high": "% Off 52W High",
+                "composite_score": "Composite Score",
             }
-        ),
+        ).sort_values(by="Composite Score", ascending=False),
         column_config={
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
+            ),
+            "Composite Score": st.column_config.ProgressColumn(
+                "Composite Score",
+                help="Weighted percentile composite rank (0-100)",
+                format="%.2f",
+                min_value=0,
+                max_value=100,
+            ),
+            "Price ($)": st.column_config.NumberColumn(
+                "Price ($)",
+                format="$%.2f",
+            ),
+            "RS Score": st.column_config.NumberColumn(
+                "RS Score",
+                format="%.4f",
+            ),
+            "Tightness Ratio": st.column_config.NumberColumn(
+                "Tightness Ratio",
+                format="%.2f",
+            ),
+            "% Off 52W High": st.column_config.NumberColumn(
+                "% Off 52W High",
+                format="%+.2f%%",
             ),
         },
         width="stretch",
@@ -201,17 +295,8 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
   - *Meaning:* A simulated report card showing what would have happened if you bought the scanner's top picks 1 week ago or 1 month ago.
   - *Forward Return & Alpha:* Shows the exact percentage gained and how much better the picks performed compared to the standard S&P 500 index.
   - *Win Rate:* Tells you the batting average (e.g., "7 out of 10 picks went up").
-"""
+""",
         )
-
-    # CSV Download Button
-    csv_data = display_df.to_csv(index=False).encode("utf-8")
-    st.download_button(
-        label="📥 Download Recommendations CSV",
-        data=csv_data,
-        file_name=f"recommendations_{latest_date}.csv",
-        mime="text/csv",
-    )
 
 
 def render_backtest_view(
@@ -251,7 +336,19 @@ def render_backtest_view(
     with mcol5:
         st.metric("SPY Return", f"{spy_ret:+.2f}%")
 
-    st.subheader("Historical Position Performance Table")
+    bcol1, bcol2 = st.columns([4, 1])
+    with bcol1:
+        st.subheader("Historical Position Performance Table")
+    with bcol2:
+        if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
+            csv_backtest = pos_df.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                label="📥 Export CSV",
+                data=csv_backtest,
+                file_name=f"backtest_{cutoff_days_ago}d_{cutoff_date}.csv",
+                mime="text/csv",
+            )
+
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
         disp_pos["company_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
@@ -259,44 +356,32 @@ def render_backtest_view(
         disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
-
-        pos_url_map = dict(zip(disp_pos["company_url"], disp_pos["company_name"]))
-
-        disp_pos = disp_pos[
-            [
-                "company_url",
-                "market_cap_str",
-                "entry_price",
-                "exit_price",
-                "return_pct",
-                "spy_return_pct",
-                "alpha_pct",
-                "max_drawdown_pct",
-                "is_win",
-            ]
-        ].rename(
-            columns={
-                "company_url": "Company Name",
-                "market_cap_str": "Market Cap",
-                "entry_price": "Entry Price ($)",
-                "exit_price": "Exit Price ($)",
-                "return_pct": "Return (%)",
-                "spy_return_pct": "SPY Return (%)",
-                "alpha_pct": "Alpha (%)",
-                "max_drawdown_pct": "Max Drawdown (%)",
-                "is_win": "Win?",
-            }
-        )
+        disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
 
         st.dataframe(
-            disp_pos.style.format(
-                {
-                    "Entry Price ($)": "${:.2f}",
-                    "Exit Price ($)": "${:.2f}",
-                    "Return (%)": "{:+.2f}%",
-                    "SPY Return (%)": "{:+.2f}%",
-                    "Alpha (%)": "{:+.2f}%",
-                    "Max Drawdown (%)": "{:.2f}%",
+            disp_pos[
+                [
+                    "company_url",
+                    "market_cap_str",
+                    "entry_price",
+                    "exit_price",
+                    "return_pct",
+                    "spy_return_pct",
+                    "alpha_pct",
+                    "max_drawdown_pct",
+                    "win_status",
+                ]
+            ].rename(
+                columns={
+                    "company_url": "Company Name",
+                    "market_cap_str": "Market Cap",
+                    "entry_price": "Entry Price ($)",
+                    "exit_price": "Exit Price ($)",
+                    "return_pct": "Return (%)",
+                    "spy_return_pct": "SPY Return (%)",
+                    "alpha_pct": "Alpha (%)",
+                    "max_drawdown_pct": "Max Drawdown (%)",
+                    "win_status": "Status",
                 }
             ),
             column_config={
@@ -304,16 +389,14 @@ def render_backtest_view(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
                 ),
+                "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
+                "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
+                "Return (%)": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
+                "SPY Return (%)": st.column_config.NumberColumn("SPY Return (%)", format="%+.2f%%"),
+                "Alpha (%)": st.column_config.NumberColumn("Alpha (%)", format="%+.2f%%"),
+                "Max Drawdown (%)": st.column_config.NumberColumn("Max Drawdown (%)", format="%.2f%%"),
             },
             width="stretch",
-        )
-        # Backtest CSV Export Button
-        csv_backtest = disp_pos.to_csv(index=False).encode("utf-8")
-        st.download_button(
-            label=f"📥 Download {view_label} Results CSV",
-            data=csv_backtest,
-            file_name=f"backtest_{cutoff_days_ago}d_{cutoff_date}.csv",
-            mime="text/csv",
         )
     else:
         st.info("No position data available for this historical backtest date.")
@@ -336,11 +419,9 @@ def render_backtest_view(
 
 
 def main() -> None:
-    """Main Streamlit application entry point."""
-    st.title("📊 Quantitative Momentum Screener & PIT Backtest")
-
-def main() -> None:
     """Main entry point for Streamlit dashboard application."""
+    inject_custom_css()
+
     db_manager = get_db_manager()
     latest_date = check_db_availability(db_manager)
 
@@ -577,20 +658,23 @@ def main() -> None:
                                 "pct_off_52w_high": "% Off 52W High",
                                 "composite_score": "Composite Score",
                             }
-                        ).sort_values(by="Composite Score", ascending=False).style.format(
-                            {
-                                "Price ($)": "${:.2f}",
-                                "RS Score": "{:.4f}",
-                                "Tightness Ratio": "{:.2f}",
-                                "% Off 52W High": "{:+.2f}%",
-                                "Composite Score": "{:.2f}",
-                            }
-                        ),
+                        ).sort_values(by="Composite Score", ascending=False),
                         column_config={
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
                             ),
+                            "Composite Score": st.column_config.ProgressColumn(
+                                "Composite Score",
+                                help="Weighted percentile composite rank (0-100)",
+                                format="%.2f",
+                                min_value=0,
+                                max_value=100,
+                            ),
+                            "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
+                            "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
+                            "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
+                            "% Off 52W High": st.column_config.NumberColumn("% Off 52W High", format="%+.2f%%"),
                         },
                         width="stretch",
                     )
