@@ -194,6 +194,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         display_df[
             [
                 "company_url",
+                "company_name",
                 "market_cap_str",
                 "exchange",
                 "close",
@@ -219,8 +220,9 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                display_text="company_name",
             ),
+            "company_name": None,
             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
             "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
@@ -343,6 +345,7 @@ def render_backtest_view(
             disp_pos[
                 [
                     "company_url",
+                    "company_name",
                     "market_cap_str",
                     "entry_price",
                     "exit_price",
@@ -369,8 +372,9 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    display_text=r"https://finance\.yahoo\.com/quote/.*",
+                    display_text="company_name",
                 ),
+                "company_name": None,
                 "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
                 "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
                 "Return (%)": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
@@ -618,6 +622,7 @@ def main() -> None:
                         df_manual[
                             [
                                 "company_url",
+                                "company_name",
                                 "market_cap_str",
                                 "exchange",
                                 "close",
@@ -643,8 +648,9 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                                display_text="company_name",
                             ),
+                            "company_name": None,
                             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
                             "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
                             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
