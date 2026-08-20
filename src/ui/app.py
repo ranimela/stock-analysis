@@ -205,7 +205,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                display_text=lambda url: url_map.get(url, url),
+                display_text=r"https://finance\.yahoo\.com/quote/.*",
             ),
             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
             "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
@@ -357,7 +357,7 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    display_text=lambda url: pos_url_map.get(url, url),
+                    display_text=r"https://finance\.yahoo\.com/quote/.*",
                 ),
                 "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
                 "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
@@ -631,7 +631,7 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                display_text=lambda url: man_url_map.get(url, url),
+                                display_text=r"https://finance\.yahoo\.com/quote/.*",
                             ),
                             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
                             "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
