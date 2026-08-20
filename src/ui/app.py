@@ -155,25 +155,10 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
     )
 
-    # Key metrics for top recommendation
-    top_row = df.iloc[0]
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.metric("Top Pick Ticker", str(top_row["ticker"]))
-    with col2:
-        st.metric("Price ($)", f"${top_row['close']:.2f}")
-    with col3:
-        st.metric("ADV20 ($M)", f"${top_row['adv_20'] / 1e6:.2f}M")
-    with col4:
-        st.metric("RS Score", f"{top_row['rs_score']:.4f}")
-    with col5:
-        st.metric("Tightness Ratio", f"{top_row['tightness_ratio']:.2f}")
-
     st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
     display_df = df.copy()
     display_df["company_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-    display_df["company_name"] = display_df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
     display_df["ADV20"] = display_df["adv_20"].apply(
         lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
     )
@@ -194,7 +179,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         display_df[
             [
                 "company_url",
-                "company_name",
                 "market_cap_str",
                 "exchange",
                 "close",
@@ -220,9 +204,8 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             "Company Name": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                display_text="company_name",
+                display_text=r"https://finance\.yahoo\.com/quote/.*",
             ),
-            "company_name": None,
             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
             "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
@@ -345,7 +328,6 @@ def render_backtest_view(
             disp_pos[
                 [
                     "company_url",
-                    "company_name",
                     "market_cap_str",
                     "entry_price",
                     "exit_price",
@@ -372,9 +354,8 @@ def render_backtest_view(
                 "Company Name": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    display_text="company_name",
+                    display_text=r"https://finance\.yahoo\.com/quote/.*",
                 ),
-                "company_name": None,
                 "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
                 "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
                 "Return (%)": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
@@ -622,7 +603,6 @@ def main() -> None:
                         df_manual[
                             [
                                 "company_url",
-                                "company_name",
                                 "market_cap_str",
                                 "exchange",
                                 "close",
@@ -648,9 +628,8 @@ def main() -> None:
                             "Company Name": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                display_text="company_name",
+                                display_text=r"https://finance\.yahoo\.com/quote/.*",
                             ),
-                            "company_name": None,
                             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
                             "RS Score": st.column_config.NumberColumn("RS Score", format="%.4f"),
                             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
