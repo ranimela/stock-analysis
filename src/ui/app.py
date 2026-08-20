@@ -157,19 +157,17 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     # Key metrics for top recommendation
     top_row = df.iloc[0]
-    with st.container(border=True):
-        st.markdown(f"### ⭐ Top Recommended Momentum Stock: **{top_row['ticker']}** — *{top_row.get('name', top_row['ticker'])}*")
-        col1, col2, col3, col4, col5 = st.columns(5)
-        with col1:
-            st.metric("Top Pick Ticker", str(top_row["ticker"]), help="Rank #1 Momentum Candidate")
-        with col2:
-            st.metric("Price ($)", f"${top_row['close']:.2f}")
-        with col3:
-            st.metric("ADV20 ($M)", f"${top_row['adv_20'] / 1e6:.2f}M", help="20-day Average Daily Volume in Millions")
-        with col4:
-            st.metric("Mansfield RS", f"{top_row['rs_score']:.4f}", delta="Outperforming SPY" if top_row['rs_score'] > 0 else "Underperforming")
-        with col5:
-            st.metric("Composite Score", f"{top_row['composite_score']:.2f} / 100")
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col1:
+        st.metric("Top Pick Ticker", str(top_row["ticker"]))
+    with col2:
+        st.metric("Price ($)", f"${top_row['close']:.2f}")
+    with col3:
+        st.metric("ADV20 ($M)", f"${top_row['adv_20'] / 1e6:.2f}M")
+    with col4:
+        st.metric("RS Score", f"{top_row['rs_score']:.4f}")
+    with col5:
+        st.metric("Tightness Ratio", f"{top_row['tightness_ratio']:.2f}")
 
     st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
