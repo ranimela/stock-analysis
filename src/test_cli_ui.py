@@ -115,7 +115,7 @@ def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypat
 
     assert len(dataframe_calls) > 0
     col_config = dataframe_calls[0][1].get("column_config", {})
-    assert "Link" in col_config
+    assert "Company Name" in col_config
 
 
 def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
