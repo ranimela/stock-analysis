@@ -155,8 +155,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
     )
 
-    st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
-
+    display_df = df.copy()
     display_df["company_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
     display_df["Company Name"] = display_df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
     display_df["ADV20"] = display_df["adv_20"].apply(
