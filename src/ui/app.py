@@ -167,21 +167,54 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         width="stretch",
     )
 
-    # Parameter Explanations Callout
-    st.markdown("### ℹ️ Parameter Definitions")
-    st.markdown(
-        r"""
-- **Company Name**: Hyperlinked corporate title of the asset (click to open live chart on Yahoo Finance).
-- **Market Cap**: Total dollar market capitalization of the company (placed directly after Company Name).
-- **Exchange**: Primary US listing market (NASDAQ, NYSE, or AMEX).
-- **Price ($)**: End-of-Day (EOD) closing price on the cutoff evaluation date.
-- **ADV20 ($)**: 20-Day Average Daily Dollar Volume ($\text{Close} \times \text{Volume}$), enforced to be $\ge \$20,000,000$ for institutional liquidity.
-- **RS Score**: Mansfield Relative Strength measuring multi-timeframe price outperformance vs the SPY benchmark (70% 63-day weight + 30% 252-day weight).
-- **Tightness Ratio**: Volatility Contraction Ratio measuring 10-day price range relative to 14-day ATR ($\le 3.5$ ceiling).
-- **% Off 52W High**: Percentage distance from the stock's 252-day rolling peak.
-- **Composite Score**: Weighted percentile score combining Relative Strength (60% weight) and Consolidation Tightness (40% weight) — stocks sorted by this score.
-"""
+    # Strategy Rationale & Output Guide (from app rationale.txt)
+    st.markdown("### 💡 Strategy Rationale & Screener Output Guide")
+    st.info(
+        "**Core Strategy:** Find the market's star athletes right as they bend their knees to jump, "
+        "rather than trying to rescue injured players or chase someone already sprinting at full speed."
     )
+
+    with st.expander("📖 **The Filters & What They Mean**", expanded=True):
+        st.markdown(
+            """
+- **Price & Trade Volume ($10+ & $20M+ per day)**
+  - *Meaning:* Keeps out cheap penny stocks and illiquid ghost towns.
+  - *Why:* You want to shop in a crowded, safe supermarket where you can buy and sell instantly without getting ripped off on price.
+
+- **Moving Averages Stacked (Price > 50-day > 150-day > 200-day)**
+  - *Meaning:* The stock's current price is higher than its recent average, which is higher than its yearly average.
+  - *Why:* Confirms big institutional players (like mutual funds and banks) are actively buying and driving the price upward across all timeframes.
+
+- **Near 52-Week Highs (Up 30%+ from lows, within 25% of highs)**
+  - *Meaning:* The stock is trading near its record high for the year, not near the bottom.
+  - *Why:* In the stock market, winners usually keep winning; cheap, battered stocks usually stay broken.
+
+- **Volatility Contraction (Tight Price Squeeze)**
+  - *Meaning:* The stock stops swinging wildly and trades in a very narrow, quiet price range for two weeks.
+  - *Why:* Think of a compressed spring. When the wild swings stop, a big move is about to happen, and you can buy with very low downside risk.
+
+- **Volume Dry-Up (Low Trading Activity)**
+  - *Meaning:* Daily trading volume drops way below normal.
+  - *Why:* It means sellers have run out of shares to dump. With no sellers left, even a tiny bit of fresh buying will push the price straight up.
+
+- **Relative Strength vs. S&P 500**
+  - *Meaning:* Measures if the stock is beating the overall market average.
+  - *Why:* You only want the top-performing market leaders, not the average laggards.
+"""
+        )
+
+    with st.expander("📊 **What the App Output Tells You**", expanded=True):
+        st.markdown(
+            """
+- **Today's Top 10 List ($T_0$)**
+  - *Meaning:* The 10 healthiest stocks in the entire market today that are tightly coiled and ready to pop.
+
+- **1-Week & 1-Month "Time Machine" Backtests ($T_{-5}$ and $T_{-22}$)**
+  - *Meaning:* A simulated report card showing what would have happened if you bought the scanner's top picks 1 week ago or 1 month ago.
+  - *Forward Return & Alpha:* Shows the exact percentage gained and how much better the picks performed compared to the standard S&P 500 index.
+  - *Win Rate:* Tells you the batting average (e.g., "7 out of 10 picks went up").
+"""
+        )
 
     # CSV Download Button
     csv_data = display_df.to_csv(index=False).encode("utf-8")
@@ -297,23 +330,21 @@ def render_backtest_view(
     else:
         st.info("No position data available for this historical backtest date.")
 
-    # Backtest Parameter Explanations Callout
-    st.markdown("### ℹ️ Backtest Parameter Definitions")
-    st.markdown(
-        r"""
-- **Cutoff Date**: Historical date ($T_{-5}$ or $T_{-22}$) when screener recommendations were computed without lookahead bias.
-- **Evaluation Date**: Target date ($T_0$) up to which forward performance is tracked.
-- **Company Name**: Hyperlinked corporate title of recommended stock (click to open live chart on Yahoo Finance).
-- **Market Cap**: Total dollar market capitalization of the company (placed directly after Company Name).
-- **Entry Price ($)**: Closing price of recommended stock on the historical Cutoff Date.
-- **Exit Price ($)**: Closing price of stock on Evaluation Date ($T_0$).
-- **Return (%)**: Total percentage price change from Entry Price to Exit Price.
-- **SPY Return (%)**: Benchmark S&P 500 ETF percentage return over the identical time window.
-- **Alpha (%)**: Excess return achieved by the stock or basket relative to SPY ($\text{Stock Return} - \text{SPY Return}$).
-- **Max Drawdown (%)**: Maximum percentage price dip from Entry Price to the lowest intraday low during holding period.
-- **Win Rate (%)**: Percentage of recommended stocks in the basket yielding positive forward return ($\text{Return} > 0$).
+    # Backtest Output Rationale Callout
+    st.markdown("### 💡 Backtest Output Guide")
+    with st.expander("📊 **What the Backtest Output Tells You**", expanded=True):
+        st.markdown(
+            """
+- **1-Week & 1-Month "Time Machine" Backtests ($T_{-5}$ and $T_{-22}$)**
+  - *Meaning:* A simulated report card showing what would have happened if you bought the scanner's top picks 1 week ago ($T_{-5}$) or 1 month ago ($T_{-22}$).
+- **Forward Return & Alpha**
+  - *Meaning:* Shows the exact percentage gained and how much better the picks performed compared to the standard S&P 500 benchmark.
+- **Win Rate**
+  - *Meaning:* Tells you the batting average (e.g., "7 out of 10 picks went up").
+- **Max Drawdown**
+  - *Meaning:* Tracks the deepest intraday dip experienced during the holding window to quantify downside risk.
 """
-    )
+        )
 
 
 def main() -> None:
