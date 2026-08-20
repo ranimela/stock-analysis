@@ -157,7 +157,6 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     st.subheader("Top-10 Recommendations Table (Sorted by Composite Score)")
 
-    display_df = df.copy()
     display_df["company_url"] = display_df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
     display_df["Company Name"] = display_df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
     display_df["ADV20"] = display_df["adv_20"].apply(
@@ -176,12 +175,13 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             mime="text/csv",
         )
 
-    url_map = dict(zip(display_df["company_url"], display_df["Company Name"]))
-
+    # For Streamlit LinkColumn, display_text="Company Name" refers to another column name in the dataframe containing display text!
+    # So we pass "company_url" as the link target and "Company Name" as the text column!
     st.dataframe(
         display_df[
             [
                 "company_url",
+                "Company Name",
                 "market_cap_str",
                 "close",
                 "ADV20",
@@ -192,7 +192,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             ]
         ].rename(
             columns={
-                "company_url": "Company Name",
+                "company_url": "Link",
                 "market_cap_str": "Market Cap",
                 "close": "Price ($)",
                 "rs_score": "RS Score",
@@ -202,11 +202,12 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             }
         ).sort_values(by="Composite Score", ascending=False),
         column_config={
-            "Company Name": st.column_config.LinkColumn(
+            "Link": st.column_config.LinkColumn(
                 "Company Name",
                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                display_text="Company Name",
             ),
+            "Company Name": None,
             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
             "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
@@ -325,12 +326,13 @@ def render_backtest_view(
         )
         disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
 
-        pos_url_map = dict(zip(disp_pos["company_url"], disp_pos["company_name"]))
+        disp_pos["Company Name"] = disp_pos.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
 
         st.dataframe(
             disp_pos[
                 [
                     "company_url",
+                    "Company Name",
                     "market_cap_str",
                     "entry_price",
                     "exit_price",
@@ -342,7 +344,7 @@ def render_backtest_view(
                 ]
             ].rename(
                 columns={
-                    "company_url": "Company Name",
+                    "company_url": "Link",
                     "market_cap_str": "Market Cap",
                     "entry_price": "Entry Price ($)",
                     "exit_price": "Exit Price ($)",
@@ -354,11 +356,12 @@ def render_backtest_view(
                 }
             ),
             column_config={
-                "Company Name": st.column_config.LinkColumn(
+                "Link": st.column_config.LinkColumn(
                     "Company Name",
                     help="Click to view live chart and fundamentals on Yahoo Finance",
-                    display_text=r"https://finance\.yahoo\.com/quote/.*",
+                    display_text="Company Name",
                 ),
+                "Company Name": None,
                 "Entry Price ($)": st.column_config.NumberColumn("Entry Price ($)", format="$%.2f"),
                 "Exit Price ($)": st.column_config.NumberColumn("Exit Price ($)", format="$%.2f"),
                 "Return (%)": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
@@ -602,12 +605,13 @@ def main() -> None:
                         lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
                     )
 
-                    man_url_map = dict(zip(df_manual["company_url"], df_manual["company_name"]))
+                    df_manual["Company Name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
 
                     st.dataframe(
                         df_manual[
                             [
                                 "company_url",
+                                "Company Name",
                                 "market_cap_str",
                                 "close",
                                 "ADV20",
@@ -618,7 +622,7 @@ def main() -> None:
                             ]
                         ].rename(
                             columns={
-                                "company_url": "Company Name",
+                                "company_url": "Link",
                                 "market_cap_str": "Market Cap",
                                 "close": "Price ($)",
                                 "rs_score": "RS Score",
@@ -628,11 +632,12 @@ def main() -> None:
                             }
                         ).sort_values(by="Composite Score", ascending=False),
                         column_config={
-                            "Company Name": st.column_config.LinkColumn(
+                            "Link": st.column_config.LinkColumn(
                                 "Company Name",
                                 help="Click to view live chart and fundamentals on Yahoo Finance",
-                                display_text=r"https://finance\.yahoo\.com/quote/.*",
+                                display_text="Company Name",
                             ),
+                            "Company Name": None,
                             "Price ($)": st.column_config.NumberColumn("Price ($)", format="$%.2f"),
                             "RS Score": st.column_config.NumberColumn("RS Score", format="%.2f"),
                             "Tightness Ratio": st.column_config.NumberColumn("Tightness Ratio", format="%.2f"),
