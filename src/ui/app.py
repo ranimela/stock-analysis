@@ -348,21 +348,6 @@ def render_backtest_view(
     max_dd = float(results["avg_max_drawdown"])
     pos_df = results["positions_df"]
 
-    st.info(f"Cutoff Date: **{cutoff_date}** | Evaluation Date: **{eval_date}**")
-
-    # Metrics Summary Row
-    mcol1, mcol2, mcol3, mcol4, mcol5 = st.columns(5)
-    with mcol1:
-        st.metric("Basket Alpha vs SPY", f"{alpha:+.2f}%")
-    with mcol2:
-        st.metric("Win Rate", f"{win_rate:.1f}%")
-    with mcol3:
-        st.metric("Avg Max Drawdown", f"{max_dd:.2f}%")
-    with mcol4:
-        st.metric("Basket Return", f"{mean_ret:+.2f}%")
-    with mcol5:
-        st.metric("SPY Return", f"{spy_ret:+.2f}%")
-
     bcol1, bcol2 = st.columns([4, 1])
     with bcol1:
         st.subheader("Historical Position Performance Table")
