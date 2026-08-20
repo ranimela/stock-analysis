@@ -299,14 +299,14 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
     )
 
-    df_med = sorted_df[sorted_df["is_med_pharma"]]
-    df_other = sorted_df[~sorted_df["is_med_pharma"]]
+    df_other_top10 = sorted_df[~sorted_df["is_med_pharma"]].head(10)
+    df_med_top10 = sorted_df[sorted_df["is_med_pharma"]].head(10)
 
-    st.subheader("🏥 Medical & Pharma Category")
-    st.markdown(build_html_table(df_med, is_backtest=False), unsafe_allow_html=True)
+    st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
+    st.markdown(build_html_table(df_other_top10, is_backtest=False), unsafe_allow_html=True)
 
-    st.subheader("🌐 All Other Sectors Category")
-    st.markdown(build_html_table(df_other, is_backtest=False), unsafe_allow_html=True)
+    st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
+    st.markdown(build_html_table(df_med_top10, is_backtest=False), unsafe_allow_html=True)
 
     # Strategy Rationale & Output Guide (from app rationale.txt)
     st.markdown("### 💡 Strategy Rationale & Screener Output Guide")
@@ -418,14 +418,14 @@ def render_backtest_view(
             lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
         )
 
-        df_b_med = disp_pos[disp_pos["is_med_pharma"]]
-        df_b_other = disp_pos[~disp_pos["is_med_pharma"]]
+        df_b_other_top10 = disp_pos[~disp_pos["is_med_pharma"]].head(10)
+        df_b_med_top10 = disp_pos[disp_pos["is_med_pharma"]].head(10)
 
-        st.subheader("🏥 Medical & Pharma Category")
-        st.markdown(build_html_table(df_b_med, is_backtest=True), unsafe_allow_html=True)
+        st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
+        st.markdown(build_html_table(df_b_other_top10, is_backtest=True), unsafe_allow_html=True)
 
-        st.subheader("🌐 All Other Sectors Category")
-        st.markdown(build_html_table(df_b_other, is_backtest=True), unsafe_allow_html=True)
+        st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
+        st.markdown(build_html_table(df_b_med_top10, is_backtest=True), unsafe_allow_html=True)
     else:
         st.info("No position data available for this historical backtest date.")
 
@@ -671,14 +671,14 @@ def main() -> None:
                         lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
                     )
 
-                    df_d_med = sorted_d_df[sorted_d_df["is_med_pharma"]]
-                    df_d_other = sorted_d_df[~sorted_d_df["is_med_pharma"]]
+                    df_d_other_top10 = sorted_d_df[~sorted_d_df["is_med_pharma"]].head(10)
+                    df_d_med_top10 = sorted_d_df[sorted_d_df["is_med_pharma"]].head(10)
 
-                    st.subheader("🏥 Medical & Pharma Category")
-                    st.markdown(build_html_table(df_d_med, is_backtest=False), unsafe_allow_html=True)
+                    st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
+                    st.markdown(build_html_table(df_d_other_top10, is_backtest=False), unsafe_allow_html=True)
 
-                    st.subheader("🌐 All Other Sectors Category")
-                    st.markdown(build_html_table(df_d_other, is_backtest=False), unsafe_allow_html=True)
+                    st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
+                    st.markdown(build_html_table(df_d_med_top10, is_backtest=False), unsafe_allow_html=True)
 
 
 if __name__ == "__main__":

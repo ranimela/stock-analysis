@@ -164,8 +164,7 @@ SELECT
     rs_score,
     composite_score
 FROM final_ranked
-ORDER BY rank ASC
-LIMIT 10;
+ORDER BY rank ASC;
 """
 
 
