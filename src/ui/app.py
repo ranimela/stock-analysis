@@ -242,18 +242,7 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
         comp_score = f"{row['composite_score']:.2f}"
 
         html_rows.append(
-            f"""
-            <tr>
-                <td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td>
-                <td class="text-right">{mcap}</td>
-                <td class="text-right">{price}</td>
-                <td class="text-right">{adv}</td>
-                <td class="text-right">{rs}</td>
-                <td class="text-right">{tightness}</td>
-                <td class="text-right">{pct_high}</td>
-                <td class="text-right">{comp_score}</td>
-            </tr>
-            """
+            f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{price}</td><td class="text-right">{adv}</td><td class="text-right">{rs}</td><td class="text-right">{tightness}</td><td class="text-right">{pct_high}</td><td class="text-right">{comp_score}</td></tr>'
         )
 
     html_table = f"""
@@ -409,19 +398,7 @@ def render_backtest_view(
             status = row["win_status"]
 
             html_b_rows.append(
-                f"""
-                <tr>
-                    <td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td>
-                    <td class="text-right">{mcap}</td>
-                    <td class="text-right">{entry_p}</td>
-                    <td class="text-right">{exit_p}</td>
-                    <td class="text-right">{ret}</td>
-                    <td class="text-right">{spy_ret}</td>
-                    <td class="text-right">{alpha_p}</td>
-                    <td class="text-right">{mdd}</td>
-                    <td class="text-left">{status}</td>
-                </tr>
-                """
+                f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{entry_p}</td><td class="text-right">{exit_p}</td><td class="text-right">{ret}</td><td class="text-right">{spy_ret}</td><td class="text-right">{alpha_p}</td><td class="text-right">{mdd}</td><td class="text-left">{status}</td></tr>'
             )
 
         html_b_table = f"""
@@ -703,18 +680,7 @@ def main() -> None:
                         comp_score = f"{row['composite_score']:.2f}"
 
                         html_d_rows.append(
-                            f"""
-                            <tr>
-                                <td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td>
-                                <td class="text-right">{mcap}</td>
-                                <td class="text-right">{price}</td>
-                                <td class="text-right">{adv}</td>
-                                <td class="text-right">{rs}</td>
-                                <td class="text-right">{tightness}</td>
-                                <td class="text-right">{pct_high}</td>
-                                <td class="text-right">{comp_score}</td>
-                            </tr>
-                            """
+                            f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{price}</td><td class="text-right">{adv}</td><td class="text-right">{rs}</td><td class="text-right">{tightness}</td><td class="text-right">{pct_high}</td><td class="text-right">{comp_score}</td></tr>'
                         )
 
                     html_d_table = f"""
