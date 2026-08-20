@@ -177,6 +177,74 @@ def check_db_availability(db_manager: DatabaseManager) -> str | None:
     return None
 
 
+def is_medical_pharma(name: str, ticker: str) -> bool:
+    """Categorize stock as Medical & Pharma based on corporate name and ticker keywords."""
+    text = f"{name} {ticker}".lower()
+    keywords = [
+        "pharma", "therapeutics", "bio", "health", "medical", "medicine",
+        "oncology", "genomics", "care", "diagnostic", "surgical", "clinical",
+        "life science", "vaccine", "immunology", "biotech", "hospital", "pharma"
+    ]
+    return any(kw in text for kw in keywords)
+
+
+def build_html_table(df_subset: pd.DataFrame, is_backtest: bool = False) -> str:
+    """Generate HTML table string for a dataframe subset."""
+    if df_subset.empty:
+        return "<div class='custom-table-container' style='padding: 16px; color: #57606a;'>No tickers in this category.</div>"
+
+    html_rows = []
+    for row_idx, row in df_subset.iterrows():
+        comp_name = str(row.get("name") or row["ticker"])
+        ticker = row["ticker"]
+        yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
+        mcap = row["market_cap_str"]
+
+        if is_backtest:
+            entry_p = f"${row['entry_price']:.2f}"
+            exit_p = f"${row['exit_price']:.2f}"
+            ret = f"{row['return_pct']:+.2f}%"
+            spy_ret = f"{row['spy_return_pct']:+.2f}%"
+            alpha_p = f"{row['alpha_pct']:+.2f}%"
+            mdd = f"{row['max_drawdown_pct']:.2f}%"
+            status = row["win_status"]
+
+            html_rows.append(
+                f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{entry_p}</td><td class="text-right">{exit_p}</td><td class="text-right">{ret}</td><td class="text-right">{spy_ret}</td><td class="text-right">{alpha_p}</td><td class="text-right">{mdd}</td><td class="text-left">{status}</td></tr>'
+            )
+        else:
+            price = f"${row['close']:.2f}"
+            adv = row["ADV20"]
+            rs = f"{row['rs_score']:.2f}"
+            tightness = f"{row['tightness_ratio']:.2f}"
+            pct_high = f"{row['pct_off_52w_high']:+.2f}%"
+            comp_score = f"{row['composite_score']:.2f}"
+
+            html_rows.append(
+                f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{price}</td><td class="text-right">{adv}</td><td class="text-right">{rs}</td><td class="text-right">{tightness}</td><td class="text-right">{pct_high}</td><td class="text-right">{comp_score}</td></tr>'
+            )
+
+    if is_backtest:
+        headers = ["Company Name", "Market Cap", "Entry Price ($)", "Exit Price ($)", "Return (%)", "SPY Return (%)", "Alpha (%)", "Max Drawdown (%)", "Status"]
+    else:
+        headers = ["Company Name", "Market Cap", "Price ($)", "ADV20", "RS Score", "Tightness Ratio", "% Off 52W High", "Composite Score"]
+
+    th_html = "".join([f'<th class="text-left">{h}</th>' for h in headers])
+
+    return f"""
+    <div class="custom-table-container">
+        <table class="custom-data-table">
+            <thead>
+                <tr>{th_html}</tr>
+            </thead>
+            <tbody>
+                {''.join(html_rows)}
+            </tbody>
+        </table>
+    </div>
+    """
+
+
 def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -> None:
     """Render View A: Live Top-10 Recommendations (T0)."""
     st.header(f"View A: Live Top-10 Recommendations (Cutoff Date: {latest_date})")
@@ -226,49 +294,19 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
             mime="text/csv",
         )
 
-    # Generate clean HTML table
     sorted_df = display_df.sort_values(by="composite_score", ascending=False)
-    
-    html_rows = []
-    for row_idx, row in sorted_df.iterrows():
-        comp_name = str(row.get("name") or row["ticker"])
-        ticker = row["ticker"]
-        yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
-        mcap = row["market_cap_str"]
-        price = f"${row['close']:.2f}"
-        adv = row["ADV20"]
-        rs = f"{row['rs_score']:.2f}"
-        tightness = f"{row['tightness_ratio']:.2f}"
-        pct_high = f"{row['pct_off_52w_high']:+.2f}%"
-        comp_score = f"{row['composite_score']:.2f}"
+    sorted_df["is_med_pharma"] = sorted_df.apply(
+        lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
+    )
 
-        html_rows.append(
-            f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{price}</td><td class="text-right">{adv}</td><td class="text-right">{rs}</td><td class="text-right">{tightness}</td><td class="text-right">{pct_high}</td><td class="text-right">{comp_score}</td></tr>'
-        )
+    df_med = sorted_df[sorted_df["is_med_pharma"]]
+    df_other = sorted_df[~sorted_df["is_med_pharma"]]
 
-    html_table = f"""
-    <div class="custom-table-container">
-        <table class="custom-data-table">
-            <thead>
-                <tr>
-                    <th class="text-left">Company Name</th>
-                    <th class="text-left">Market Cap</th>
-                    <th class="text-left">Price ($)</th>
-                    <th class="text-left">ADV20</th>
-                    <th class="text-left">RS Score</th>
-                    <th class="text-left">Tightness Ratio</th>
-                    <th class="text-left">% Off 52W High</th>
-                    <th class="text-left">Composite Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                {''.join(html_rows)}
-            </tbody>
-        </table>
-    </div>
-    """
+    st.subheader("🏥 Medical & Pharma Category")
+    st.markdown(build_html_table(df_med, is_backtest=False), unsafe_allow_html=True)
 
-    st.markdown(html_table, unsafe_allow_html=True)
+    st.subheader("🌐 All Other Sectors Category")
+    st.markdown(build_html_table(df_other, is_backtest=False), unsafe_allow_html=True)
 
     # Strategy Rationale & Output Guide (from app rationale.txt)
     st.markdown("### 💡 Strategy Rationale & Screener Output Guide")
@@ -376,48 +414,18 @@ def render_backtest_view(
             axis=1
         )
 
-        html_b_rows = []
-        for row_idx, row in disp_pos.iterrows():
-            comp_name = str(row.get("name") or row["ticker"])
-            ticker = row["ticker"]
-            yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
-            mcap = row["market_cap_str"]
-            entry_p = f"${row['entry_price']:.2f}"
-            exit_p = f"${row['exit_price']:.2f}"
-            ret = f"{row['return_pct']:+.2f}%"
-            spy_ret = f"{row['spy_return_pct']:+.2f}%"
-            alpha_p = f"{row['alpha_pct']:+.2f}%"
-            mdd = f"{row['max_drawdown_pct']:.2f}%"
-            status = row["win_status"]
+        disp_pos["is_med_pharma"] = disp_pos.apply(
+            lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
+        )
 
-            html_b_rows.append(
-                f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{entry_p}</td><td class="text-right">{exit_p}</td><td class="text-right">{ret}</td><td class="text-right">{spy_ret}</td><td class="text-right">{alpha_p}</td><td class="text-right">{mdd}</td><td class="text-left">{status}</td></tr>'
-            )
+        df_b_med = disp_pos[disp_pos["is_med_pharma"]]
+        df_b_other = disp_pos[~disp_pos["is_med_pharma"]]
 
-        html_b_table = f"""
-        <div class="custom-table-container">
-            <table class="custom-data-table">
-                <thead>
-                    <tr>
-                        <th class="text-left">Company Name</th>
-                        <th class="text-left">Market Cap</th>
-                        <th class="text-left">Entry Price ($)</th>
-                        <th class="text-left">Exit Price ($)</th>
-                        <th class="text-left">Return (%)</th>
-                        <th class="text-left">SPY Return (%)</th>
-                        <th class="text-left">Alpha (%)</th>
-                        <th class="text-left">Max Drawdown (%)</th>
-                        <th class="text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {''.join(html_b_rows)}
-                </tbody>
-            </table>
-        </div>
-        """
+        st.subheader("🏥 Medical & Pharma Category")
+        st.markdown(build_html_table(df_b_med, is_backtest=True), unsafe_allow_html=True)
 
-        st.markdown(html_b_table, unsafe_allow_html=True)
+        st.subheader("🌐 All Other Sectors Category")
+        st.markdown(build_html_table(df_b_other, is_backtest=True), unsafe_allow_html=True)
     else:
         st.info("No position data available for this historical backtest date.")
 
@@ -487,6 +495,7 @@ def main() -> None:
     st.sidebar.markdown("---")
     st.sidebar.caption("Mode: **Read-Only (Zero Write Access)**")
     st.sidebar.caption(f"Latest EOD Date: **{latest_date}**")
+    st.sidebar.caption("⏰ EOD Update: **Daily at 16:30 EST / 23:30 IST** (After US Market Close)")
 
     # Header Status Banner
     st.title("📈 Quantitative Stock Screener & PIT Backtest")
@@ -658,47 +667,18 @@ def main() -> None:
                     )
 
                     sorted_d_df = df_manual.sort_values(by="composite_score", ascending=False)
-                    
-                    html_d_rows = []
-                    for row_idx, row in sorted_d_df.iterrows():
-                        comp_name = str(row.get("name") or row["ticker"])
-                        ticker = row["ticker"]
-                        yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
-                        mcap = row["market_cap_str"]
-                        price = f"${row['close']:.2f}"
-                        adv = row["ADV20"]
-                        rs = f"{row['rs_score']:.2f}"
-                        tightness = f"{row['tightness_ratio']:.2f}"
-                        pct_high = f"{row['pct_off_52w_high']:+.2f}%"
-                        comp_score = f"{row['composite_score']:.2f}"
+                    sorted_d_df["is_med_pharma"] = sorted_d_df.apply(
+                        lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
+                    )
 
-                        html_d_rows.append(
-                            f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{price}</td><td class="text-right">{adv}</td><td class="text-right">{rs}</td><td class="text-right">{tightness}</td><td class="text-right">{pct_high}</td><td class="text-right">{comp_score}</td></tr>'
-                        )
+                    df_d_med = sorted_d_df[sorted_d_df["is_med_pharma"]]
+                    df_d_other = sorted_d_df[~sorted_d_df["is_med_pharma"]]
 
-                    html_d_table = f"""
-                    <div class="custom-table-container">
-                        <table class="custom-data-table">
-                            <thead>
-                                <tr>
-                                    <th class="text-left">Company Name</th>
-                                    <th class="text-left">Market Cap</th>
-                                    <th class="text-left">Price ($)</th>
-                                    <th class="text-left">ADV20</th>
-                                    <th class="text-left">RS Score</th>
-                                    <th class="text-left">Tightness Ratio</th>
-                                    <th class="text-left">% Off 52W High</th>
-                                    <th class="text-left">Composite Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {''.join(html_d_rows)}
-                            </tbody>
-                        </table>
-                    </div>
-                    """
+                    st.subheader("🏥 Medical & Pharma Category")
+                    st.markdown(build_html_table(df_d_med, is_backtest=False), unsafe_allow_html=True)
 
-                    st.markdown(html_d_table, unsafe_allow_html=True)
+                    st.subheader("🌐 All Other Sectors Category")
+                    st.markdown(build_html_table(df_d_other, is_backtest=False), unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
