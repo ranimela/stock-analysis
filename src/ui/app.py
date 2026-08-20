@@ -94,30 +94,30 @@ def inject_custom_css() -> None:
             font-weight: 600 !important;
         }
 
-        /* HTML Custom Data Table Styling */
+        /* HTML Custom Data Table Styling (Light Background) */
         .custom-table-container {
-            border: 1px solid #30363d;
+            border: 1px solid #d0d7de;
             border-radius: 10px;
             overflow-x: auto;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
             margin: 12px 0 24px 0;
-            background-color: #0d1117;
+            background-color: #ffffff;
         }
 
         .custom-data-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.9rem;
-            color: #f0f6fc;
+            color: #1f2328;
             text-align: left;
         }
 
         .custom-data-table th {
-            background-color: #161b22;
-            color: #8b949e;
+            background-color: #f6f8fa;
+            color: #57606a;
             font-weight: 600;
             padding: 12px 16px;
-            border-bottom: 1px solid #30363d;
+            border-bottom: 1px solid #d0d7de;
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 0.5px;
@@ -125,28 +125,29 @@ def inject_custom_css() -> None:
 
         .custom-data-table td {
             padding: 12px 16px;
-            border-bottom: 1px solid #21262d;
+            border-bottom: 1px solid #e1e4e8;
             vertical-align: middle;
             font-variant-numeric: tabular-nums;
+            color: #1f2328;
         }
 
         .custom-data-table tr:hover {
-            background-color: #161b22;
+            background-color: #f3f4f6;
         }
 
         .custom-data-table a.company-link {
-            color: #58a6ff;
+            color: #0969da;
             text-decoration: none;
             font-weight: 600;
         }
 
         .custom-data-table a.company-link:hover {
             text-decoration: underline;
-            color: #79c0ff;
+            color: #0550ae;
         }
 
         .text-left { text-align: left !important; }
-        .text-right { text-align: right !important; font-family: 'JetBrains Mono', monospace; }
+        .text-right { text-align: right !important; font-family: 'JetBrains Mono', monospace; color: #1f2328 !important; }
     </style>
     """,
         unsafe_allow_html=True,
