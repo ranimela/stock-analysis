@@ -65,6 +65,8 @@ def run_point_in_time_backtest(
         empty_positions = pd.DataFrame(
             columns=[
                 "ticker",
+                "name",
+                "market_cap",
                 "entry_price",
                 "exit_price",
                 "return_pct",

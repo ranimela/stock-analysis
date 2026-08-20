@@ -339,7 +339,7 @@ def run_screener(
             sm.rs_score,
             sm.composite_score
         FROM final_ranked sm
-        ORDER BY sm.rs_score DESC;
+        ORDER BY rank ASC;
         """
         with db_manager.read_cursor() as conn:
             manual_df = conn.execute(manual_sql, [cutoff_date] + [cutoff_date] + manual_tickers + manual_tickers).df()
