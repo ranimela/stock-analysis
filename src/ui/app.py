@@ -149,17 +149,37 @@ def inject_custom_css() -> None:
         .text-left { text-align: left !important; }
         .text-right { text-align: right !important; font-family: 'JetBrains Mono', monospace; color: #1f2328 !important; }
 
-        /* Portfolio Comparison Box Styling */
+        /* Portfolio Benchmark Section & Card Styling */
+        .benchmark-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 20px 0 10px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .title-non-pharma {
+            background-color: #ddf4ff;
+            color: #0969da;
+            border-left: 5px solid #0969da;
+        }
+        .title-pharma {
+            background-color: #dafbe1;
+            color: #1a7f37;
+            border-left: 5px solid #1a7f37;
+        }
         .portfolio-card {
             border: 1px solid #d0d7de;
             border-radius: 10px;
             padding: 16px 20px;
             background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
             margin-bottom: 16px;
         }
         .portfolio-card-title {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: #57606a;
             text-transform: uppercase;
@@ -167,7 +187,7 @@ def inject_custom_css() -> None:
             margin-bottom: 6px;
         }
         .portfolio-card-val {
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 700;
             color: #1f2328;
             font-family: 'JetBrains Mono', monospace;
@@ -417,84 +437,11 @@ def render_backtest_view(
     max_dd = float(results["avg_max_drawdown"])
     pos_df = results["positions_df"]
 
-    # Calculate $10,000 Portfolio Comparison: $10,000 SPY vs 10x $1,000 Stock Investments
+    # Calculate $10,000 SPY Benchmark value
     spy_val = 10000.0 * (1.0 + (spy_ret / 100.0))
     spy_gain = spy_val - 10000.0
 
-    if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
-        # Calculate equal $1,000 allocation across positions (up to 10 stocks)
-        pos_subset = pos_df.head(10)
-        n_positions = len(pos_subset)
-        alloc_per_stock = 10000.0 / n_positions if n_positions > 0 else 1000.0
-        
-        total_basket_val = sum([alloc_per_stock * (1.0 + (row["return_pct"] / 100.0)) for _, row in pos_subset.iterrows()])
-        basket_gain = total_basket_val - 10000.0
-    else:
-        total_basket_val = 10000.0
-        basket_gain = 0.0
-
-    portfolio_outperformance = total_basket_val - spy_val
-
-    st.markdown("### 💰 $10,000 Investment Benchmark Comparison")
-    pcol1, pcol2, pcol3 = st.columns(3)
-
-    with pcol1:
-        st.markdown(
-            f"""
-            <div class="portfolio-card">
-                <div class="portfolio-card-title">💵 SPY S&P 500 ($10k Buy & Hold)</div>
-                <div class="portfolio-card-val">${spy_val:,.2f}</div>
-                <div class="portfolio-card-sub {'pos-gain' if spy_gain >= 0 else 'neg-loss'}">
-                    {'▲' if spy_gain >= 0 else '▼'} ${abs(spy_gain):,.2f} ({spy_ret:+.2f}%)
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with pcol2:
-        st.markdown(
-            f"""
-            <div class="portfolio-card">
-                <div class="portfolio-card-title">🚀 10x $1,000 Model Stock Picks</div>
-                <div class="portfolio-card-val">${total_basket_val:,.2f}</div>
-                <div class="portfolio-card-sub {'pos-gain' if basket_gain >= 0 else 'neg-loss'}">
-                    {'▲' if basket_gain >= 0 else '▼'} ${abs(basket_gain):,.2f} ({(basket_gain/10000.0)*100.0:+.2f}%)
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with pcol3:
-        st.markdown(
-            f"""
-            <div class="portfolio-card">
-                <div class="portfolio-card-title">⚡ Net Portfolio Outperformance</div>
-                <div class="portfolio-card-val {'pos-gain' if portfolio_outperformance >= 0 else 'neg-loss'}">
-                    {'+' if portfolio_outperformance >= 0 else '-'}${abs(portfolio_outperformance):,.2f}
-                </div>
-                <div class="portfolio-card-sub {'pos-gain' if portfolio_outperformance >= 0 else 'neg-loss'}">
-                    {'▲ Alpha Outperformance' if portfolio_outperformance >= 0 else '▼ Underperformance'} vs S&P 500
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    bcol1, bcol2 = st.columns([4, 1])
-    with bcol1:
-        st.subheader("Historical Position Performance Table")
-        st.caption(f"📅 Recommended on **{cutoff_date}** ($T_{{-{cutoff_days_ago}}}$) — Performance tracked through **{eval_date}** ($T_0$)")
-    with bcol2:
-        if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
-            csv_backtest = pos_df.to_csv(index=False).encode("utf-8")
-            st.download_button(
-                label="📥 Export CSV",
-                data=csv_backtest,
-                file_name=f"backtest_{cutoff_days_ago}d_{cutoff_date}.csv",
-                mime="text/csv",
-            )
+    st.markdown("### 💰 $10,000 Portfolio Benchmark Performance Comparisons")
 
     if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
@@ -504,18 +451,146 @@ def render_backtest_view(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
         disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
-
         disp_pos["Company Name"] = disp_pos.apply(
             lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
             axis=1
         )
-
         disp_pos["is_med_pharma"] = disp_pos.apply(
             lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
         )
 
         df_b_other_top10 = disp_pos[~disp_pos["is_med_pharma"]].head(10)
         df_b_med_top10 = disp_pos[disp_pos["is_med_pharma"]].head(10)
+
+        # 1. Non-Pharma / General Sectors Benchmark Calculation
+        n_other = len(df_b_other_top10)
+        alloc_other = 10000.0 / n_other if n_other > 0 else 1000.0
+        other_val = sum([alloc_other * (1.0 + (row["return_pct"] / 100.0)) for _, row in df_b_other_top10.iterrows()]) if n_other > 0 else 10000.0
+        other_gain = other_val - 10000.0
+        other_alpha = other_val - spy_val
+
+        # 2. Medical & Pharma / Biotech Benchmark Calculation
+        n_med = len(df_b_med_top10)
+        alloc_med = 10000.0 / n_med if n_med > 0 else 1000.0
+        med_val = sum([alloc_med * (1.0 + (row["return_pct"] / 100.0)) for _, row in df_b_med_top10.iterrows()]) if n_med > 0 else 10000.0
+        med_gain = med_val - 10000.0
+        med_alpha = med_val - spy_val
+
+        # --- Section 1: Non-Pharma Benchmark Cards ---
+        st.markdown(
+            '<div class="benchmark-section-title title-non-pharma">'
+            '<span>🌐 Category 1: All Other Sectors (Non-Pharma/Bio) — $10k Benchmark</span>'
+            '<span style="font-size: 0.8rem; text-transform: uppercase;">Top 10 Picks Allocation</span>'
+            '</div>',
+            unsafe_allow_html=True
+        )
+        ocol1, ocol2, ocol3 = st.columns(3)
+        with ocol1:
+            st.markdown(
+                f"""
+                <div class="portfolio-card">
+                    <div class="portfolio-card-title">💵 SPY S&P 500 ($10k Buy & Hold)</div>
+                    <div class="portfolio-card-val">${spy_val:,.2f}</div>
+                    <div class="portfolio-card-sub {'pos-gain' if spy_gain >= 0 else 'neg-loss'}">
+                        {'▲' if spy_gain >= 0 else '▼'} ${abs(spy_gain):,.2f} ({spy_ret:+.2f}%)
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        with ocol2:
+            st.markdown(
+                f"""
+                <div class="portfolio-card">
+                    <div class="portfolio-card-title">🌐 10x $1,000 Non-Pharma Stock Picks</div>
+                    <div class="portfolio-card-val">${other_val:,.2f}</div>
+                    <div class="portfolio-card-sub {'pos-gain' if other_gain >= 0 else 'neg-loss'}">
+                        {'▲' if other_gain >= 0 else '▼'} ${abs(other_gain):,.2f} ({(other_gain/10000.0)*100.0:+.2f}%)
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        with ocol3:
+            st.markdown(
+                f"""
+                <div class="portfolio-card">
+                    <div class="portfolio-card-title">⚡ Net Non-Pharma Alpha vs SPY</div>
+                    <div class="portfolio-card-val {'pos-gain' if other_alpha >= 0 else 'neg-loss'}">
+                        {'+' if other_alpha >= 0 else '-'}${abs(other_alpha):,.2f}
+                    </div>
+                    <div class="portfolio-card-sub {'pos-gain' if other_alpha >= 0 else 'neg-loss'}">
+                        {'▲ Alpha Outperformance' if other_alpha >= 0 else '▼ Underperformance'} vs S&P 500
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        # --- Section 2: Medical & Pharma Benchmark Cards ---
+        st.markdown(
+            '<div class="benchmark-section-title title-pharma">'
+            '<span>🏥 Category 2: Medical, Pharma & Bio — $10k Benchmark</span>'
+            '<span style="font-size: 0.8rem; text-transform: uppercase;">Top 10 Picks Allocation</span>'
+            '</div>',
+            unsafe_allow_html=True
+        )
+        mcol1, mcol2, mcol3 = st.columns(3)
+        with mcol1:
+            st.markdown(
+                f"""
+                <div class="portfolio-card">
+                    <div class="portfolio-card-title">💵 SPY S&P 500 ($10k Buy & Hold)</div>
+                    <div class="portfolio-card-val">${spy_val:,.2f}</div>
+                    <div class="portfolio-card-sub {'pos-gain' if spy_gain >= 0 else 'neg-loss'}">
+                        {'▲' if spy_gain >= 0 else '▼'} ${abs(spy_gain):,.2f} ({spy_ret:+.2f}%)
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        with mcol2:
+            st.markdown(
+                f"""
+                <div class="portfolio-card">
+                    <div class="portfolio-card-title">🏥 10x $1,000 Pharma/Bio Stock Picks</div>
+                    <div class="portfolio-card-val">${med_val:,.2f}</div>
+                    <div class="portfolio-card-sub {'pos-gain' if med_gain >= 0 else 'neg-loss'}">
+                        {'▲' if med_gain >= 0 else '▼'} ${abs(med_gain):,.2f} ({(med_gain/10000.0)*100.0:+.2f}%)
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+        with mcol3:
+            st.markdown(
+                f"""
+                <div class="portfolio-card">
+                    <div class="portfolio-card-title">⚡ Net Pharma/Bio Alpha vs SPY</div>
+                    <div class="portfolio-card-val {'pos-gain' if med_alpha >= 0 else 'neg-loss'}">
+                        {'+' if med_alpha >= 0 else '-'}${abs(med_alpha):,.2f}
+                    </div>
+                    <div class="portfolio-card-sub {'pos-gain' if med_alpha >= 0 else 'neg-loss'}">
+                        {'▲ Alpha Outperformance' if med_alpha >= 0 else '▼ Underperformance'} vs S&P 500
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        st.markdown("---")
+        bcol1, bcol2 = st.columns([4, 1])
+        with bcol1:
+            st.subheader("Historical Position Performance Tables")
+            st.caption(f"📅 Recommended on **{cutoff_date}** ($T_{{-{cutoff_days_ago}}}$) — Performance tracked through **{eval_date}** ($T_0$)")
+        with bcol2:
+            csv_backtest = pos_df.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                label="📥 Export CSV",
+                data=csv_backtest,
+                file_name=f"backtest_{cutoff_days_ago}d_{cutoff_date}.csv",
+                mime="text/csv",
+            )
 
         st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
         st.markdown(build_html_table(df_b_other_top10, is_backtest=True), unsafe_allow_html=True)
