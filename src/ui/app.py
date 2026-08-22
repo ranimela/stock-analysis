@@ -665,20 +665,13 @@ def main() -> None:
     )
     manual_tickers = [t.strip().upper() for t in manual_input.split(",") if t.strip()] if manual_input else None
 
-    # Auto-sync unmerged parquet deltas if available
-    try:
-        from src.ingestion.data_ingestor import DataIngestor
-        ingestor = DataIngestor(db_manager=db_manager)
-        ingestor.sync_local_db_from_parquet(deltas_dir="data/daily_deltas")
-        latest_date = check_db_availability(db_manager)
-    except Exception as e:
-        logger.warning("Auto parquet sync warning: %s", e)
-
     st.sidebar.markdown("---")
     if st.sidebar.button("🔄 Sync Cloud Delta"):
         try:
             from src.ingestion.data_ingestor import DataIngestor
-            ingestor = DataIngestor(db_manager=db_manager)
+            from src.db.db_manager import DatabaseManager
+            write_mgr = DatabaseManager(db_path=ROOT_DIR / "market_data.duckdb", read_only=False)
+            ingestor = DataIngestor(db_manager=write_mgr)
             count = ingestor.sync_local_db_from_parquet(deltas_dir="data/daily_deltas")
             st.sidebar.success(f"Synced {count} delta file(s)!")
             st.rerun()
