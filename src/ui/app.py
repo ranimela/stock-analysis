@@ -148,6 +148,37 @@ def inject_custom_css() -> None:
 
         .text-left { text-align: left !important; }
         .text-right { text-align: right !important; font-family: 'JetBrains Mono', monospace; color: #1f2328 !important; }
+
+        /* Portfolio Comparison Box Styling */
+        .portfolio-card {
+            border: 1px solid #d0d7de;
+            border-radius: 10px;
+            padding: 16px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+        }
+        .portfolio-card-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #57606a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .portfolio-card-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2328;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .portfolio-card-sub {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .pos-gain { color: #1a7f37 !important; }
+        .neg-loss { color: #cf222e !important; }
     </style>
     """,
         unsafe_allow_html=True,
@@ -386,6 +417,71 @@ def render_backtest_view(
     max_dd = float(results["avg_max_drawdown"])
     pos_df = results["positions_df"]
 
+    # Calculate $10,000 Portfolio Comparison: $10,000 SPY vs 10x $1,000 Stock Investments
+    spy_val = 10000.0 * (1.0 + (spy_ret / 100.0))
+    spy_gain = spy_val - 10000.0
+
+    if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
+        # Calculate equal $1,000 allocation across positions (up to 10 stocks)
+        pos_subset = pos_df.head(10)
+        n_positions = len(pos_subset)
+        alloc_per_stock = 10000.0 / n_positions if n_positions > 0 else 1000.0
+        
+        total_basket_val = sum([alloc_per_stock * (1.0 + (row["return_pct"] / 100.0)) for _, row in pos_subset.iterrows()])
+        basket_gain = total_basket_val - 10000.0
+    else:
+        total_basket_val = 10000.0
+        basket_gain = 0.0
+
+    portfolio_outperformance = total_basket_val - spy_val
+
+    st.markdown("### 💰 $10,000 Investment Benchmark Comparison")
+    pcol1, pcol2, pcol3 = st.columns(3)
+
+    with pcol1:
+        st.markdown(
+            f"""
+            <div class="portfolio-card">
+                <div class="portfolio-card-title">💵 SPY S&P 500 ($10k Buy & Hold)</div>
+                <div class="portfolio-card-val">${spy_val:,.2f}</div>
+                <div class="portfolio-card-sub {'pos-gain' if spy_gain >= 0 else 'neg-loss'}">
+                    {'▲' if spy_gain >= 0 else '▼'} ${abs(spy_gain):,.2f} ({spy_ret:+.2f}%)
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with pcol2:
+        st.markdown(
+            f"""
+            <div class="portfolio-card">
+                <div class="portfolio-card-title">🚀 10x $1,000 Model Stock Picks</div>
+                <div class="portfolio-card-val">${total_basket_val:,.2f}</div>
+                <div class="portfolio-card-sub {'pos-gain' if basket_gain >= 0 else 'neg-loss'}">
+                    {'▲' if basket_gain >= 0 else '▼'} ${abs(basket_gain):,.2f} ({(basket_gain/10000.0)*100.0:+.2f}%)
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with pcol3:
+        st.markdown(
+            f"""
+            <div class="portfolio-card">
+                <div class="portfolio-card-title">⚡ Net Portfolio Outperformance</div>
+                <div class="portfolio-card-val {'pos-gain' if portfolio_outperformance >= 0 else 'neg-loss'}">
+                    {'+' if portfolio_outperformance >= 0 else '-'}${abs(portfolio_outperformance):,.2f}
+                </div>
+                <div class="portfolio-card-sub {'pos-gain' if portfolio_outperformance >= 0 else 'neg-loss'}">
+                    {'▲ Alpha Outperformance' if portfolio_outperformance >= 0 else '▼ Underperformance'} vs S&P 500
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
     bcol1, bcol2 = st.columns([4, 1])
     with bcol1:
         st.subheader("Historical Position Performance Table")
@@ -434,6 +530,8 @@ def render_backtest_view(
     with st.expander("📊 **What the Backtest Output Tells You**", expanded=True):
         st.markdown(
             f"""
+- **$10,000 Investment Benchmark Comparison**
+  - *Meaning:* Compares a single **$10,000 buy-and-hold investment in the S&P 500 (`SPY`)** against allocating **$1,000 into each of the model's top 10 recommended stocks** (ignoring share rounding) over the exact same period ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$).
 - **Point-in-Time Recommendation ($T_{{-{cutoff_days_ago}}}$)**
   - *Meaning:* Shows the exact list of stocks that the model recommended **{cutoff_days_ago} trading days ago** on **{cutoff_date}**, using strictly the market data available on that day.
 - **Forward Performance Tracking ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$)**
