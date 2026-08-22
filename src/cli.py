@@ -90,6 +90,53 @@ def update(db_path: str) -> None:
     click.echo(f"Status: {summary['status']}")
 
 
+@main.command(name="export-delta")
+@click.option(
+    "--db-path",
+    default="market_data.duckdb",
+    help="Path to DuckDB database file.",
+    show_default=True,
+)
+@click.option(
+    "--output-dir",
+    default="data/daily_deltas",
+    help="Output directory for parquet file.",
+    show_default=True,
+)
+def export_delta(db_path: str, output_dir: str) -> None:
+    """Exports latest EOD trade date bars to a single Parquet file and prunes files older than 7 days."""
+    click.echo(f"Exporting latest EOD delta from '{db_path}' to '{output_dir}'...")
+    db_manager = DatabaseManager(db_path=db_path, read_only=False)
+    ingestor = DataIngestor(db_manager=db_manager)
+    res_path = ingestor.export_daily_delta_parquet(output_dir=output_dir, retention_days=7)
+    if res_path:
+        click.echo(f"Export successful: {res_path}")
+    else:
+        click.echo("Export skipped or failed.")
+
+
+@main.command(name="sync-delta")
+@click.option(
+    "--db-path",
+    default="market_data.duckdb",
+    help="Path to DuckDB database file.",
+    show_default=True,
+)
+@click.option(
+    "--deltas-dir",
+    default="data/daily_deltas",
+    help="Directory containing parquet delta files.",
+    show_default=True,
+)
+def sync_delta(db_path: str, deltas_dir: str) -> None:
+    """Syncs unmerged parquet delta files into local DuckDB database."""
+    click.echo(f"Syncing local DuckDB '{db_path}' from parquet deltas in '{deltas_dir}'...")
+    db_manager = DatabaseManager(db_path=db_path, read_only=False)
+    ingestor = DataIngestor(db_manager=db_manager)
+    synced_count = ingestor.sync_local_db_from_parquet(deltas_dir=deltas_dir)
+    click.echo(f"Merged {synced_count} daily delta file(s) into local DuckDB.")
+
+
 @main.command()
 @click.option(
     "--db-path",

@@ -1,0 +1,42 @@
+name: Daily Market Data Delta Update & Prune
+
+on:
+  schedule:
+    # 21:30 UTC = 16:30 EST (30 mins after US market close, Mon-Fri)
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  update-delta:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Daily Delta Sync & Parquet Export
+        run: |
+          python -m src.cli update
+          python -m src.cli export-delta --output-dir data/daily_deltas
+
+      - name: Commit & Push Daily Delta Parquet
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add data/daily_deltas/*.parquet
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update daily market delta parquet [skip ci]" && git push)

@@ -429,3 +429,112 @@ class DataIngestor:
 
         bars_count = self.parse_and_store_bars(df, [ticker_clean])
         return bars_count > 0
+
+    def export_daily_delta_parquet(self, output_dir: str = "data/daily_deltas", retention_days: int = 7) -> str | None:
+        """Export latest EOD daily bar delta into a single parquet file and prune old parquet files > retention_days.
+
+        Args:
+            output_dir: Target directory path for parquet files.
+            retention_days: Number of days to retain parquet files on disk before cleanup. Defaults to 7.
+
+        Returns:
+            str | None: Absolute filepath of exported parquet file if successful, otherwise None.
+        """
+        import pathlib
+        out_path = pathlib.Path(output_dir)
+        out_path.mkdir(parents=True, exist_ok=True)
+
+        today_str = datetime.date.today().isoformat()
+        target_file = out_path / f"{today_str}.parquet"
+
+        # Fetch latest EOD bars from daily_bars table for latest trade date
+        max_date_row = self.db_manager.execute_read("SELECT MAX(trade_date) FROM daily_bars;")
+        if not max_date_row or not max_date_row[0][0]:
+            logger.warning("No trade dates found in database. Cannot export parquet delta.")
+            return None
+
+        latest_date = str(max_date_row[0][0])
+        logger.info("Exporting daily parquet delta for trade date %s...", latest_date)
+
+        query = f"SELECT ticker, trade_date, open, high, low, close, adj_close, volume FROM daily_bars WHERE trade_date = '{latest_date}';"
+        df = self.db_manager.query_to_df(query)
+
+        if df.empty:
+            logger.warning("No rows found for trade date %s.", latest_date)
+            return None
+
+        df.to_parquet(target_file, index=False)
+        logger.info("Successfully exported %d rows to %s", len(df), target_file)
+
+        # Prune parquet files older than retention_days
+        cutoff_time = time.time() - (retention_days * 86400)
+        for pfile in out_path.glob("*.parquet"):
+            if pfile.stat().st_mtime < cutoff_time:
+                try:
+                    pfile.unlink()
+                    logger.info("Pruned old delta parquet file: %s", pfile.name)
+                except Exception as err:
+                    logger.warning("Failed to delete old file %s: %s", pfile.name, err)
+
+        return str(target_file)
+
+    def sync_local_db_from_parquet(self, deltas_dir: str = "data/daily_deltas") -> int:
+        """Scan deltas_dir for parquet files and merge un-synced trade dates into local DuckDB.
+
+        Args:
+            deltas_dir: Directory containing daily delta parquet files.
+
+        Returns:
+            int: Number of newly synced trade dates merged into DuckDB.
+        """
+        import pathlib
+        d_path = pathlib.Path(deltas_dir)
+        if not d_path.exists():
+            return 0
+
+        parquet_files = sorted(list(d_path.glob("*.parquet")))
+        if not parquet_files:
+            return 0
+
+        max_date_row = self.db_manager.execute_read("SELECT MAX(trade_date) FROM daily_bars;")
+        local_max_date = str(max_date_row[0][0]) if (max_date_row and max_date_row[0][0]) else "1970-01-01"
+
+        inserted_dates = 0
+        for pfile in parquet_files:
+            file_date_str = pfile.stem  # YYYY-MM-DD
+            if file_date_str > local_max_date:
+                logger.info("Merging remote delta parquet file %s into local DuckDB...", pfile.name)
+                try:
+                    p_df = pd.read_parquet(pfile)
+                    if p_df.empty:
+                        continue
+
+                    records = [
+                        (
+                            str(r["ticker"]).upper(),
+                            datetime.date.fromisoformat(str(r["trade_date"])),
+                            float(r["open"]),
+                            float(r["high"]),
+                            float(r["low"]),
+                            float(r["close"]),
+                            float(r["adj_close"]),
+                            int(r["volume"]),
+                        )
+                        for _, r in p_df.iterrows()
+                    ]
+
+                    with self.db_manager.write_cursor() as conn:
+                        conn.executemany(
+                            """
+                            INSERT OR REPLACE INTO daily_bars
+                            (ticker, trade_date, open, high, low, close, adj_close, volume)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                            """,
+                            records,
+                        )
+                    inserted_dates += 1
+                    logger.info("Successfully merged %d rows from %s", len(records), pfile.name)
+                except Exception as e:
+                    logger.error("Error merging parquet file %s: %s", pfile.name, e)
+
+        return inserted_dates
