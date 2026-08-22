@@ -457,11 +457,14 @@ class DataIngestor:
         logger.info("Exporting daily parquet delta for trade date %s...", latest_date)
 
         query = f"SELECT ticker, trade_date, open, high, low, close, adj_close, volume FROM daily_bars WHERE trade_date = '{latest_date}';"
-        df = self.db_manager.query_to_df(query)
+        rows = self.db_manager.execute_read(query)
 
-        if df.empty:
+        if not rows:
             logger.warning("No rows found for trade date %s.", latest_date)
             return None
+
+        cols = ["ticker", "trade_date", "open", "high", "low", "close", "adj_close", "volume"]
+        df = pd.DataFrame(rows, columns=cols)
 
         df.to_parquet(target_file, index=False)
         logger.info("Successfully exported %d rows to %s", len(df), target_file)
