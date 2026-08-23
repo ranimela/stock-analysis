@@ -19,46 +19,78 @@ logger = logging.getLogger(__name__)
 
 
 def run_point_in_time_backtest(
-    db_manager: DatabaseManager, cutoff_days_ago: int
+    db_manager: DatabaseManager,
+    cutoff_days_ago: int = 5,
+    custom_cutoff_date: str | None = None,
+    max_tightness: float = 3.5,
+    pct_off_low: float = 30.0,
+    pct_within_high: float = 25.0,
 ) -> dict[str, float | str | int | pd.DataFrame]:
-    """Executes a point-in-time backtest for top recommendations at T - cutoff_days_ago.
+    """Executes a point-in-time backtest for top recommendations at T - cutoff_days_ago or a custom date.
 
     Args:
         db_manager: Initialized DatabaseManager instance.
-        cutoff_days_ago: Number of trading days prior to latest available date (e.g. 5 or 22).
+        cutoff_days_ago: Number of trading days prior to latest available date (e.g. 5 or 22). Defaults to 5.
+        custom_cutoff_date: Optional specific historical YYYY-MM-DD date chosen by user.
+        max_tightness: Tightness ratio threshold ceiling. Defaults to 3.5.
+        pct_off_low: Minimum % gain off 52-week low. Defaults to 30.0.
+        pct_within_high: Maximum allowable % distance below 52-week high. Defaults to 25.0.
 
     Returns:
         dict[str, float | str | int | pd.DataFrame]: Dictionary containing summary statistics
         and a detailed DataFrame of position forward performance.
 
     Raises:
-        ValueError: If there are insufficient trading dates in the database for cutoff_days_ago.
+        ValueError: If there are insufficient trading dates or date is out of range.
     """
-    if cutoff_days_ago < 1:
-        raise ValueError("cutoff_days_ago must be a positive integer >= 1.")
-
     # Get distinct trade dates in descending order
     dates_query = "SELECT DISTINCT trade_date FROM daily_bars ORDER BY trade_date DESC;"
     rows = db_manager.execute_read(dates_query)
     trade_dates = [str(r[0]) for r in rows]
 
-    if len(trade_dates) <= cutoff_days_ago:
-        raise ValueError(
-            f"Insufficient historical dates ({len(trade_dates)}) for cutoff_days_ago={cutoff_days_ago}."
-        )
+    if not trade_dates:
+        raise ValueError("Database is empty. No historical daily bars available.")
 
     eval_date = trade_dates[0]  # T0 (Today / latest available date)
-    cutoff_date = trade_dates[cutoff_days_ago]  # T_cut
+
+    if custom_cutoff_date is not None:
+        custom_str = str(custom_cutoff_date)
+        if custom_str not in trade_dates:
+            min_avail = trade_dates[-1]
+            max_avail = trade_dates[0]
+            raise ValueError(
+                f"Selected date '{custom_str}' is out of range or not a valid market trading day. "
+                f"Available database range: {min_avail} to {max_avail}."
+            )
+        cutoff_date = custom_str
+        # Verify there is at least some forward data or check index
+        idx = trade_dates.index(cutoff_date)
+        if idx == 0:
+            raise ValueError(f"Selected date '{custom_str}' is today's date ({eval_date}). A backtest requires historical simulation before today.")
+    else:
+        if cutoff_days_ago < 1:
+            raise ValueError("cutoff_days_ago must be a positive integer >= 1.")
+
+        if len(trade_dates) <= cutoff_days_ago:
+            raise ValueError(
+                f"Insufficient historical dates ({len(trade_dates)}) for cutoff_days_ago={cutoff_days_ago}."
+            )
+        cutoff_date = trade_dates[cutoff_days_ago]  # T_cut
 
     logger.info(
-        "Running point-in-time backtest for T-%d: cutoff_date=%s, eval_date=%s.",
-        cutoff_days_ago,
+        "Running point-in-time backtest: cutoff_date=%s, eval_date=%s.",
         cutoff_date,
         eval_date,
     )
 
-    # Execute screener at cutoff date
-    screener_df = run_screener(db_manager, cutoff_date=cutoff_date)
+    # Execute screener at cutoff date with custom strategy parameters
+    screener_df = run_screener(
+        db_manager,
+        cutoff_date=cutoff_date,
+        max_tightness=max_tightness,
+        pct_off_low=pct_off_low,
+        pct_within_high=pct_within_high,
+    )
 
     if screener_df.empty:
         logger.warning("No candidates returned by screener for cutoff date %s.", cutoff_date)

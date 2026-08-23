@@ -136,6 +136,17 @@ def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pyt
     # Test View C (T-22)
     render_backtest_view(read_only_mgr, cutoff_days_ago=22, view_label="View C: 1-Month Backtest")
 
+    # Test View E (Custom Date)
+    rows = read_only_mgr.execute_read("SELECT DISTINCT trade_date FROM daily_bars ORDER BY trade_date DESC;")
+    dates = [str(r[0]) for r in rows]
+    if len(dates) > 5:
+        custom_date = dates[5]
+        render_backtest_view(
+            read_only_mgr,
+            custom_cutoff_date=custom_date,
+            view_label=f"View E: Custom Date ({custom_date}) Backtest",
+        )
+
     assert len(markdown_calls) > 0
 
 

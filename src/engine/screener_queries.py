@@ -123,8 +123,8 @@ stage_filters AS (
         AND ls.sma150 > ls.sma200
         AND ls.sma200_20d_ago IS NOT NULL
         AND ls.sma200 > ls.sma200_20d_ago
-        AND ls.close >= 1.30 * ls.low_52w
-        AND ls.close >= 0.75 * ls.high_52w
+        AND ls.close >= {min_off_low_mult:.2f} * ls.low_52w
+        AND ls.close >= {min_of_high_mult:.2f} * ls.high_52w
         AND ls.atr14 IS NOT NULL AND ls.atr14 > 0
 ),
 composite_scoring AS (
@@ -173,6 +173,8 @@ def run_screener(
     cutoff_date: str,
     max_tightness: float = 3.5,
     manual_tickers: list[str] | None = None,
+    pct_off_low: float = 30.0,
+    pct_within_high: float = 25.0,
 ) -> pd.DataFrame:
     """Executes the quantitative momentum screener query for a cutoff date.
 
@@ -181,11 +183,16 @@ def run_screener(
         cutoff_date: YYYY-MM-DD cutoff date string.
         max_tightness: Tightness ratio threshold ceiling. Defaults to 3.5.
         manual_tickers: Optional list of manual ticker symbols to force-include or evaluate.
+        pct_off_low: Minimum % gain off 52-week low. Defaults to 30.0 (+30%).
+        pct_within_high: Maximum allowable % distance below 52-week high. Defaults to 25.0 (within 25%).
 
     Returns:
         pd.DataFrame: Top recommended stocks clearing filter stages,
             ranked by pure Mansfield Relative Strength score.
     """
+    min_off_low_mult = 1.0 + (pct_off_low / 100.0)
+    min_of_high_mult = 1.0 - (pct_within_high / 100.0)
+
     if manual_tickers:
         placeholders = ", ".join(["?"] * len(manual_tickers))
         manual_sql = f"""
@@ -296,8 +303,8 @@ def run_screener(
                     AND ls.sma150 > ls.sma200
                     AND ls.sma200_20d_ago IS NOT NULL
                     AND ls.sma200 > ls.sma200_20d_ago
-                    AND ls.close >= 1.30 * ls.low_52w
-                    AND ls.close >= 0.75 * ls.high_52w
+                    AND ls.close >= {min_off_low_mult:.2f} * ls.low_52w
+                    AND ls.close >= {min_of_high_mult:.2f} * ls.high_52w
                     AND ls.atr14 IS NOT NULL AND ls.atr14 > 0
                 )
         ),
@@ -310,7 +317,7 @@ def run_screener(
                     0.40 * (PERCENT_RANK() OVER (ORDER BY (CASE WHEN sf.tightness_ratio > 0 THEN 1.0 / sf.tightness_ratio ELSE 0 END) ASC) * 100.0)
                 ) AS composite_score
             FROM stage_filters sf
-            WHERE sf.tightness_ratio <= 3.5 OR sf.ticker IN ({placeholders})
+            WHERE sf.tightness_ratio <= {max_tightness} OR sf.ticker IN ({placeholders})
         ),
         final_ranked AS (
             SELECT
@@ -345,12 +352,20 @@ def run_screener(
         if not manual_df.empty:
             return manual_df
 
-    query = SCREENER_SQL.format(max_tightness=max_tightness)
+    query = SCREENER_SQL.format(
+        max_tightness=max_tightness,
+        min_off_low_mult=min_off_low_mult,
+        min_of_high_mult=min_of_high_mult,
+    )
     with db_manager.read_cursor() as conn:
         df = conn.execute(query, [cutoff_date]).df()
 
     if df.empty and max_tightness == 2.0:
-        fallback_query = SCREENER_SQL.format(max_tightness=3.0)
+        fallback_query = SCREENER_SQL.format(
+            max_tightness=3.0,
+            min_off_low_mult=min_off_low_mult,
+            min_of_high_mult=min_of_high_mult,
+        )
         with db_manager.read_cursor() as conn:
             df = conn.execute(fallback_query, [cutoff_date]).df()
 
@@ -358,3 +373,4 @@ def run_screener(
         logger.info("No candidates passed screener for cutoff date %s.", cutoff_date)
 
     return df
+

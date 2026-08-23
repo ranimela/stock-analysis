@@ -296,7 +296,13 @@ def build_html_table(df_subset: pd.DataFrame, is_backtest: bool = False) -> str:
     """
 
 
-def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -> None:
+def render_live_recommendations(
+    db_manager: DatabaseManager,
+    latest_date: str,
+    max_tightness: float = 3.5,
+    pct_off_low: float = 30.0,
+    pct_within_high: float = 25.0,
+) -> None:
     """Render View A: Live Top-10 Recommendations (T0)."""
     st.header(f"View A: Live Top-10 Recommendations (Cutoff Date: {latest_date})")
     st.markdown(
@@ -306,7 +312,13 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
     with st.spinner("Executing Stage-2 Screener..."):
         try:
-            df = run_screener(db_manager, cutoff_date=latest_date)
+            df = run_screener(
+                db_manager,
+                cutoff_date=latest_date,
+                max_tightness=max_tightness,
+                pct_off_low=pct_off_low,
+                pct_within_high=pct_within_high,
+            )
         except Exception as e:
             st.error(f"Database error executing screener: {e}")
             return
@@ -416,16 +428,32 @@ def render_live_recommendations(db_manager: DatabaseManager, latest_date: str) -
 
 
 def render_backtest_view(
-    db_manager: DatabaseManager, cutoff_days_ago: int, view_label: str
+    db_manager: DatabaseManager,
+    cutoff_days_ago: int = 5,
+    view_label: str = "Backtest",
+    custom_cutoff_date: str | None = None,
+    max_tightness: float = 3.5,
+    pct_off_low: float = 30.0,
+    pct_within_high: float = 25.0,
 ) -> None:
-    """Render View B / View C Point-in-Time Backtest results."""
-    st.header(f"{view_label} (T-{cutoff_days_ago} Days Ago)")
+    """Render Point-in-Time Backtest results for T-5, T-22, or Custom Selected Date."""
+    if custom_cutoff_date:
+        st.header(f"{view_label} (Cutoff Date: {custom_cutoff_date})")
+    else:
+        st.header(f"{view_label} (T-{cutoff_days_ago} Days Ago)")
 
-    with st.spinner(f"Running T-{cutoff_days_ago} Point-in-Time Backtest..."):
+    with st.spinner("Running Point-in-Time Backtest..."):
         try:
-            results = run_point_in_time_backtest(db_manager, cutoff_days_ago=cutoff_days_ago)
+            results = run_point_in_time_backtest(
+                db_manager,
+                cutoff_days_ago=cutoff_days_ago,
+                custom_cutoff_date=custom_cutoff_date,
+                max_tightness=max_tightness,
+                pct_off_low=pct_off_low,
+                pct_within_high=pct_within_high,
+            )
         except Exception as e:
-            st.error(f"Error running backtest: {e}")
+            st.error(f"⚠️ Error running backtest: {e}")
             return
 
     cutoff_date = str(results["cutoff_date"])
@@ -638,23 +666,67 @@ def main() -> None:
         )
         return
 
+    # Initialize session_state defaults for strategy parameters
+    if "min_adv20" not in st.session_state:
+        st.session_state["min_adv20"] = 20.0
+    if "max_tightness" not in st.session_state:
+        st.session_state["max_tightness"] = 3.5
+    if "pct_off_low" not in st.session_state:
+        st.session_state["pct_off_low"] = 30.0
+    if "pct_within_high" not in st.session_state:
+        st.session_state["pct_within_high"] = 25.0
+
     st.sidebar.markdown("### Strategy Parameters")
+
     min_adv20 = st.sidebar.number_input(
         "Min ADV20 Liquidity ($M)",
         min_value=1.0,
         max_value=100.0,
-        value=20.0,
+        value=st.session_state["min_adv20"],
         step=5.0,
+        key="min_adv20_input",
         help="Minimum 20-day average daily dollar volume in millions",
     )
     max_tightness = st.sidebar.slider(
         "VCP Tightness Ceiling",
         min_value=1.0,
         max_value=5.0,
-        value=3.5,
+        value=st.session_state["max_tightness"],
         step=0.1,
+        key="max_tightness_input",
         help="Maximum allowable 10-day high-low tightness ratio",
     )
+    pct_off_low = st.sidebar.slider(
+        "Min % Off 52W Low (+30% default)",
+        min_value=10.0,
+        max_value=60.0,
+        value=st.session_state["pct_off_low"],
+        step=1.0,
+        key="pct_off_low_input",
+        help="Stock close price must be at least this % above its 52-week low",
+    )
+    pct_within_high = st.sidebar.slider(
+        "Max % Distance Below 52W High (25% default)",
+        min_value=10.0,
+        max_value=40.0,
+        value=st.session_state["pct_within_high"],
+        step=1.0,
+        key="pct_within_high_input",
+        help="Stock close price must be within this % distance below its 52-week high",
+    )
+
+    if st.sidebar.button("🔄 Reset Parameters to Defaults"):
+        st.session_state["min_adv20"] = 20.0
+        st.session_state["max_tightness"] = 3.5
+        st.session_state["pct_off_low"] = 30.0
+        st.session_state["pct_within_high"] = 25.0
+        st.rerun()
+
+    # Sync session state with slider values
+    st.session_state["min_adv20"] = min_adv20
+    st.session_state["max_tightness"] = max_tightness
+    st.session_state["pct_off_low"] = pct_off_low
+    st.session_state["pct_within_high"] = pct_within_high
 
     st.sidebar.markdown("---")
     st.sidebar.subheader("🔬 Custom Stock Analysis")
@@ -695,23 +767,75 @@ def main() -> None:
     st.markdown("---")
 
     # Top-Level Horizontal Tabbed Navigation Architecture
-    tab1, tab2, tab3, tab4 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
         "📈 View A: Live Top-10 Recommendations",
         "⏪ View B: 1-Week PIT Backtest",
         "🗓️ View C: 1-Month PIT Backtest",
+        "🗓️ View E: Custom Date Backtest",
         "🔬 View D: Custom Diagnostic Lab",
     ])
 
     with tab1:
-        render_live_recommendations(db_manager, latest_date)
+        render_live_recommendations(
+            db_manager,
+            latest_date,
+            max_tightness=max_tightness,
+            pct_off_low=pct_off_low,
+            pct_within_high=pct_within_high,
+        )
 
     with tab2:
-        render_backtest_view(db_manager, cutoff_days_ago=5, view_label="View B: 1-Week Backtest")
+        render_backtest_view(
+            db_manager,
+            cutoff_days_ago=5,
+            view_label="View B: 1-Week Backtest",
+            max_tightness=max_tightness,
+            pct_off_low=pct_off_low,
+            pct_within_high=pct_within_high,
+        )
 
     with tab3:
-        render_backtest_view(db_manager, cutoff_days_ago=22, view_label="View C: 1-Month Backtest")
+        render_backtest_view(
+            db_manager,
+            cutoff_days_ago=22,
+            view_label="View C: 1-Month Backtest",
+            max_tightness=max_tightness,
+            pct_off_low=pct_off_low,
+            pct_within_high=pct_within_high,
+        )
 
     with tab4:
+        st.subheader("🗓️ Custom Historical Date Point-in-Time Backtest")
+        st.markdown("Select any historical date to evaluate model picks and track their forward performance through today.")
+        
+        # Get date range from daily_bars
+        range_rows = db_manager.execute_read("SELECT MIN(trade_date), MAX(trade_date) FROM daily_bars;")
+        min_date_val = datetime.strptime(str(range_rows[0][0]), "%Y-%m-%d").date() if range_rows and range_rows[0][0] else datetime.now().date()
+        max_date_val = datetime.strptime(str(range_rows[0][1]), "%Y-%m-%d").date() if range_rows and range_rows[0][1] else datetime.now().date()
+        
+        # Default custom date to 10 trading days ago
+        default_custom_date = max_date_val - timedelta(days=14)
+
+        chosen_date = st.date_input(
+            "Select Backtest Cutoff Date",
+            value=default_custom_date,
+            min_value=min_date_val,
+            max_value=max_date_val,
+            help="Choose a historical trading date between available dataset range",
+        )
+
+        chosen_date_str = chosen_date.strftime("%Y-%m-%d")
+
+        render_backtest_view(
+            db_manager,
+            custom_cutoff_date=chosen_date_str,
+            view_label=f"View E: Custom Date ({chosen_date_str}) Backtest",
+            max_tightness=max_tightness,
+            pct_off_low=pct_off_low,
+            pct_within_high=pct_within_high,
+        )
+
+    with tab5:
         if not manual_tickers:
             st.info("👈 Enter one or more stock tickers in the sidebar field **'Ticker(s) to Analyze'** (e.g. `NVDA, AAPL, TSLA`) to launch custom diagnostics.")
         else:
