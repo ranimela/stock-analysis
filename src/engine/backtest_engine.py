@@ -55,18 +55,18 @@ def run_point_in_time_backtest(
 
     if custom_cutoff_date is not None:
         custom_str = str(custom_cutoff_date)
-        if custom_str not in trade_dates:
+        # Find nearest trade_date <= custom_str
+        valid_dates = [d for d in trade_dates if d <= custom_str]
+        if not valid_dates:
             min_avail = trade_dates[-1]
             max_avail = trade_dates[0]
             raise ValueError(
-                f"Selected date '{custom_str}' is out of range or not a valid market trading day. "
+                f"Selected date '{custom_str}' is prior to available market dataset. "
                 f"Available database range: {min_avail} to {max_avail}."
             )
-        cutoff_date = custom_str
-        # Verify there is at least some forward data or check index
-        idx = trade_dates.index(cutoff_date)
-        if idx == 0:
-            raise ValueError(f"Selected date '{custom_str}' is today's date ({eval_date}). A backtest requires historical simulation before today.")
+        cutoff_date = valid_dates[0]  # Nearest valid trading day at or prior to custom_str
+        if custom_str != cutoff_date:
+            logger.info("Custom date %s snapped to nearest prior trading date %s.", custom_str, cutoff_date)
     else:
         if cutoff_days_ago < 1:
             raise ValueError("cutoff_days_ago must be a positive integer >= 1.")
