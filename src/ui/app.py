@@ -676,7 +676,13 @@ def main() -> None:
     if "pct_within_high_input" not in st.session_state:
         st.session_state["pct_within_high_input"] = 25.0
 
-    st.sidebar.markdown("### Strategy Parameters")
+    def reset_parameters_callback() -> None:
+        st.session_state["min_adv20_input"] = 20.0
+        st.session_state["max_tightness_input"] = 3.5
+        st.session_state["pct_off_low_input"] = 30.0
+        st.session_state["pct_within_high_input"] = 25.0
+
+    st.sidebar.button("🔄 Reset Parameters to Defaults", on_click=reset_parameters_callback)
 
     min_adv20 = st.sidebar.number_input(
         "Min ADV20 Liquidity ($M)",
@@ -710,13 +716,6 @@ def main() -> None:
         key="pct_within_high_input",
         help="Stock close price must be within this % distance below its 52-week high",
     )
-
-    if st.sidebar.button("🔄 Reset Parameters to Defaults"):
-        st.session_state["min_adv20_input"] = 20.0
-        st.session_state["max_tightness_input"] = 3.5
-        st.session_state["pct_off_low_input"] = 30.0
-        st.session_state["pct_within_high_input"] = 25.0
-        st.rerun()
 
     st.sidebar.markdown("---")
     st.sidebar.subheader("🔬 Custom Stock Analysis")
