@@ -667,14 +667,14 @@ def main() -> None:
         return
 
     # Initialize session_state defaults for strategy parameters
-    if "min_adv20" not in st.session_state:
-        st.session_state["min_adv20"] = 20.0
-    if "max_tightness" not in st.session_state:
-        st.session_state["max_tightness"] = 3.5
-    if "pct_off_low" not in st.session_state:
-        st.session_state["pct_off_low"] = 30.0
-    if "pct_within_high" not in st.session_state:
-        st.session_state["pct_within_high"] = 25.0
+    if "min_adv20_input" not in st.session_state:
+        st.session_state["min_adv20_input"] = 20.0
+    if "max_tightness_input" not in st.session_state:
+        st.session_state["max_tightness_input"] = 3.5
+    if "pct_off_low_input" not in st.session_state:
+        st.session_state["pct_off_low_input"] = 30.0
+    if "pct_within_high_input" not in st.session_state:
+        st.session_state["pct_within_high_input"] = 25.0
 
     st.sidebar.markdown("### Strategy Parameters")
 
@@ -682,7 +682,6 @@ def main() -> None:
         "Min ADV20 Liquidity ($M)",
         min_value=1.0,
         max_value=100.0,
-        value=st.session_state["min_adv20"],
         step=5.0,
         key="min_adv20_input",
         help="Minimum 20-day average daily dollar volume in millions",
@@ -691,7 +690,6 @@ def main() -> None:
         "VCP Tightness Ceiling",
         min_value=1.0,
         max_value=5.0,
-        value=st.session_state["max_tightness"],
         step=0.1,
         key="max_tightness_input",
         help="Maximum allowable 10-day high-low tightness ratio",
@@ -700,7 +698,6 @@ def main() -> None:
         "Min % Off 52W Low (+30% default)",
         min_value=10.0,
         max_value=60.0,
-        value=st.session_state["pct_off_low"],
         step=1.0,
         key="pct_off_low_input",
         help="Stock close price must be at least this % above its 52-week low",
@@ -709,24 +706,17 @@ def main() -> None:
         "Max % Distance Below 52W High (25% default)",
         min_value=10.0,
         max_value=40.0,
-        value=st.session_state["pct_within_high"],
         step=1.0,
         key="pct_within_high_input",
         help="Stock close price must be within this % distance below its 52-week high",
     )
 
     if st.sidebar.button("🔄 Reset Parameters to Defaults"):
-        st.session_state["min_adv20"] = 20.0
-        st.session_state["max_tightness"] = 3.5
-        st.session_state["pct_off_low"] = 30.0
-        st.session_state["pct_within_high"] = 25.0
+        st.session_state["min_adv20_input"] = 20.0
+        st.session_state["max_tightness_input"] = 3.5
+        st.session_state["pct_off_low_input"] = 30.0
+        st.session_state["pct_within_high_input"] = 25.0
         st.rerun()
-
-    # Sync session state with slider values
-    st.session_state["min_adv20"] = min_adv20
-    st.session_state["max_tightness"] = max_tightness
-    st.session_state["pct_off_low"] = pct_off_low
-    st.session_state["pct_within_high"] = pct_within_high
 
     st.sidebar.markdown("---")
     st.sidebar.subheader("🔬 Custom Stock Analysis")
