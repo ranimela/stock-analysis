@@ -684,11 +684,11 @@ def main() -> None:
 
     st.sidebar.button("🔄 Reset Parameters to Defaults", on_click=reset_parameters_callback)
 
-    min_adv20 = st.sidebar.number_input(
-        "Min ADV20 Liquidity ($M)",
+    min_adv20 = st.sidebar.slider(
+        "Min ADV20 Liquidity ($M) ($20M default)",
         min_value=1.0,
         max_value=100.0,
-        step=5.0,
+        step=1.0,
         key="min_adv20_input",
         help="Minimum 20-day average daily dollar volume in millions",
     )
