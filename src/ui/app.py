@@ -761,8 +761,8 @@ def main() -> None:
         "📈 View A: Live Top-10 Recommendations",
         "⏪ View B: 1-Week PIT Backtest",
         "🗓️ View C: 1-Month PIT Backtest",
-        "🗓️ View E: Custom Date Backtest",
         "🔬 View D: Custom Diagnostic Lab",
+        "🗓️ View E: Custom Date Backtest",
     ])
 
     with tab1:
@@ -795,37 +795,6 @@ def main() -> None:
         )
 
     with tab4:
-        st.subheader("🗓️ Custom Historical Date Point-in-Time Backtest")
-        st.markdown("Select any historical date to evaluate model picks and track their forward performance through today.")
-        
-        # Get date range from daily_bars
-        range_rows = db_manager.execute_read("SELECT MIN(trade_date), MAX(trade_date) FROM daily_bars;")
-        min_date_val = datetime.strptime(str(range_rows[0][0]), "%Y-%m-%d").date() if range_rows and range_rows[0][0] else datetime.now().date()
-        max_date_val = datetime.strptime(str(range_rows[0][1]), "%Y-%m-%d").date() if range_rows and range_rows[0][1] else datetime.now().date()
-        
-        # Default custom date to 10 trading days ago
-        default_custom_date = max_date_val - timedelta(days=14)
-
-        chosen_date = st.date_input(
-            "Select Backtest Cutoff Date",
-            value=default_custom_date,
-            min_value=min_date_val,
-            max_value=max_date_val,
-            help="Choose a historical trading date between available dataset range",
-        )
-
-        chosen_date_str = chosen_date.strftime("%Y-%m-%d")
-
-        render_backtest_view(
-            db_manager,
-            custom_cutoff_date=chosen_date_str,
-            view_label=f"View E: Custom Date ({chosen_date_str}) Backtest",
-            max_tightness=max_tightness,
-            pct_off_low=pct_off_low,
-            pct_within_high=pct_within_high,
-        )
-
-    with tab5:
         if not manual_tickers:
             st.info("👈 Enter one or more stock tickers in the sidebar field **'Ticker(s) to Analyze'** (e.g. `NVDA, AAPL, TSLA`) to launch custom diagnostics.")
         else:
@@ -853,11 +822,10 @@ def main() -> None:
                 st.warning(
                     f"The following ticker(s) were not part of the initial database seed: **{', '.join(missing_tickers)}**"
                 )
-                if st.button("📥 Download Historical Data for Missing Tickers"):
-                    from src.ingestion.data_ingestor import DataIngestor
-
-                    with st.spinner("Downloading price history from Yahoo Finance..."):
-                        write_db = DatabaseManager(db_path=db_manager.db_path, read_only=False)
+                if st.button(f"📥 Download Data for {', '.join(missing_tickers)}"):
+                    with st.spinner(f"Ingesting daily bar data for {', '.join(missing_tickers)}..."):
+                        from src.ingestion.data_ingestor import DataIngestor
+                        write_db = DatabaseManager(db_path=ROOT_DIR / "market_data.duckdb", read_only=False)
                         ingestor = DataIngestor(db_manager=write_db)
                         synced_any = False
                         for m_tick in missing_tickers:
@@ -865,7 +833,6 @@ def main() -> None:
                             if ok:
                                 st.success(f"Downloaded and stored price history for **{m_tick}**!")
                                 synced_any = True
-                            else:
                                 st.error(f"Failed to fetch data for **{m_tick}**. Please verify ticker symbol on Yahoo Finance.")
                         if synced_any:
                             st.rerun()
@@ -978,6 +945,37 @@ def main() -> None:
 
                     st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
                     st.markdown(build_html_table(df_d_med_top10, is_backtest=False), unsafe_allow_html=True)
+
+    with tab5:
+        st.subheader("🗓️ Custom Historical Date Point-in-Time Backtest")
+        st.markdown("Select any historical date to evaluate model picks and track their forward performance through today.")
+        
+        # Get date range from daily_bars
+        range_rows = db_manager.execute_read("SELECT MIN(trade_date), MAX(trade_date) FROM daily_bars;")
+        min_date_val = datetime.strptime(str(range_rows[0][0]), "%Y-%m-%d").date() if range_rows and range_rows[0][0] else datetime.now().date()
+        max_date_val = datetime.strptime(str(range_rows[0][1]), "%Y-%m-%d").date() if range_rows and range_rows[0][1] else datetime.now().date()
+        
+        # Default custom date to 10 trading days ago
+        default_custom_date = max_date_val - timedelta(days=14)
+
+        chosen_date = st.date_input(
+            "Select Backtest Cutoff Date",
+            value=default_custom_date,
+            min_value=min_date_val,
+            max_value=max_date_val,
+            help="Choose a historical trading date between available dataset range",
+        )
+
+        chosen_date_str = chosen_date.strftime("%Y-%m-%d")
+
+        render_backtest_view(
+            db_manager,
+            custom_cutoff_date=chosen_date_str,
+            view_label=f"View E: Custom Date ({chosen_date_str}) Backtest",
+            max_tightness=max_tightness,
+            pct_off_low=pct_off_low,
+            pct_within_high=pct_within_high,
+        )
 
 
 if __name__ == "__main__":
