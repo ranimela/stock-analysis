@@ -824,13 +824,13 @@ def main() -> None:
 
 When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures historical price action over specific lookback timeframes:
 
-1. **Price Floor ($\ge \$10.00$)**: Single-day close price on `{v4_date_str}`.
-2. **ADV20 Liquidity ($\ge \$20\text{{M}}$)**: **20 Trading Days** (~1 month) average daily volume $\times$ close price prior to `{v4_date_str}`.
-3. **Moving Averages (50/150/200)**: **50, 150, and 200 Trading Days** Simple Moving Averages prior to `{v4_date_str}`. Must satisfy $\text{{Close}} > \text{{SMA}}_{{50}} > \text{{SMA}}_{{150}} > \text{{SMA}}_{{200}}$.
-4. **200D SMA Slope Trajectory**: Compares $\text{{SMA}}_{{200}}$ on `{v4_date_str}` vs $\text{{SMA}}_{{200}}$ **20 Trading Days Ago**. Must be strictly rising.
-5. **52-Week Low Bound ($\ge +30\%$)**: Minimum low price over **252 Trading Days** (~1 year). Close must be $\ge +30\%$ above 52W low.
-6. **52-Week High Bound ($\le 25\%$)**: Maximum high price over **252 Trading Days** (~1 year). Close must be within $25\%$ distance below 52W high.
-7. **VCP Tightness Compression ($\le 3.5$)**: **10 Trading Days** High-Low consolidation range divided by 14-day Average True Range ($\text{{ATR}}_{{14}}$).
+1. **Price Floor (>= $10.00)**: Single-day close price on `{v4_date_str}`.
+2. **ADV20 Liquidity (>= $20M)**: **20 Trading Days** (~1 month) average daily volume x close price prior to `{v4_date_str}`.
+3. **Moving Averages (50/150/200)**: **50, 150, and 200 Trading Days** Simple Moving Averages prior to `{v4_date_str}`. Must satisfy Close > SMA50 > SMA150 > SMA200.
+4. **200D SMA Slope Trajectory**: Compares SMA200 on `{v4_date_str}` vs SMA200 **20 Trading Days Ago**. Must be strictly rising.
+5. **52-Week Low Bound (>= +30%)**: Minimum low price over **252 Trading Days** (~1 year). Close must be >= +30% above 52W low.
+6. **52-Week High Bound (<= 25%)**: Maximum high price over **252 Trading Days** (~1 year). Close must be within 25% distance below 52W high.
+7. **VCP Tightness Compression (<= 3.5)**: **10 Trading Days** High-Low consolidation range divided by 14-day Average True Range (ATR14).
 8. **Mansfield Relative Strength vs SPY**: Outperformance vs S&P 500 (`SPY`) over **63 Trading Days (3M)** and **252 Trading Days (12M)**.
 """
                 )
