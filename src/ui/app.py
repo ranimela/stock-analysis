@@ -800,6 +800,41 @@ def main() -> None:
         else:
             st.header(f"View D: Custom Analysis for {', '.join(manual_tickers)}")
 
+            # Date Selector for View D Diagnostic Evaluation
+            r_rows = db_manager.execute_read("SELECT MIN(trade_date), MAX(trade_date) FROM daily_bars;")
+            min_d_val = datetime.strptime(str(r_rows[0][0]), "%Y-%m-%d").date() if r_rows and r_rows[0][0] else datetime.now().date()
+            max_d_val = datetime.strptime(str(r_rows[0][1]), "%Y-%m-%d").date() if r_rows and r_rows[0][1] else datetime.now().date()
+
+            v4_col1, v4_col2 = st.columns([1, 2])
+            with v4_col1:
+                v4_chosen_date = st.date_input(
+                    "Evaluation Cutoff Date",
+                    value=max_d_val,
+                    min_value=min_d_val,
+                    max_value=max_d_val,
+                    key="view_d_date_picker",
+                    help="Choose the historical trading date on which to diagnose custom stock tickers",
+                )
+            v4_date_str = v4_chosen_date.strftime("%Y-%m-%d")
+
+            with st.expander("⏱️ **Evaluation Date & Technical Lookback Windows Guide**", expanded=False):
+                st.markdown(
+                    f"""
+### 📊 Evaluation Date: `{v4_date_str}`
+
+When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures historical price action over specific lookback timeframes:
+
+1. **Price Floor ($\ge \$10.00$)**: Single-day close price on `{v4_date_str}`.
+2. **ADV20 Liquidity ($\ge \$20\text{{M}}$)**: **20 Trading Days** (~1 month) average daily volume $\times$ close price prior to `{v4_date_str}`.
+3. **Moving Averages (50/150/200)**: **50, 150, and 200 Trading Days** Simple Moving Averages prior to `{v4_date_str}`. Must satisfy $\text{{Close}} > \text{{SMA}}_{{50}} > \text{{SMA}}_{{150}} > \text{{SMA}}_{{200}}$.
+4. **200D SMA Slope Trajectory**: Compares $\text{{SMA}}_{{200}}$ on `{v4_date_str}` vs $\text{{SMA}}_{{200}}$ **20 Trading Days Ago**. Must be strictly rising.
+5. **52-Week Low Bound ($\ge +30\%$)**: Minimum low price over **252 Trading Days** (~1 year). Close must be $\ge +30\%$ above 52W low.
+6. **52-Week High Bound ($\le 25\%$)**: Maximum high price over **252 Trading Days** (~1 year). Close must be within $25\%$ distance below 52W high.
+7. **VCP Tightness Compression ($\le 3.5$)**: **10 Trading Days** High-Low consolidation range divided by 14-day Average True Range ($\text{{ATR}}_{{14}}$).
+8. **Mansfield Relative Strength vs SPY**: Outperformance vs S&P 500 (`SPY`) over **63 Trading Days (3M)** and **252 Trading Days (12M)**.
+"""
+                )
+
             # Check ticker presence in DuckDB
             db_tickers_query = f"SELECT DISTINCT ticker FROM daily_bars WHERE ticker IN ({', '.join(['?']*len(manual_tickers))});"
             existing_rows = db_manager.execute_read(db_tickers_query, manual_tickers)
@@ -838,13 +873,26 @@ def main() -> None:
                             st.rerun()
 
             if found_tickers:
-                df_manual = run_screener(db_manager, cutoff_date=latest_date, manual_tickers=found_tickers)
+                df_manual = run_screener(
+                    db_manager,
+                    cutoff_date=v4_date_str,
+                    manual_tickers=found_tickers,
+                    max_tightness=max_tightness,
+                    pct_off_low=pct_off_low,
+                    pct_within_high=pct_within_high,
+                )
                 df_manual = df_manual[df_manual["ticker"].isin(found_tickers)].copy()
 
                 if not df_manual.empty:
-                    st.markdown("### 📋 Stage-2 Diagnostic Evaluation & PM Feedback")
+                    st.markdown(f"### 📋 Stage-2 Diagnostic Evaluation & PM Feedback (Cutoff Date: `{v4_date_str}`)")
 
-                    df_top10 = run_screener(db_manager, cutoff_date=latest_date)
+                    df_top10 = run_screener(
+                        db_manager,
+                        cutoff_date=v4_date_str,
+                        max_tightness=max_tightness,
+                        pct_off_low=pct_off_low,
+                        pct_within_high=pct_within_high,
+                    )
                     top10_set = set(df_top10["ticker"].tolist()) if not df_top10.empty else set()
 
                     for _, row in df_manual.iterrows():
