@@ -731,9 +731,7 @@ def main() -> None:
     if st.sidebar.button("🔄 Sync Cloud Delta"):
         try:
             from src.ingestion.data_ingestor import DataIngestor
-            from src.db.db_manager import DatabaseManager
-            write_mgr = DatabaseManager(db_path=ROOT_DIR / "market_data.duckdb", read_only=False)
-            ingestor = DataIngestor(db_manager=write_mgr)
+            ingestor = DataIngestor(db_manager=db_manager)
             count = ingestor.sync_local_db_from_parquet(deltas_dir="data/daily_deltas")
             st.sidebar.success(f"Synced {count} delta file(s)!")
             st.rerun()
@@ -860,8 +858,7 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                 if st.button(f"📥 Download Data for {', '.join(missing_tickers)}"):
                     with st.spinner(f"Ingesting daily bar data for {', '.join(missing_tickers)}..."):
                         from src.ingestion.data_ingestor import DataIngestor
-                        write_db = DatabaseManager(db_path=ROOT_DIR / "market_data.duckdb", read_only=False)
-                        ingestor = DataIngestor(db_manager=write_db)
+                        ingestor = DataIngestor(db_manager=db_manager)
                         synced_any = False
                         for m_tick in missing_tickers:
                             ok = ingestor.sync_single_ticker(m_tick)

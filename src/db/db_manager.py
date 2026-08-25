@@ -39,7 +39,6 @@ class DatabaseManager:
         self._write_lock = threading.Lock()
         if not self.read_only:
             self.db_path.parent.mkdir(parents=True, exist_ok=True)
-            self.init_schema()
 
     def get_connection(self, read_only: bool | None = None) -> duckdb.DuckDBPyConnection:
         """Create a new DuckDB connection.
