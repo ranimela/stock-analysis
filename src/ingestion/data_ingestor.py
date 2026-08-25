@@ -304,9 +304,16 @@ class DataIngestor:
         ticker_list: list[str] = []
 
         if symbols is None:
-            symbol_dicts = fetch_symbol_directory()
-            sync_symbol_metadata(self.db_manager, symbol_dicts)
-            ticker_list = [s["ticker"] for s in symbol_dicts]
+            try:
+                symbol_dicts = fetch_symbol_directory()
+                sync_symbol_metadata(self.db_manager, symbol_dicts)
+                ticker_list = [s["ticker"] for s in symbol_dicts]
+            except Exception as err:
+                logger.warning("Failed to fetch fresh NASDAQ symbol directory (%s). Falling back to existing database metadata tickers.", err)
+                db_symbols = self.db_manager.execute_read("SELECT DISTINCT ticker FROM symbol_metadata WHERE is_active = true;")
+                if not db_symbols:
+                    db_symbols = self.db_manager.execute_read("SELECT DISTINCT ticker FROM daily_bars;")
+                ticker_list = [str(r[0]).upper() for r in db_symbols]
         elif symbols and isinstance(symbols[0], dict):
             symbol_dicts = list(symbols)  # type: ignore[arg-type]
             sync_symbol_metadata(self.db_manager, symbol_dicts)
