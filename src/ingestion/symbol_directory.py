@@ -300,13 +300,25 @@ def fetch_symbol_directory() -> list[dict[str, Any]]:
     Returns:
         list[dict[str, Any]]: Combined list of common stock ticker metadata dictionaries.
     """
-    logger.info("Fetching NASDAQ listed symbol directory...")
-    nasdaq_content = download_file_content(NASDAQ_LISTED_HTTP_URL, NASDAQ_LISTED_FTP_URL)
-    nasdaq_symbols = parse_nasdaqlisted(nasdaq_content)
+    nasdaq_symbols: list[dict[str, Any]] = []
+    other_symbols: list[dict[str, Any]] = []
 
-    logger.info("Fetching Other listed symbol directory...")
-    other_content = download_file_content(OTHER_LISTED_HTTP_URL, OTHER_LISTED_FTP_URL)
-    other_symbols = parse_otherlisted(other_content)
+    try:
+        logger.info("Fetching NASDAQ listed symbol directory...")
+        nasdaq_content = download_file_content(NASDAQ_LISTED_HTTP_URL, NASDAQ_LISTED_FTP_URL)
+        nasdaq_symbols = parse_nasdaqlisted(nasdaq_content)
+    except Exception as e:
+        logger.warning("Failed to fetch NASDAQ listed symbol directory: %s", e)
+
+    try:
+        logger.info("Fetching Other listed symbol directory...")
+        other_content = download_file_content(OTHER_LISTED_HTTP_URL, OTHER_LISTED_FTP_URL)
+        other_symbols = parse_otherlisted(other_content)
+    except Exception as e:
+        logger.warning("Failed to fetch Other listed symbol directory: %s", e)
+
+    if not nasdaq_symbols and not other_symbols:
+        raise RuntimeError("Failed to download both NASDAQ listed and Other listed symbol directories.")
 
     # Deduplicate by ticker
     seen_tickers: set[str] = set()
