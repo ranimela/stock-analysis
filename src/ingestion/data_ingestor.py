@@ -27,7 +27,7 @@ class DataIngestor:
         self,
         db_manager: DatabaseManager | None = None,
         chunk_size: int = 100,
-        delay_seconds: float = 1.0,
+        delay_seconds: float = 0.1,
         lookback_years: int = 2,
     ) -> None:
         """Initialize DataIngestor.
@@ -35,7 +35,7 @@ class DataIngestor:
         Args:
             db_manager: DatabaseManager instance. If None, initializes a default instance.
             chunk_size: Number of tickers per batch request. Defaults to 100.
-            delay_seconds: Sleep delay between batch requests in seconds. Defaults to 1.0.
+            delay_seconds: Sleep delay between batch requests in seconds. Defaults to 0.1.
             lookback_years: Historical lookback in years for new tickers. Defaults to 2.
         """
         self.db_manager = db_manager if db_manager is not None else DatabaseManager()
@@ -148,6 +148,7 @@ class DataIngestor:
         df: pd.DataFrame,
         tickers: Sequence[str],
         max_dates: dict[str, datetime.date] | None = None,
+        update_metadata: bool = False,
     ) -> int:
         """Parse yfinance DataFrame and store valid bars into DuckDB daily_bars.
 
@@ -155,6 +156,7 @@ class DataIngestor:
             df: Raw yfinance DataFrame output.
             tickers: Sequence of ticker symbols expected in the DataFrame.
             max_dates: Optional dictionary mapping ticker to latest stored date for delta sync filtering.
+            update_metadata: Whether to perform individual yfinance fast_info HTTP requests to update market cap. Defaults to False for high speed.
 
         Returns:
             int: Total number of bars inserted into DuckDB.
@@ -240,40 +242,41 @@ class DataIngestor:
                 records,
             )
 
-        # Batch update Market Cap & Name for synced tickers via fast_info / Ticker info
-        for ticker in tickers:
-            ticker_clean = ticker.strip().upper()
-            try:
-                t = yf.Ticker(ticker_clean)
-                fi = t.fast_info
-                mc = getattr(fi, "market_cap", None)
-                name = getattr(fi, "long_name", None) or getattr(fi, "short_name", None)
-                if mc is None or pd.isna(mc) or not name:
-                    inf = t.info
-                    if mc is None or pd.isna(mc):
-                        mc = inf.get("marketCap")
-                    if not name:
-                        name = inf.get("longName") or inf.get("shortName")
+        # Batch update Market Cap & Name for synced tickers if explicitly requested
+        if update_metadata:
+            for ticker in tickers:
+                ticker_clean = ticker.strip().upper()
+                try:
+                    t = yf.Ticker(ticker_clean)
+                    fi = t.fast_info
+                    mc = getattr(fi, "market_cap", None)
+                    name = getattr(fi, "long_name", None) or getattr(fi, "short_name", None)
+                    if mc is None or pd.isna(mc) or not name:
+                        inf = t.info
+                        if mc is None or pd.isna(mc):
+                            mc = inf.get("marketCap")
+                        if not name:
+                            name = inf.get("longName") or inf.get("shortName")
 
-                if (mc and not pd.isna(mc)) or name:
-                    with self.db_manager.write_cursor() as conn:
-                        if mc and not pd.isna(mc) and name:
-                            conn.execute(
-                                "UPDATE symbol_metadata SET market_cap = ?, name = ? WHERE ticker = ?;",
-                                [float(mc), str(name), ticker_clean],
-                            )
-                        elif mc and not pd.isna(mc):
-                            conn.execute(
-                                "UPDATE symbol_metadata SET market_cap = ? WHERE ticker = ?;",
-                                [float(mc), ticker_clean],
-                            )
-                        elif name:
-                            conn.execute(
-                                "UPDATE symbol_metadata SET name = ? WHERE ticker = ?;",
-                                [str(name), ticker_clean],
-                            )
-            except Exception:
-                pass
+                    if (mc and not pd.isna(mc)) or name:
+                        with self.db_manager.write_cursor() as conn:
+                            if mc and not pd.isna(mc) and name:
+                                conn.execute(
+                                    "UPDATE symbol_metadata SET market_cap = ?, name = ? WHERE ticker = ?;",
+                                    [float(mc), str(name), ticker_clean],
+                                )
+                            elif mc and not pd.isna(mc):
+                                conn.execute(
+                                    "UPDATE symbol_metadata SET market_cap = ? WHERE ticker = ?;",
+                                    [float(mc), ticker_clean],
+                                )
+                            elif name:
+                                conn.execute(
+                                    "UPDATE symbol_metadata SET name = ? WHERE ticker = ?;",
+                                    [str(name), ticker_clean],
+                                )
+                except Exception:
+                    pass
 
         return len(records)
 
