@@ -518,4 +518,77 @@ def test_ui_render_backtest_view_empty_universe_resilience(temp_db: Path, monkey
     assert len(info_calls) > 0
 
 
+def test_ui_format_company_name_helper() -> None:
+    """Test format_company_name handles NaNs, strings, and fallbacks robustly."""
+    import numpy as np
+    from src.ui.app import format_company_name
+
+    assert format_company_name("Apple Inc.", "AAPL") == "Apple Inc."
+    assert format_company_name("  Apple Inc.  ", "AAPL") == "Apple Inc."
+    assert format_company_name(None, "AAPL") == "AAPL"
+    assert format_company_name(np.nan, "AAPL") == "AAPL"
+    assert format_company_name(float("nan"), "AAPL") == "AAPL"
+    assert format_company_name("nan", "AAPL") == "AAPL"
+    assert format_company_name("NAN", "AAPL") == "AAPL"
+    assert format_company_name("", "AAPL") == "AAPL"
+    assert format_company_name("   ", "AAPL") == "AAPL"
+    assert format_company_name("בנק דיסקונט", "DSCT.TA") == "בנק דיסקונט"
+
+
+def test_ui_render_live_recommendations_empty_us_decoupled_tase(
+    populated_db_with_tase: DatabaseManager, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Test View A renders TASE section even when US screener returns 0 results."""
+    import streamlit as st
+    from src.ui.app import render_live_recommendations
+
+    read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)
+    latest_date = "2025-10-27"
+
+    warnings = []
+    markdown_calls = []
+
+    monkeypatch.setattr(st, "warning", lambda msg: warnings.append(str(msg)))
+    monkeypatch.setattr(st, "markdown", lambda body, *a, **kw: markdown_calls.append(str(body)))
+    monkeypatch.setattr(st, "header", lambda *a, **kw: None)
+    monkeypatch.setattr(st, "subheader", lambda *a, **kw: None)
+    monkeypatch.setattr(st, "caption", lambda *a, **kw: None)
+    monkeypatch.setattr(st, "download_button", lambda *a, **kw: None)
+
+    # Force US to be empty by using min_price that excludes US but allows TASE
+    # In populated_db_with_tase, AAPL close ~300. Set min_price=1000.0 (TASE close ~2500, AAPL < 500)
+    render_live_recommendations(read_only_mgr, latest_date, min_price=1000.0, min_adv20=0.0)
+
+    rendered_all = "\n".join(markdown_calls)
+    assert "Category 3: Tel Aviv Stock Exchange" in rendered_all
+    assert any("No stocks passed all screening filters" in w for w in warnings)
+
+
+def test_ui_render_backtest_view_empty_us_positions_decoupled(
+    populated_db_with_tase: DatabaseManager, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Test render_backtest_view executes cleanly without UnboundLocalError when US produces 0 positions."""
+    import streamlit as st
+    from src.ui.app import render_backtest_view
+
+    read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)
+
+    markdown_calls = []
+    infos = []
+
+    monkeypatch.setattr(st, "markdown", lambda body, *a, **kw: markdown_calls.append(str(body)))
+    monkeypatch.setattr(st, "info", lambda msg: infos.append(str(msg)))
+    monkeypatch.setattr(st, "header", lambda *a, **kw: None)
+    monkeypatch.setattr(st, "subheader", lambda *a, **kw: None)
+    monkeypatch.setattr(st, "caption", lambda *a, **kw: None)
+    monkeypatch.setattr(st, "download_button", lambda *a, **kw: None)
+
+    # Impossible max_tightness to produce 0 US positions
+    render_backtest_view(read_only_mgr, cutoff_days_ago=5, max_tightness=0.0001, pct_off_low=999999.0)
+
+    rendered_all = "\n".join(markdown_calls)
+    assert "$10,000 Investment Benchmark Comparison" in rendered_all
+    assert any("No US position data available" in msg for msg in infos)
+
+
 

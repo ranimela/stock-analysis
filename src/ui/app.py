@@ -254,6 +254,15 @@ def is_medical_pharma(name: str, ticker: str) -> bool:
     return any(kw in text for kw in keywords)
 
 
+def format_company_name(name: Any, ticker: str) -> str:
+    """Safely format company name with fallback to ticker symbol if missing or NaN."""
+    if pd.notna(name):
+        s = str(name).strip()
+        if s and s.lower() != "nan":
+            return s
+    return str(ticker).strip()
+
+
 def is_tase_ticker(ticker: str) -> bool:
     """Check if ticker belongs to Tel Aviv Stock Exchange."""
     t = ticker.strip().upper()
@@ -271,7 +280,7 @@ def build_html_table(
 
     html_rows = []
     for row_idx, row in df_subset.iterrows():
-        comp_name = str(row.get("name") or row["ticker"])
+        comp_name = format_company_name(row.get("name"), row["ticker"])
         ticker = str(row["ticker"])
         yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
         mcap = str(row.get("market_cap_str", "N/A"))
@@ -365,55 +374,54 @@ def render_live_recommendations(
             )
         except Exception as e:
             st.error(f"Database error executing screener: {e}")
-            return
+            df = pd.DataFrame()
 
-    if df.empty:
-        st.warning("No stocks passed all screening filters for the latest trade date.")
-        return
-
-    # Calculate % Off 52W High & Market Cap formatting helper
-    df["pct_off_52w_high"] = ((df["close"] / df["high_52w"]) - 1.0) * 100.0
-    df["yahoo_url"] = df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-    df["Company Name"] = df.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
-    df["market_cap_str"] = df["market_cap"].apply(
-        lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
-    )
-
-    display_df = df.copy()
-    # Format Company Name as interactive Markdown link directly: [Company Full Name](Yahoo_URL)
-    display_df["Company Name"] = display_df.apply(
-        lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
-        axis=1
-    )
-    display_df["ADV20"] = display_df["adv_20"].apply(
-        lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
-    )
-
-    tcol1, tcol2 = st.columns([4, 1])
-    with tcol1:
-        st.caption("📈 Top 10 Quantitative Momentum Recommendations")
-    with tcol2:
-        csv_data = display_df.to_csv(index=False).encode("utf-8")
-        st.download_button(
-            label="📥 Export CSV",
-            data=csv_data,
-            file_name=f"recommendations_{latest_date}.csv",
-            mime="text/csv",
+    if isinstance(df, pd.DataFrame) and not df.empty:
+        # Calculate % Off 52W High & Market Cap formatting helper
+        df["pct_off_52w_high"] = ((df["close"] / df["high_52w"]) - 1.0) * 100.0
+        df["yahoo_url"] = df["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        df["Company Name"] = df.apply(lambda r: format_company_name(r.get("name"), r["ticker"]), axis=1)
+        df["market_cap_str"] = df["market_cap"].apply(
+            lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
 
-    sorted_df = display_df.sort_values(by="composite_score", ascending=False)
-    sorted_df["is_med_pharma"] = sorted_df.apply(
-        lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
-    )
+        display_df = df.copy()
+        # Format Company Name as interactive Markdown link directly: [Company Full Name](Yahoo_URL)
+        display_df["Company Name"] = display_df.apply(
+            lambda r: f"[{format_company_name(r.get('name'), r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+            axis=1
+        )
+        display_df["ADV20"] = display_df["adv_20"].apply(
+            lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
+        )
 
-    df_other_top10 = sorted_df[~sorted_df["is_med_pharma"]].head(10)
-    df_med_top10 = sorted_df[sorted_df["is_med_pharma"]].head(10)
+        tcol1, tcol2 = st.columns([4, 1])
+        with tcol1:
+            st.caption("📈 Top 10 Quantitative Momentum Recommendations")
+        with tcol2:
+            csv_data = display_df.to_csv(index=False).encode("utf-8")
+            st.download_button(
+                label="📥 Export CSV",
+                data=csv_data,
+                file_name=f"recommendations_{latest_date}.csv",
+                mime="text/csv",
+            )
 
-    st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
-    st.markdown(build_html_table(df_other_top10, is_backtest=False), unsafe_allow_html=True)
+        sorted_df = display_df.sort_values(by="composite_score", ascending=False)
+        sorted_df["is_med_pharma"] = sorted_df.apply(
+            lambda r: is_medical_pharma(format_company_name(r.get("name"), ""), str(r["ticker"])), axis=1
+        )
 
-    st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
-    st.markdown(build_html_table(df_med_top10, is_backtest=False), unsafe_allow_html=True)
+        df_other_top10 = sorted_df[~sorted_df["is_med_pharma"]].head(10)
+        df_med_top10 = sorted_df[sorted_df["is_med_pharma"]].head(10)
+
+        st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
+        st.markdown(build_html_table(df_other_top10, is_backtest=False), unsafe_allow_html=True)
+
+        st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
+        st.markdown(build_html_table(df_med_top10, is_backtest=False), unsafe_allow_html=True)
+    else:
+        st.warning("No stocks passed all screening filters for the latest trade date.")
 
     # Section 3: Dedicated Top 5 TASE Recommendations
     st.markdown("---")
@@ -445,7 +453,7 @@ def render_live_recommendations(
         df_tase["pct_off_52w_high"] = ((df_tase["close"] / df_tase["high_52w"]) - 1.0) * 100.0
         df_tase["yahoo_url"] = df_tase["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
         df_tase["Company Name"] = df_tase.apply(
-            lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+            lambda r: f"[{format_company_name(r.get('name'), r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
             axis=1,
         )
         df_tase["ADV20"] = df_tase["adv_20"].apply(
@@ -563,9 +571,10 @@ def render_backtest_view(
             logger.warning("Error running US backtest: %s", e)
             results = None
 
+    cutoff_date = str(results.get("cutoff_date", custom_cutoff_date or "N/A")) if results else (str(custom_cutoff_date) if custom_cutoff_date else "N/A")
+    eval_date = str(results.get("evaluation_date", "N/A")) if results else "N/A"
+
     if results and isinstance(results.get("positions_df"), pd.DataFrame) and not results["positions_df"].empty:
-        cutoff_date = str(results["cutoff_date"])
-        eval_date = str(results["evaluation_date"])
         mean_ret = float(results["mean_basket_return"]) * 100.0
         spy_ret = float(results["spy_return"]) * 100.0
         alpha = float(results["basket_alpha"]) * 100.0
@@ -579,17 +588,17 @@ def render_backtest_view(
 
         disp_pos = pos_df.copy()
         disp_pos["company_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-        disp_pos["company_name"] = disp_pos.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+        disp_pos["company_name"] = disp_pos.apply(lambda r: format_company_name(r.get("name"), r["ticker"]), axis=1)
         disp_pos["market_cap_str"] = disp_pos["market_cap"].apply(
             lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
         )
         disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
         disp_pos["Company Name"] = disp_pos.apply(
-            lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+            lambda r: f"[{format_company_name(r.get('name'), r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
             axis=1,
         )
         disp_pos["is_med_pharma"] = disp_pos.apply(
-            lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1,
+            lambda r: is_medical_pharma(format_company_name(r.get("name"), ""), str(r["ticker"])), axis=1,
         )
 
         df_b_other_top10 = disp_pos[~disp_pos["is_med_pharma"]].head(10)
@@ -766,13 +775,13 @@ def render_backtest_view(
         pos_df_tase = results_tase["positions_df"].copy()
 
         pos_df_tase["company_url"] = pos_df_tase["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-        pos_df_tase["company_name"] = pos_df_tase.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+        pos_df_tase["company_name"] = pos_df_tase.apply(lambda r: format_company_name(r.get("name"), r["ticker"]), axis=1)
         pos_df_tase["market_cap_str"] = pos_df_tase["market_cap"].apply(
             lambda m: f"{m / 1e9:.2f}B Ag." if pd.notna(m) and m >= 1e9 else (f"{m / 1e6:.1f}M Ag." if pd.notna(m) and m >= 1e6 else "N/A")
         )
         pos_df_tase["win_status"] = pos_df_tase["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
         pos_df_tase["Company Name"] = pos_df_tase.apply(
-            lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+            lambda r: f"[{format_company_name(r.get('name'), r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
             axis=1,
         )
 
@@ -856,9 +865,9 @@ def render_backtest_view(
 - **$10,000 Investment Benchmark Comparison**
   - *Meaning:* Compares a single **$10,000 buy-and-hold investment in the S&P 500 (`SPY`)** against allocating **$1,000 into each of the model's top 10 recommended stocks** (ignoring share rounding) over the exact same period ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$).
 - **Point-in-Time Recommendation ($T_{{-{cutoff_days_ago}}}$)**
-  - *Meaning:* Shows the exact list of stocks that the model recommended **{cutoff_days_ago} trading days ago** on **{cutoff_date if results and 'cutoff_date' in results else 'N/A'}**, using strictly the market data available on that day.
+  - *Meaning:* Shows the exact list of stocks that the model recommended **{cutoff_days_ago} trading days ago** on **{cutoff_date}**, using strictly the market data available on that day.
 - **Forward Performance Tracking ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$)**
-  - *Meaning:* Tracks the performance of those recommendations from their entry price on **{cutoff_date if results and 'cutoff_date' in results else 'N/A'}** up to **today ({eval_date if results and 'evaluation_date' in results else 'N/A'})**.
+  - *Meaning:* Tracks the performance of those recommendations from their entry price on **{cutoff_date}** up to **today ({eval_date})**.
 - **Return (%) & Benchmark Alpha (%)**
   - *Meaning:* Measures your exact stock percentage return and how much better (or worse) each pick performed compared to the S&P 500 (`SPY`) over the exact same period.
 - **Max Drawdown (%)**
@@ -1128,7 +1137,7 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
 
                     for _, row in df_manual.iterrows():
                         tick = row["ticker"]
-                        name_str = row.get("name", tick)
+                        name_str = format_company_name(row.get("name"), tick)
                         close_val = row["close"]
                         adv_val = row["adv_20"]
                         sma50_val = row["sma50"]
@@ -1207,7 +1216,7 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
 
                     df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
                     df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
-                    df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+                    df_manual["company_name"] = df_manual.apply(lambda r: format_company_name(r.get("name"), r["ticker"]), axis=1)
                     df_manual["ADV20"] = df_manual.apply(
                         lambda r: (f"{r['adv_20'] / 1e6:,.1f}M Ag." if is_tase_ticker(str(r['ticker'])) else (f"${r['adv_20'] / 1e9:.2f}B" if pd.notna(r['adv_20']) and r['adv_20'] >= 1e9 else f"${r['adv_20'] / 1e6:.1f}M")),
                         axis=1
@@ -1218,14 +1227,14 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                     )
 
                     df_manual["Company Name"] = df_manual.apply(
-                        lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+                        lambda r: f"[{format_company_name(r.get('name'), r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
                         axis=1
                     )
 
                     sorted_d_df = df_manual.sort_values(by="composite_score", ascending=False)
                     sorted_d_df["is_tase"] = sorted_d_df["ticker"].apply(is_tase_ticker)
                     sorted_d_df["is_med_pharma"] = sorted_d_df.apply(
-                        lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
+                        lambda r: is_medical_pharma(format_company_name(r.get("name"), ""), str(r["ticker"])), axis=1
                     )
 
                     df_d_other_top10 = sorted_d_df[(~sorted_d_df["is_med_pharma"]) & (~sorted_d_df["is_tase"])].head(10)
