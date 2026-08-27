@@ -171,12 +171,26 @@ def inject_custom_css() -> None:
             color: #1a7f37;
             border-left: 5px solid #1a7f37;
         }
+        .title-tase {
+            background-color: #eef5fc;
+            color: #0b4f8a;
+            border-left: 5px solid #0b4f8a;
+        }
         .portfolio-card {
             border: 1px solid #d0d7de;
             border-radius: 10px;
             padding: 16px 20px;
             background-color: #ffffff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 16px;
+        }
+        .portfolio-card-tase {
+            border: 1px solid #b6d4fe;
+            border-left: 4px solid #0b4f8a;
+            border-radius: 10px;
+            padding: 16px 20px;
+            background-color: #f7faff;
+            box-shadow: 0 4px 12px rgba(11, 79, 138, 0.06);
             margin-bottom: 16px;
         }
         .portfolio-card-title {
@@ -240,7 +254,17 @@ def is_medical_pharma(name: str, ticker: str) -> bool:
     return any(kw in text for kw in keywords)
 
 
-def build_html_table(df_subset: pd.DataFrame, is_backtest: bool = False) -> str:
+def is_tase_ticker(ticker: str) -> bool:
+    """Check if ticker belongs to Tel Aviv Stock Exchange."""
+    t = ticker.strip().upper()
+    return t.endswith(".TA") or t == "^TA125.TA" or t == "^TA125"
+
+
+def build_html_table(
+    df_subset: pd.DataFrame,
+    is_backtest: bool = False,
+    is_tase: bool = False,
+) -> str:
     """Generate HTML table string for a dataframe subset."""
     if df_subset.empty:
         return "<div class='custom-table-container' style='padding: 16px; color: #57606a;'>No tickers in this category.</div>"
@@ -248,38 +272,53 @@ def build_html_table(df_subset: pd.DataFrame, is_backtest: bool = False) -> str:
     html_rows = []
     for row_idx, row in df_subset.iterrows():
         comp_name = str(row.get("name") or row["ticker"])
-        ticker = row["ticker"]
+        ticker = str(row["ticker"])
         yahoo_url = f"https://finance.yahoo.com/quote/{ticker}"
-        mcap = row["market_cap_str"]
+        mcap = str(row.get("market_cap_str", "N/A"))
 
         if is_backtest:
-            entry_p = f"${row['entry_price']:.2f}"
-            exit_p = f"${row['exit_price']:.2f}"
-            ret = f"{row['return_pct']:+.2f}%"
-            spy_ret = f"{row['spy_return_pct']:+.2f}%"
-            alpha_p = f"{row['alpha_pct']:+.2f}%"
-            mdd = f"{row['max_drawdown_pct']:.2f}%"
-            status = row["win_status"]
+            if is_tase:
+                entry_p = f"{row['entry_price']:,.2f} Ag." if pd.notna(row.get("entry_price")) else "N/A"
+                exit_p = f"{row['exit_price']:,.2f} Ag." if pd.notna(row.get("exit_price")) else "N/A"
+                bench_ret_val = row.get("ta125_return_pct", row.get("benchmark_return_pct", row.get("spy_return_pct", None)))
+            else:
+                entry_p = f"${row['entry_price']:.2f}" if pd.notna(row.get("entry_price")) else "N/A"
+                exit_p = f"${row['exit_price']:.2f}" if pd.notna(row.get("exit_price")) else "N/A"
+                bench_ret_val = row.get("spy_return_pct", None)
+
+            ret = f"{row['return_pct']:+.2f}%" if pd.notna(row.get("return_pct")) else "N/A"
+            bench_ret = f"{bench_ret_val:+.2f}%" if pd.notna(bench_ret_val) else "N/A"
+            alpha_p = f"{row['alpha_pct']:+.2f}%" if pd.notna(row.get("alpha_pct")) else "N/A"
+            mdd = f"{row['max_drawdown_pct']:.2f}%" if pd.notna(row.get("max_drawdown_pct")) else "N/A"
+            status = str(row.get("win_status", "🟢 WIN" if row.get("is_win", False) else "🔴 LOSS"))
 
             html_rows.append(
-                f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{entry_p}</td><td class="text-right">{exit_p}</td><td class="text-right">{ret}</td><td class="text-right">{spy_ret}</td><td class="text-right">{alpha_p}</td><td class="text-right">{mdd}</td><td class="text-left">{status}</td></tr>'
+                f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{entry_p}</td><td class="text-right">{exit_p}</td><td class="text-right">{ret}</td><td class="text-right">{bench_ret}</td><td class="text-right">{alpha_p}</td><td class="text-right">{mdd}</td><td class="text-left">{status}</td></tr>'
             )
         else:
-            price = f"${row['close']:.2f}"
-            adv = row["ADV20"]
-            rs = f"{row['rs_score']:.2f}"
-            tightness = f"{row['tightness_ratio']:.2f}"
-            pct_high = f"{row['pct_off_52w_high']:+.2f}%"
-            comp_score = f"{row['composite_score']:.2f}"
+            if is_tase:
+                price = f"{row['close']:,.2f} Ag." if pd.notna(row.get("close")) else "N/A"
+            else:
+                price = f"${row['close']:.2f}" if pd.notna(row.get("close")) else "N/A"
+            adv = str(row.get("ADV20", "N/A"))
+            rs = f"{row['rs_score']:.2f}" if pd.notna(row.get("rs_score")) else "N/A"
+            tightness = f"{row['tightness_ratio']:.2f}" if pd.notna(row.get("tightness_ratio")) else "N/A"
+            pct_high = f"{row['pct_off_52w_high']:+.2f}%" if pd.notna(row.get("pct_off_52w_high")) else "N/A"
+            comp_score = f"{row['composite_score']:.2f}" if pd.notna(row.get("composite_score")) else "N/A"
 
             html_rows.append(
                 f'<tr><td class="text-left"><a class="company-link" href="{yahoo_url}" target="_blank">{comp_name}</a></td><td class="text-right">{mcap}</td><td class="text-right">{price}</td><td class="text-right">{adv}</td><td class="text-right">{rs}</td><td class="text-right">{tightness}</td><td class="text-right">{pct_high}</td><td class="text-right">{comp_score}</td></tr>'
             )
 
     if is_backtest:
-        headers = ["Company Name", "Market Cap", "Entry Price ($)", "Exit Price ($)", "Return (%)", "SPY Return (%)", "Alpha (%)", "Max Drawdown (%)", "Status"]
+        bench_col = "TA-125 Return (%)" if is_tase else "SPY Return (%)"
+        price_col_entry = "Entry Price (Ag.)" if is_tase else "Entry Price ($)"
+        price_col_exit = "Exit Price (Ag.)" if is_tase else "Exit Price ($)"
+        headers = ["Company Name", "Market Cap", price_col_entry, price_col_exit, "Return (%)", bench_col, "Alpha (%)", "Max Drawdown (%)", "Status"]
     else:
-        headers = ["Company Name", "Market Cap", "Price ($)", "ADV20", "RS Score", "Tightness Ratio", "% Off 52W High", "Composite Score"]
+        price_col = "Price (Ag.)" if is_tase else "Price ($)"
+        adv_col = "ADV20 (Ag.)" if is_tase else "ADV20"
+        headers = ["Company Name", "Market Cap", price_col, adv_col, "RS Score", "Tightness Ratio", "% Off 52W High", "Composite Score"]
 
     th_html = "".join([f'<th class="text-left">{h}</th>' for h in headers])
 
@@ -303,6 +342,8 @@ def render_live_recommendations(
     max_tightness: float = 3.5,
     pct_off_low: float = 30.0,
     pct_within_high: float = 25.0,
+    min_price: float | None = None,
+    min_adv20: float | None = None,
 ) -> None:
     """Render View A: Live Top-10 Recommendations (T0)."""
     st.header(f"View A: Live Top-10 Recommendations (Cutoff Date: {latest_date})")
@@ -319,6 +360,8 @@ def render_live_recommendations(
                 max_tightness=max_tightness,
                 pct_off_low=pct_off_low,
                 pct_within_high=pct_within_high,
+                min_price=min_price,
+                min_adv20=min_adv20,
             )
         except Exception as e:
             st.error(f"Database error executing screener: {e}")
@@ -371,6 +414,64 @@ def render_live_recommendations(
 
     st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
     st.markdown(build_html_table(df_med_top10, is_backtest=False), unsafe_allow_html=True)
+
+    # Section 3: Dedicated Top 5 TASE Recommendations
+    st.markdown("---")
+    st.markdown(
+        '<div class="benchmark-section-title title-tase">'
+        '<span>🇮🇱 Category 3: Tel Aviv Stock Exchange (TA-125) — Top 5 Recommendations</span>'
+        '<span style="font-size: 0.8rem; text-transform: uppercase;">TASE Dedicated Pool</span>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+
+    with st.spinner("Executing TASE Stage-2 Screener..."):
+        try:
+            df_tase = run_screener(
+                db_manager,
+                cutoff_date=latest_date,
+                universe="TASE",
+                max_tightness=max_tightness,
+                pct_off_low=pct_off_low,
+                pct_within_high=pct_within_high,
+                min_price=min_price,
+                min_adv20=min_adv20,
+            )
+        except Exception as e:
+            st.warning(f"Note: TASE screener execution notice: {e}")
+            df_tase = pd.DataFrame()
+
+    if isinstance(df_tase, pd.DataFrame) and not df_tase.empty:
+        df_tase["pct_off_52w_high"] = ((df_tase["close"] / df_tase["high_52w"]) - 1.0) * 100.0
+        df_tase["yahoo_url"] = df_tase["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        df_tase["Company Name"] = df_tase.apply(
+            lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+            axis=1,
+        )
+        df_tase["ADV20"] = df_tase["adv_20"].apply(
+            lambda v: f"{v / 1e6:,.1f}M Ag." if pd.notna(v) and v >= 1e6 else (f"{v:,.0f} Ag." if pd.notna(v) else "N/A")
+        )
+        df_tase["market_cap_str"] = df_tase["market_cap"].apply(
+            lambda m: f"{m / 1e9:.2f}B Ag." if pd.notna(m) and m >= 1e9 else (f"{m / 1e6:.1f}M Ag." if pd.notna(m) and m >= 1e6 else "N/A")
+        )
+
+        tcol1, tcol2 = st.columns([4, 1])
+        with tcol1:
+            st.caption("🇮🇱 Top 5 Quantitative Momentum Recommendations (TA-125 Universe)")
+        with tcol2:
+            csv_tase = df_tase.head(5).to_csv(index=False).encode("utf-8")
+            st.download_button(
+                label="📥 Export TASE CSV",
+                data=csv_tase,
+                file_name=f"tase_recommendations_{latest_date}.csv",
+                mime="text/csv",
+                key=f"dl_tase_csv_view_a_{latest_date}",
+            )
+
+        df_tase_top5 = df_tase.sort_values(by="composite_score", ascending=False).head(5)
+        st.markdown(build_html_table(df_tase_top5, is_backtest=False, is_tase=True), unsafe_allow_html=True)
+    else:
+        st.info("No TASE stocks passed screening filters or TASE universe data not yet loaded.")
 
     # Strategy Rationale & Output Guide (from app rationale.txt)
     st.markdown("### 💡 Strategy Rationale & Screener Output Guide")
@@ -436,6 +537,8 @@ def render_backtest_view(
     max_tightness: float = 3.5,
     pct_off_low: float = 30.0,
     pct_within_high: float = 25.0,
+    min_price: float | None = None,
+    min_adv20: float | None = None,
 ) -> None:
     """Render Point-in-Time Backtest results for T-5, T-22, or Custom Selected Date."""
     if custom_cutoff_date:
@@ -443,7 +546,9 @@ def render_backtest_view(
     else:
         st.header(f"{view_label} (T-{cutoff_days_ago} Days Ago)")
 
-    with st.spinner("Running Point-in-Time Backtest..."):
+    st.markdown("### 💰 $10,000 Portfolio Benchmark Performance Comparisons")
+
+    with st.spinner("Running US Point-in-Time Backtest..."):
         try:
             results = run_point_in_time_backtest(
                 db_manager,
@@ -452,27 +557,26 @@ def render_backtest_view(
                 max_tightness=max_tightness,
                 pct_off_low=pct_off_low,
                 pct_within_high=pct_within_high,
+                universe="US",
             )
         except Exception as e:
-            st.error(f"⚠️ Error running backtest: {e}")
-            return
+            logger.warning("Error running US backtest: %s", e)
+            results = None
 
-    cutoff_date = str(results["cutoff_date"])
-    eval_date = str(results["evaluation_date"])
-    mean_ret = float(results["mean_basket_return"]) * 100.0
-    spy_ret = float(results["spy_return"]) * 100.0
-    alpha = float(results["basket_alpha"]) * 100.0
-    win_rate = float(results["win_rate"])
-    max_dd = float(results["avg_max_drawdown"])
-    pos_df = results["positions_df"]
+    if results and isinstance(results.get("positions_df"), pd.DataFrame) and not results["positions_df"].empty:
+        cutoff_date = str(results["cutoff_date"])
+        eval_date = str(results["evaluation_date"])
+        mean_ret = float(results["mean_basket_return"]) * 100.0
+        spy_ret = float(results["spy_return"]) * 100.0
+        alpha = float(results["basket_alpha"]) * 100.0
+        win_rate = float(results["win_rate"])
+        max_dd = float(results["avg_max_drawdown"])
+        pos_df = results["positions_df"]
 
-    # Calculate $10,000 SPY Benchmark value
-    spy_val = 10000.0 * (1.0 + (spy_ret / 100.0))
-    spy_gain = spy_val - 10000.0
+        # Calculate $10,000 SPY Benchmark value
+        spy_val = 10000.0 * (1.0 + (spy_ret / 100.0))
+        spy_gain = spy_val - 10000.0
 
-    st.markdown("### 💰 $10,000 Portfolio Benchmark Performance Comparisons")
-
-    if isinstance(pos_df, pd.DataFrame) and not pos_df.empty:
         disp_pos = pos_df.copy()
         disp_pos["company_url"] = disp_pos["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
         disp_pos["company_name"] = disp_pos.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
@@ -482,10 +586,10 @@ def render_backtest_view(
         disp_pos["win_status"] = disp_pos["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
         disp_pos["Company Name"] = disp_pos.apply(
             lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
-            axis=1
+            axis=1,
         )
         disp_pos["is_med_pharma"] = disp_pos.apply(
-            lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
+            lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1,
         )
 
         df_b_other_top10 = disp_pos[~disp_pos["is_med_pharma"]].head(10)
@@ -511,7 +615,7 @@ def render_backtest_view(
             '<span>🌐 Category 1: All Other Sectors (Non-Pharma/Bio) — $10k Benchmark</span>'
             '<span style="font-size: 0.8rem; text-transform: uppercase;">Top 10 Picks Allocation</span>'
             '</div>',
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
         ocol1, ocol2, ocol3 = st.columns(3)
         with ocol1:
@@ -525,7 +629,7 @@ def render_backtest_view(
                     </div>
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
         with ocol2:
             st.markdown(
@@ -538,7 +642,7 @@ def render_backtest_view(
                     </div>
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
         with ocol3:
             st.markdown(
@@ -553,7 +657,7 @@ def render_backtest_view(
                     </div>
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
 
         # --- Section 2: Medical & Pharma Benchmark Cards ---
@@ -562,7 +666,7 @@ def render_backtest_view(
             '<span>🏥 Category 2: Medical, Pharma & Bio — $10k Benchmark</span>'
             '<span style="font-size: 0.8rem; text-transform: uppercase;">Top 10 Picks Allocation</span>'
             '</div>',
-            unsafe_allow_html=True
+            unsafe_allow_html=True,
         )
         mcol1, mcol2, mcol3 = st.columns(3)
         with mcol1:
@@ -576,7 +680,7 @@ def render_backtest_view(
                     </div>
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
         with mcol2:
             st.markdown(
@@ -589,7 +693,7 @@ def render_backtest_view(
                     </div>
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
         with mcol3:
             st.markdown(
@@ -604,7 +708,7 @@ def render_backtest_view(
                     </div>
                 </div>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
 
         st.markdown("---")
@@ -619,6 +723,7 @@ def render_backtest_view(
                 data=csv_backtest,
                 file_name=f"backtest_{cutoff_days_ago}d_{cutoff_date}.csv",
                 mime="text/csv",
+                key=f"dl_us_bt_csv_{cutoff_days_ago}_{custom_cutoff_date}_{cutoff_date}",
             )
 
         st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
@@ -627,7 +732,121 @@ def render_backtest_view(
         st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
         st.markdown(build_html_table(df_b_med_top10, is_backtest=True), unsafe_allow_html=True)
     else:
-        st.info("No position data available for this historical backtest date.")
+        st.info("No US position data available for this historical backtest date.")
+
+    # --- Section 3: TASE Benchmark Cards & Positions ---
+    st.markdown("---")
+    st.markdown(
+        '<div class="benchmark-section-title title-tase">'
+        '<span>🇮🇱 Category 3: Tel Aviv Stock Exchange (TA-125) — $10k Benchmark</span>'
+        '<span style="font-size: 0.8rem; text-transform: uppercase;">Top 5 Picks Allocation ($2,000 / position)</span>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+
+    with st.spinner("Running TASE Point-in-Time Backtest..."):
+        try:
+            results_tase = run_point_in_time_backtest(
+                db_manager,
+                cutoff_days_ago=cutoff_days_ago,
+                custom_cutoff_date=custom_cutoff_date,
+                universe="TASE",
+                max_tightness=max_tightness,
+                pct_off_low=pct_off_low,
+                pct_within_high=pct_within_high,
+            )
+        except Exception as e:
+            logger.warning("Note: TASE backtest execution notice: %s", e)
+            results_tase = None
+
+    if results_tase and isinstance(results_tase.get("positions_df"), pd.DataFrame) and not results_tase["positions_df"].empty:
+        tase_cutoff = str(results_tase["cutoff_date"])
+        tase_eval = str(results_tase["evaluation_date"])
+        ta125_ret = float(results_tase.get("ta125_return", results_tase.get("benchmark_return", 0.0))) * 100.0
+        pos_df_tase = results_tase["positions_df"].copy()
+
+        pos_df_tase["company_url"] = pos_df_tase["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
+        pos_df_tase["company_name"] = pos_df_tase.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
+        pos_df_tase["market_cap_str"] = pos_df_tase["market_cap"].apply(
+            lambda m: f"{m / 1e9:.2f}B Ag." if pd.notna(m) and m >= 1e9 else (f"{m / 1e6:.1f}M Ag." if pd.notna(m) and m >= 1e6 else "N/A")
+        )
+        pos_df_tase["win_status"] = pos_df_tase["is_win"].apply(lambda w: "🟢 WIN" if w else "🔴 LOSS")
+        pos_df_tase["Company Name"] = pos_df_tase.apply(
+            lambda r: f"[{str(r.get('name') or r['ticker'])}](https://finance.yahoo.com/quote/{r['ticker']})",
+            axis=1,
+        )
+
+        df_b_tase_top5 = pos_df_tase.head(5)
+        n_tase = len(df_b_tase_top5)
+        alloc_tase = 10000.0 / n_tase if n_tase > 0 else 2000.0
+        tase_val = sum([alloc_tase * (1.0 + (row["return_pct"] / 100.0)) for _, row in df_b_tase_top5.iterrows()]) if n_tase > 0 else 10000.0
+        tase_gain = tase_val - 10000.0
+        ta125_val = 10000.0 * (1.0 + (ta125_ret / 100.0))
+        ta125_gain = ta125_val - 10000.0
+        tase_alpha = tase_val - ta125_val
+
+        tcol1, tcol2, tcol3 = st.columns(3)
+        with tcol1:
+            st.markdown(
+                f"""
+                <div class="portfolio-card-tase">
+                    <div class="portfolio-card-title">🏛️ ^TA125.TA Index ($10k Buy & Hold)</div>
+                    <div class="portfolio-card-val">${ta125_val:,.2f}</div>
+                    <div class="portfolio-card-sub {'pos-gain' if ta125_gain >= 0 else 'neg-loss'}">
+                        {'▲' if ta125_gain >= 0 else '▼'} ${abs(ta125_gain):,.2f} ({ta125_ret:+.2f}%)
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with tcol2:
+            st.markdown(
+                f"""
+                <div class="portfolio-card-tase">
+                    <div class="portfolio-card-title">🇮🇱 5x $2,000 TASE Stock Picks</div>
+                    <div class="portfolio-card-val">${tase_val:,.2f}</div>
+                    <div class="portfolio-card-sub {'pos-gain' if tase_gain >= 0 else 'neg-loss'}">
+                        {'▲' if tase_gain >= 0 else '▼'} ${abs(tase_gain):,.2f} ({(tase_gain/10000.0)*100.0:+.2f}%)
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with tcol3:
+            st.markdown(
+                f"""
+                <div class="portfolio-card-tase">
+                    <div class="portfolio-card-title">⚡ Net TASE Alpha vs ^TA125.TA</div>
+                    <div class="portfolio-card-val {'pos-gain' if tase_alpha >= 0 else 'neg-loss'}">
+                        {'+' if tase_alpha >= 0 else '-'}${abs(tase_alpha):,.2f}
+                    </div>
+                    <div class="portfolio-card-sub {'pos-gain' if tase_alpha >= 0 else 'neg-loss'}">
+                        {'▲ Alpha Outperformance' if tase_alpha >= 0 else '▼ Underperformance'} vs TA-125
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+        st.markdown("---")
+        tbcol1, tbcol2 = st.columns([4, 1])
+        with tbcol1:
+            st.subheader("🇮🇱 Top 5: Tel Aviv Stock Exchange (TA-125)")
+            st.caption(f"📅 Recommended on **{tase_cutoff}** — Performance tracked through **{tase_eval}** ($T_0$)")
+        with tbcol2:
+            csv_b_tase = df_b_tase_top5.to_csv(index=False).encode("utf-8")
+            date_key = tase_cutoff.replace("-", "")
+            st.download_button(
+                label="📥 Export TASE CSV",
+                data=csv_b_tase,
+                file_name=f"tase_backtest_{cutoff_days_ago}d_{date_key}.csv" if not custom_cutoff_date else f"tase_backtest_{date_key}.csv",
+                mime="text/csv",
+                key=f"dl_tase_bt_csv_{cutoff_days_ago}_{custom_cutoff_date}_{date_key}",
+            )
+
+        st.markdown(build_html_table(df_b_tase_top5, is_backtest=True, is_tase=True), unsafe_allow_html=True)
+    else:
+        st.info("No TASE position data available for this historical backtest date.")
 
     # Backtest Output Rationale Callout
     st.markdown("### 💡 Backtest Output Guide")
@@ -637,9 +856,9 @@ def render_backtest_view(
 - **$10,000 Investment Benchmark Comparison**
   - *Meaning:* Compares a single **$10,000 buy-and-hold investment in the S&P 500 (`SPY`)** against allocating **$1,000 into each of the model's top 10 recommended stocks** (ignoring share rounding) over the exact same period ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$).
 - **Point-in-Time Recommendation ($T_{{-{cutoff_days_ago}}}$)**
-  - *Meaning:* Shows the exact list of stocks that the model recommended **{cutoff_days_ago} trading days ago** on **{cutoff_date}**, using strictly the market data available on that day.
+  - *Meaning:* Shows the exact list of stocks that the model recommended **{cutoff_days_ago} trading days ago** on **{cutoff_date if results and 'cutoff_date' in results else 'N/A'}**, using strictly the market data available on that day.
 - **Forward Performance Tracking ($T_{{-{cutoff_days_ago}}} \rightarrow T_0$)**
-  - *Meaning:* Tracks the performance of those recommendations from their entry price on **{cutoff_date}** up to **today ({eval_date})**.
+  - *Meaning:* Tracks the performance of those recommendations from their entry price on **{cutoff_date if results and 'cutoff_date' in results else 'N/A'}** up to **today ({eval_date if results and 'evaluation_date' in results else 'N/A'})**.
 - **Return (%) & Benchmark Alpha (%)**
   - *Meaning:* Measures your exact stock percentage return and how much better (or worse) each pick performed compared to the S&P 500 (`SPY`) over the exact same period.
 - **Max Drawdown (%)**
@@ -865,6 +1084,7 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                             if ok:
                                 st.success(f"Downloaded and stored price history for **{m_tick}**!")
                                 synced_any = True
+                            else:
                                 st.error(f"Failed to fetch data for **{m_tick}**. Please verify ticker symbol on Yahoo Finance.")
                         if synced_any:
                             st.rerun()
@@ -886,11 +1106,25 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                     df_top10 = run_screener(
                         db_manager,
                         cutoff_date=v4_date_str,
+                        universe="US",
                         max_tightness=max_tightness,
                         pct_off_low=pct_off_low,
                         pct_within_high=pct_within_high,
                     )
-                    top10_set = set(df_top10["ticker"].tolist()) if not df_top10.empty else set()
+                    top10_set = set(df_top10["ticker"].tolist()) if isinstance(df_top10, pd.DataFrame) and not df_top10.empty else set()
+
+                    try:
+                        df_tase_top = run_screener(
+                            db_manager,
+                            cutoff_date=v4_date_str,
+                            universe="TASE",
+                            max_tightness=max_tightness,
+                            pct_off_low=pct_off_low,
+                            pct_within_high=pct_within_high,
+                        )
+                        top5_tase_set = set(df_tase_top.head(5)["ticker"].tolist()) if isinstance(df_tase_top, pd.DataFrame) and not df_tase_top.empty else set()
+                    except Exception:
+                        top5_tase_set = set()
 
                     for _, row in df_manual.iterrows():
                         tick = row["ticker"]
@@ -907,8 +1141,10 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                         rs_val = row["rs_score"]
                         comp_val = row["composite_score"]
 
-                        # 8-Point Stage-2 Health Diagnostics
-                        p_price = pd.notna(close_val) and close_val >= 10.0
+                        is_tase_item = is_tase_ticker(str(tick))
+
+                        # 8-Point Stage-2 Health Diagnostics (Universe-Aware)
+                        p_price = pd.notna(close_val) and (close_val >= 100.0 if is_tase_item else close_val >= 10.0)
                         p_adv = pd.notna(adv_val) and adv_val >= 20000000.0
                         p_ma = pd.notna(close_val) and pd.notna(sma50_val) and pd.notna(sma150_val) and pd.notna(sma200_val) and (close_val > sma50_val > sma150_val > sma200_val)
                         p_slope = pd.notna(sma200_val) and pd.notna(sma200_20d_val) and sma200_val > sma200_20d_val
@@ -918,18 +1154,23 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                         p_rs = pd.notna(rs_val) and rs_val > 0.0
 
                         passed_count = sum([p_price, p_adv, p_ma, p_slope, p_low52, p_high52, p_tight, p_rs])
-                        was_in_top10 = tick in top10_set
+                        was_in_top = (tick in top5_tase_set) if is_tase_item else (tick in top10_set)
                         is_passing_all = passed_count == 8
 
                         reasons = []
-                        if not p_price: reasons.append(f"Price (${close_val:.2f}) is below $10.00 floor")
-                        if not p_adv: reasons.append(f"ADV20 (${adv_val/1e6:.2f}M) is below $20M liquidity floor")
+                        if not p_price:
+                            reasons.append(f"Price ({close_val:.2f} Ag.) is below 100.0 Ag. floor" if is_tase_item else f"Price (${close_val:.2f}) is below $10.00 floor")
+                        if not p_adv:
+                            reasons.append(f"ADV20 ({adv_val/1e6:.2f}M Ag.) is below 20M Ag. liquidity floor" if is_tase_item else f"ADV20 (${adv_val/1e6:.2f}M) is below $20M liquidity floor")
                         if not p_ma: reasons.append("Moving averages break Close > SMA50 > SMA150 > SMA200 alignment")
                         if not p_slope: reasons.append("200D SMA is not trending upward vs 20 days ago")
-                        if not p_low52: reasons.append(f"Price (${close_val:.2f}) is < +30% above 52W Low (${low52_val:.2f})")
-                        if not p_high52: reasons.append(f"Price (${close_val:.2f}) exceeds 25% distance from 52W High (${high52_val:.2f})")
+                        if not p_low52:
+                            reasons.append(f"Price ({close_val:,.2f} Ag.) is < +30% above 52W Low ({low52_val:,.2f} Ag.)" if is_tase_item else f"Price (${close_val:.2f}) is < +30% above 52W Low (${low52_val:.2f})")
+                        if not p_high52:
+                            reasons.append(f"Price ({close_val:,.2f} Ag.) exceeds 25% distance from 52W High ({high52_val:,.2f} Ag.)" if is_tase_item else f"Price (${close_val:.2f}) exceeds 25% distance from 52W High (${high52_val:.2f})")
                         if not p_tight: reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 ceiling")
-                        if not p_rs: reasons.append(f"Mansfield RS ({rs_val:.4f}) shows underperformance vs SPY")
+                        if not p_rs:
+                            reasons.append(f"Mansfield RS ({rs_val:.4f}) shows underperformance vs ^TA125.TA" if is_tase_item else f"Mansfield RS ({rs_val:.4f}) shows underperformance vs SPY")
 
                         with st.expander(f"📌 **{tick}** — {name_str} (Diagnostic Score: {passed_count}/8 Passed)", expanded=True):
                             # Visual Health Meter Progress Bar
@@ -938,8 +1179,8 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                             # 8-Point Grid Display
                             gcol1, gcol2, gcol3, gcol4 = st.columns(4)
                             with gcol1:
-                                st.markdown(f"**Price Floor ($10):** {'🟢 PASS' if p_price else '🔴 FAIL'}")
-                                st.markdown(f"**Liquidity ($20M):** {'🟢 PASS' if p_adv else '🔴 FAIL'}")
+                                st.markdown(f"**{'Price Floor (100 Ag.)' if is_tase_item else 'Price Floor ($10)'}:** {'🟢 PASS' if p_price else '🔴 FAIL'}")
+                                st.markdown(f"**{'Liquidity (20M Ag.)' if is_tase_item else 'Liquidity ($20M)'}:** {'🟢 PASS' if p_adv else '🔴 FAIL'}")
                             with gcol2:
                                 st.markdown(f"**MA Alignment:** {'🟢 PASS' if p_ma else '🔴 FAIL'}")
                                 st.markdown(f"**200D Slope:** {'🟢 PASS' if p_slope else '🔴 FAIL'}")
@@ -948,28 +1189,32 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                                 st.markdown(f"**52W High (-25%):** {'🟢 PASS' if p_high52 else '🔴 FAIL'}")
                             with gcol4:
                                 st.markdown(f"**VCP Tightness:** {'🟢 PASS' if p_tight else '🔴 FAIL'}")
-                                st.markdown(f"**Relative Strength:** {'🟢 PASS' if p_rs else '🔴 FAIL'}")
+                                st.markdown(f"**{'RS vs ^TA125.TA' if is_tase_item else 'Relative Strength'}:** {'🟢 PASS' if p_rs else '🔴 FAIL'}")
 
                             st.markdown("---")
                             dcol1, dcol2 = st.columns(2)
                             with dcol1:
                                 st.markdown(f"**Percentile Composite Rating:** `{comp_val:.2f} / 100`")
                             with dcol2:
-                                st.markdown(f"**View A Top 10 Qualification:** {'⭐ Qualified in Top 10' if was_in_top10 else ('Outside Top 10' if is_passing_all else '❌ Disqualified (Failed Criteria)')}")
+                                qual_label = "View A Top 5 (TASE) Qualification" if is_tase_item else "View A Top 10 Qualification"
+                                qual_text = ("⭐ Qualified in Top 5 (TASE)" if is_tase_item else "⭐ Qualified in Top 10") if was_in_top else ("Outside Top Ranking" if is_passing_all else "❌ Disqualified (Failed Criteria)")
+                                st.markdown(f"**{qual_label}:** {qual_text}")
 
                             if is_passing_all:
                                 st.success(f"**PM Verdict:** {tick} passes all Stage-2 trend template, liquidity, 52W bounds, SMA slope trajectory, and VCP tightness filters!")
                             else:
-                                st.warning(f"**PM Feedback — Why {tick} did not qualify for Top 10:**\n" + "\n".join([f"- {r}" for r in reasons]))
+                                st.warning(f"**PM Feedback — Why {tick} did not qualify:**\n" + "\n".join([f"- {r}" for r in reasons]))
 
                     df_manual["pct_off_52w_high"] = ((df_manual["close"] / df_manual["high_52w"]) - 1.0) * 100.0
                     df_manual["company_url"] = df_manual["ticker"].apply(lambda t: f"https://finance.yahoo.com/quote/{t}")
                     df_manual["company_name"] = df_manual.apply(lambda r: str(r.get("name") or r["ticker"]), axis=1)
-                    df_manual["ADV20"] = df_manual["adv_20"].apply(
-                        lambda v: f"${v / 1e9:.2f}B" if pd.notna(v) and v >= 1e9 else (f"${v / 1e6:.1f}M" if pd.notna(v) and v >= 1e6 else "N/A")
+                    df_manual["ADV20"] = df_manual.apply(
+                        lambda r: (f"{r['adv_20'] / 1e6:,.1f}M Ag." if is_tase_ticker(str(r['ticker'])) else (f"${r['adv_20'] / 1e9:.2f}B" if pd.notna(r['adv_20']) and r['adv_20'] >= 1e9 else f"${r['adv_20'] / 1e6:.1f}M")),
+                        axis=1
                     )
-                    df_manual["market_cap_str"] = df_manual["market_cap"].apply(
-                        lambda m: f"${m / 1e9:.2f}B" if pd.notna(m) and m >= 1e9 else (f"${m / 1e6:.1f}M" if pd.notna(m) and m >= 1e6 else "N/A")
+                    df_manual["market_cap_str"] = df_manual.apply(
+                        lambda r: (f"{r['market_cap'] / 1e9:.2f}B Ag." if is_tase_ticker(str(r['ticker'])) and pd.notna(r['market_cap']) else (f"${r['market_cap'] / 1e9:.2f}B" if pd.notna(r['market_cap']) and r['market_cap'] >= 1e9 else "N/A")),
+                        axis=1
                     )
 
                     df_manual["Company Name"] = df_manual.apply(
@@ -978,18 +1223,26 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                     )
 
                     sorted_d_df = df_manual.sort_values(by="composite_score", ascending=False)
+                    sorted_d_df["is_tase"] = sorted_d_df["ticker"].apply(is_tase_ticker)
                     sorted_d_df["is_med_pharma"] = sorted_d_df.apply(
                         lambda r: is_medical_pharma(str(r.get("name") or ""), str(r["ticker"])), axis=1
                     )
 
-                    df_d_other_top10 = sorted_d_df[~sorted_d_df["is_med_pharma"]].head(10)
-                    df_d_med_top10 = sorted_d_df[sorted_d_df["is_med_pharma"]].head(10)
+                    df_d_other_top10 = sorted_d_df[(~sorted_d_df["is_med_pharma"]) & (~sorted_d_df["is_tase"])].head(10)
+                    df_d_med_top10 = sorted_d_df[(sorted_d_df["is_med_pharma"]) & (~sorted_d_df["is_tase"])].head(10)
+                    df_d_tase_top5 = sorted_d_df[sorted_d_df["is_tase"]].head(5)
 
-                    st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
-                    st.markdown(build_html_table(df_d_other_top10, is_backtest=False), unsafe_allow_html=True)
+                    if not df_d_other_top10.empty:
+                        st.subheader("🌐 Top 10: All Other Sectors (Non-Pharma/Bio)")
+                        st.markdown(build_html_table(df_d_other_top10, is_backtest=False, is_tase=False), unsafe_allow_html=True)
 
-                    st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
-                    st.markdown(build_html_table(df_d_med_top10, is_backtest=False), unsafe_allow_html=True)
+                    if not df_d_med_top10.empty:
+                        st.subheader("🏥 Top 10: Medical, Pharma & Bio Category")
+                        st.markdown(build_html_table(df_d_med_top10, is_backtest=False, is_tase=False), unsafe_allow_html=True)
+
+                    if not df_d_tase_top5.empty:
+                        st.subheader("🇮🇱 Top 5: Tel Aviv Stock Exchange (TA-125)")
+                        st.markdown(build_html_table(df_d_tase_top5, is_backtest=False, is_tase=True), unsafe_allow_html=True)
 
     with tab5:
         st.subheader("🗓️ Custom Historical Date Point-in-Time Backtest")
