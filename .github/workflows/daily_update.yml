@@ -38,5 +38,5 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
-          git add data/daily_deltas/*.parquet
+          git add -f data/daily_deltas/*.parquet
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update daily market delta parquet [skip ci]" && git push)
