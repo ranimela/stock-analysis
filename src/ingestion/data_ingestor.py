@@ -1,7 +1,8 @@
 """Data ingestor module.
 
-Fetches daily OHLCV bars using yfinance with batch chunking, hard-gated SPY benchmark validation,
-delta sync based on existing DuckDB trade dates, and thread-safe database insertion.
+Fetches daily OHLCV bars using yfinance with batch chunking, hard-gated benchmark validation
+(SPY for US, ^TA125.TA for TASE), delta sync based on existing DuckDB trade dates,
+and thread-safe database insertion.
 """
 
 from __future__ import annotations
@@ -16,12 +17,20 @@ import yfinance as yf
 
 from src.db.db_manager import DatabaseManager
 from src.ingestion.symbol_directory import fetch_symbol_directory, sync_symbol_metadata
+from src.ingestion.tase_directory import (
+    TASE_BENCHMARK,
+    fetch_tase_symbols,
+    is_tase_ticker,
+)
 
 logger = logging.getLogger(__name__)
 
+US_BENCHMARK_TICKER = "SPY"
+TASE_BENCHMARK_TICKER = TASE_BENCHMARK
+
 
 class DataIngestor:
-    """Ingests market daily bars for common stocks into DuckDB."""
+    """Ingests market daily bars for common stocks and indices into DuckDB."""
 
     def __init__(
         self,
@@ -62,10 +71,87 @@ class DataIngestor:
                 max_dates[ticker.upper()] = max_date
         return max_dates
 
-    def download_spy(self, start_date: str | datetime.date | None = None) -> int:
-        """Download SPY benchmark data FIRST as a hard-gating step.
+    def download_benchmark(
+        self,
+        ticker: str,
+        start_date: str | datetime.date | None = None,
+        name: str | None = None,
+        exchange: str = "US",
+    ) -> int:
+        """Download benchmark index/ETF data FIRST as a hard-gating step.
 
-        If SPY download fails or returns empty data, aborts synchronization.
+        If benchmark download fails or returns empty data, aborts synchronization.
+
+        Args:
+            ticker: Benchmark ticker symbol (e.g. 'SPY' or '^TA125.TA').
+            start_date: Start date for benchmark download. If None, uses lookback_years.
+            name: Official index/ETF name.
+            exchange: Exchange code ('US', 'NYSE', 'TASE').
+
+        Returns:
+            int: Number of benchmark daily bars stored in DuckDB.
+
+        Raises:
+            RuntimeError: If benchmark download fails or returns no data.
+        """
+        bench_clean = ticker.strip().upper()
+        logger.info("Hard-gating check: Downloading benchmark %s...", bench_clean)
+
+        if start_date is None:
+            calc_start = datetime.date.today() - datetime.timedelta(days=365 * self.lookback_years)
+        elif isinstance(start_date, str):
+            calc_start = datetime.date.fromisoformat(start_date)
+        else:
+            calc_start = start_date
+
+        bench_name = name or (
+            "SPDR S&P 500 ETF Trust"
+            if bench_clean == "SPY"
+            else ("TA-125 Index" if bench_clean == TASE_BENCHMARK_TICKER else bench_clean)
+        )
+        bench_exchange = "TASE" if is_tase_ticker(bench_clean) else ("NYSE" if bench_clean == "SPY" else exchange)
+        bench_asset_class = "ETF" if bench_clean == "SPY" else "Index"
+
+        # Register/update symbol metadata for benchmark
+        try:
+            self.db_manager.execute_write(
+                """
+                INSERT INTO symbol_metadata (ticker, name, exchange, asset_class, market_cap, is_active, first_added_date, last_updated_date)
+                VALUES (?, ?, ?, ?, NULL, true, CURRENT_DATE(), CURRENT_DATE())
+                ON CONFLICT (ticker) DO UPDATE SET
+                    name = COALESCE(EXCLUDED.name, symbol_metadata.name),
+                    exchange = COALESCE(EXCLUDED.exchange, symbol_metadata.exchange),
+                    asset_class = COALESCE(EXCLUDED.asset_class, symbol_metadata.asset_class),
+                    is_active = true,
+                    last_updated_date = CURRENT_DATE();
+                """,
+                [bench_clean, bench_name, bench_exchange, bench_asset_class],
+            )
+        except Exception as e:
+            logger.warning("Could not register metadata for benchmark %s: %s", bench_clean, e)
+
+        try:
+            df = yf.download(bench_clean, start=calc_start.isoformat(), progress=False, auto_adjust=False)
+        except Exception as e:
+            logger.error("Failed to download %s benchmark data: %s", bench_clean, e)
+            raise RuntimeError(f"{bench_clean} benchmark download failed. Aborting sync: {e}") from e
+
+        if df is None or df.empty:
+            logger.error("%s benchmark returned empty dataset.", bench_clean)
+            raise RuntimeError(f"{bench_clean} benchmark download failed (empty response). Aborting sync.")
+
+        bars_inserted = self.parse_and_store_bars(df, [bench_clean])
+        if bars_inserted == 0:
+            # Check if benchmark is already up-to-date in DB
+            max_dates = self.get_existing_max_dates()
+            if bench_clean not in max_dates:
+                raise RuntimeError(f"{bench_clean} benchmark download failed (0 bars stored for new benchmark). Aborting sync.")
+
+        logger.info("Hard-gating passed: %s benchmark sync complete (%d bars stored/verified).", bench_clean, bars_inserted)
+        return bars_inserted
+
+    def download_spy(self, start_date: str | datetime.date | None = None) -> int:
+        """Download SPY benchmark data FIRST as a hard-gating step for US equities.
 
         Args:
             start_date: Start date for benchmark download. If None, uses lookback_years.
@@ -76,33 +162,32 @@ class DataIngestor:
         Raises:
             RuntimeError: If SPY benchmark download fails or returns no data.
         """
-        logger.info("Hard-gating check: Downloading SPY benchmark data...")
-        if start_date is None:
-            calc_start = datetime.date.today() - datetime.timedelta(days=365 * self.lookback_years)
-        elif isinstance(start_date, str):
-            calc_start = datetime.date.fromisoformat(start_date)
-        else:
-            calc_start = start_date
+        return self.download_benchmark("SPY", start_date=start_date, name="SPDR S&P 500 ETF Trust", exchange="NYSE")
 
-        try:
-            df = yf.download("SPY", start=calc_start.isoformat(), progress=False, auto_adjust=False)
-        except Exception as e:
-            logger.error("Failed to download SPY benchmark data: %s", e)
-            raise RuntimeError(f"SPY benchmark download failed. Aborting sync: {e}") from e
+    def download_tase_benchmark(self, start_date: str | datetime.date | None = None) -> int:
+        """Download TA-125 benchmark data FIRST as a hard-gating step for TASE equities.
 
-        if df is None or df.empty:
-            logger.error("SPY benchmark returned empty dataset.")
-            raise RuntimeError("SPY benchmark download failed (empty response). Aborting sync.")
+        Args:
+            start_date: Start date for benchmark download. If None, uses lookback_years.
 
-        bars_inserted = self.parse_and_store_bars(df, ["SPY"])
-        if bars_inserted == 0:
-            # Check if SPY is already up-to-date in DB
-            max_dates = self.get_existing_max_dates()
-            if "SPY" not in max_dates:
-                raise RuntimeError("SPY benchmark download failed (0 bars stored for new benchmark). Aborting sync.")
+        Returns:
+            int: Number of TA-125 daily bars stored in DuckDB.
 
-        logger.info("Hard-gating passed: SPY benchmark sync complete (%d bars stored/verified).", bars_inserted)
-        return bars_inserted
+        Raises:
+            RuntimeError: If TA-125 benchmark download fails or returns no data.
+        """
+        return self.download_benchmark(TASE_BENCHMARK_TICKER, start_date=start_date, name="TA-125 Index", exchange="TASE")
+
+    def download_ta125_benchmark(self, start_date: str | datetime.date | None = None) -> int:
+        """Alias for download_tase_benchmark().
+
+        Args:
+            start_date: Start date for benchmark download. If None, uses lookback_years.
+
+        Returns:
+            int: Number of TA-125 daily bars stored in DuckDB.
+        """
+        return self.download_tase_benchmark(start_date=start_date)
 
     def fetch_ticker_chunk(
         self,
@@ -156,7 +241,7 @@ class DataIngestor:
             df: Raw yfinance DataFrame output.
             tickers: Sequence of ticker symbols expected in the DataFrame.
             max_dates: Optional dictionary mapping ticker to latest stored date for delta sync filtering.
-            update_metadata: Whether to perform individual yfinance fast_info HTTP requests to update market cap. Defaults to False for high speed.
+            update_metadata: Whether to perform individual yfinance fast_info HTTP requests to update market cap.
 
         Returns:
             int: Total number of bars inserted into DuckDB.
@@ -256,7 +341,7 @@ class DataIngestor:
                         if mc is None or pd.isna(mc):
                             mc = inf.get("marketCap")
                         if not name:
-                            name = inf.get("longName") or inf.get("shortName")
+                            name = inf.get("shortName") or inf.get("longName")
 
                     if (mc and not pd.isna(mc)) or name:
                         with self.db_manager.write_cursor() as conn:
@@ -283,40 +368,76 @@ class DataIngestor:
     def sync_universe(
         self,
         symbols: Sequence[str] | Sequence[dict[str, Any]] | None = None,
+        exchange: str = "ALL",
     ) -> dict[str, Any]:
-        """Synchronize historical daily bar data for all target equities.
+        """Synchronize historical daily bar data for target equities.
 
         Workflow:
-        1. Hard-gate SPY benchmark download.
-        2. Resolve ticker universe (downloads FTP list if symbols is None).
+        1. Hard-gate benchmark downloads based on target exchange:
+           - "ALL": Downloads both SPY and ^TA125.TA.
+           - "US": Downloads SPY only.
+           - "TASE": Downloads ^TA125.TA only.
+        2. Resolve ticker universe (US via FTP/HTTP, TASE via curated constituent directory).
         3. Determine existing max dates for delta sync.
         4. Chunk ticker universe and fetch missing date ranges with rate-limiting delays.
         5. Store fetched bars in DuckDB daily_bars.
 
         Args:
             symbols: Optional list of ticker strings or symbol metadata dictionaries.
+            exchange: Target exchange filter: 'ALL', 'US', or 'TASE'. Defaults to 'ALL'.
 
         Returns:
             dict[str, Any]: Sync results summary containing statistics.
         """
-        # Step 1: Hard-gate SPY benchmark FIRST
-        self.download_spy()
+        target_exchange = exchange.strip().upper()
+
+        # Step 1: Hard-gate benchmarks
+        if target_exchange in {"US", "ALL"}:
+            self.download_spy()
+        if target_exchange in {"TASE", "ALL"}:
+            self.download_tase_benchmark()
 
         # Step 2: Resolve symbol list
         symbol_dicts: list[dict[str, Any]] = []
         ticker_list: list[str] = []
 
         if symbols is None:
-            try:
-                symbol_dicts = fetch_symbol_directory()
+            if target_exchange in {"US", "ALL"}:
+                try:
+                    us_symbols = fetch_symbol_directory()
+                    symbol_dicts.extend(us_symbols)
+                except Exception as err:
+                    logger.warning("Failed to fetch NASDAQ symbol directory (%s).", err)
+
+            if target_exchange in {"TASE", "ALL"}:
+                try:
+                    tase_symbols = fetch_tase_symbols()
+                    symbol_dicts.extend(tase_symbols)
+                except Exception as err:
+                    logger.warning("Failed to fetch TASE symbol directory (%s).", err)
+
+            if symbol_dicts:
                 sync_symbol_metadata(self.db_manager, symbol_dicts)
                 ticker_list = [s["ticker"] for s in symbol_dicts]
-            except Exception as err:
-                logger.warning("Failed to fetch fresh NASDAQ symbol directory (%s). Falling back to existing database metadata tickers.", err)
-                db_symbols = self.db_manager.execute_read("SELECT DISTINCT ticker FROM symbol_metadata WHERE is_active = true;")
+            else:
+                logger.warning("Falling back to existing database metadata tickers.")
+                if target_exchange == "TASE":
+                    db_symbols = self.db_manager.execute_read(
+                        "SELECT DISTINCT ticker FROM symbol_metadata WHERE is_active = true AND exchange = 'TASE';"
+                    )
+                elif target_exchange == "US":
+                    db_symbols = self.db_manager.execute_read(
+                        "SELECT DISTINCT ticker FROM symbol_metadata WHERE is_active = true AND (exchange != 'TASE' OR exchange IS NULL);"
+                    )
+                else:
+                    db_symbols = self.db_manager.execute_read(
+                        "SELECT DISTINCT ticker FROM symbol_metadata WHERE is_active = true;"
+                    )
+
                 if not db_symbols:
                     db_symbols = self.db_manager.execute_read("SELECT DISTINCT ticker FROM daily_bars;")
                 ticker_list = [str(r[0]).upper() for r in db_symbols]
+
         elif symbols and isinstance(symbols[0], dict):
             symbol_dicts = list(symbols)  # type: ignore[arg-type]
             sync_symbol_metadata(self.db_manager, symbol_dicts)
@@ -324,10 +445,11 @@ class DataIngestor:
         else:
             ticker_list = [str(s).upper() for s in symbols]
 
-        # Deduplicate
+        # Deduplicate and remove benchmark tickers (they are already synced)
         ticker_list = list(dict.fromkeys(ticker_list))
-        if "SPY" in ticker_list:
-            ticker_list.remove("SPY")
+        for bench in ["SPY", TASE_BENCHMARK_TICKER, "^TA125"]:
+            if bench in ticker_list:
+                ticker_list.remove(bench)
 
         today = datetime.date.today()
         default_start = today - datetime.timedelta(days=365 * self.lookback_years)
@@ -348,7 +470,7 @@ class DataIngestor:
 
         tickers_to_sync = list(ticker_start_dates.keys())
         total_tickers = len(tickers_to_sync)
-        logger.info("Found %d tickers requiring data sync.", total_tickers)
+        logger.info("Found %d tickers requiring data sync (exchange=%s).", total_tickers, target_exchange)
 
         if total_tickers == 0:
             logger.info("Universe is up-to-date. No bars to fetch.")
@@ -357,6 +479,7 @@ class DataIngestor:
                 "synced_tickers": 0,
                 "total_bars_inserted": 0,
                 "status": "up_to_date",
+                "exchange": target_exchange,
             }
 
         total_bars_inserted = 0
@@ -387,12 +510,31 @@ class DataIngestor:
             "synced_tickers": total_tickers,
             "total_bars_inserted": total_bars_inserted,
             "status": "success",
+            "exchange": target_exchange,
         }
         logger.info("Sync complete summary: %s", summary)
         return summary
 
+    def seed_universe(
+        self,
+        exchange: str = "ALL",
+        symbols: Sequence[str] | Sequence[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        """Seed universe metadata and historical daily bars. Alias/convenience method for sync_universe."""
+        return self.sync_universe(symbols=symbols, exchange=exchange)
+
+    def sync_daily_bars(
+        self,
+        exchange: str = "ALL",
+        symbols: Sequence[str] | Sequence[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        """Synchronize daily bars for universe equities. Alias/convenience method for sync_universe."""
+        return self.sync_universe(symbols=symbols, exchange=exchange)
+
     def sync_single_ticker(self, ticker: str) -> bool:
         """Fetch and store 2 years of daily bar data for a single ticker on-demand.
+
+        Correctly tags '.TA' tickers with exchange = 'TASE'.
 
         Args:
             ticker: Ticker symbol string.
@@ -403,6 +545,15 @@ class DataIngestor:
         ticker_clean = ticker.strip().upper()
         today = datetime.date.today()
         start_date = today - datetime.timedelta(days=365 * self.lookback_years)
+
+        # Infer exchange and asset class
+        is_tase = is_tase_ticker(ticker_clean)
+        exchange = "TASE" if is_tase else "NASDAQ"
+        asset_class = (
+            "Index"
+            if ticker_clean in {TASE_BENCHMARK_TICKER, "SPY", "^GSPC", "^IXIC"}
+            else "Common Stock"
+        )
 
         # Fetch market cap & metadata via yfinance Ticker info
         market_cap = None
@@ -421,16 +572,19 @@ class DataIngestor:
         except Exception:
             pass
 
-        # Register metadata entry if missing
+        # Register metadata entry with inferred exchange and asset class
         self.db_manager.execute_write(
             """
             INSERT INTO symbol_metadata (ticker, name, exchange, asset_class, market_cap, is_active, first_added_date, last_updated_date)
-            VALUES (?, ?, 'NASDAQ', 'Common Stock', ?, true, CURRENT_DATE(), CURRENT_DATE())
+            VALUES (?, ?, ?, ?, ?, true, CURRENT_DATE(), CURRENT_DATE())
             ON CONFLICT (ticker) DO UPDATE SET
                 market_cap = COALESCE(EXCLUDED.market_cap, symbol_metadata.market_cap),
-                name = COALESCE(EXCLUDED.name, symbol_metadata.name);
+                name = COALESCE(EXCLUDED.name, symbol_metadata.name),
+                exchange = COALESCE(EXCLUDED.exchange, symbol_metadata.exchange),
+                asset_class = COALESCE(EXCLUDED.asset_class, symbol_metadata.asset_class),
+                last_updated_date = CURRENT_DATE();
             """,
-            [ticker_clean, comp_name, market_cap],
+            [ticker_clean, comp_name, exchange, asset_class, market_cap],
         )
 
         df = self.fetch_ticker_chunk([ticker_clean], start_date=start_date)

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 import sys
+from typing import Any
 
 import click
 
@@ -18,6 +19,7 @@ from src.engine.backtest_engine import run_point_in_time_backtest
 from src.engine.screener_queries import run_screener
 from src.ingestion.data_ingestor import DataIngestor
 from src.ingestion.symbol_directory import fetch_symbol_directory, sync_symbol_metadata
+from src.ingestion.tase_directory import get_tase_symbol_directory
 
 logging.basicConfig(
     level=logging.INFO,
@@ -45,21 +47,49 @@ def main() -> None:
     help="Batch chunk size for ticker data fetching.",
     show_default=True,
 )
-def seed(db_path: str, chunk_size: int) -> None:
+@click.option(
+    "--exchange",
+    "-e",
+    type=click.Choice(["US", "TASE", "ALL"], case_sensitive=False),
+    default="ALL",
+    help="Target exchange universe to seed (US, TASE, or ALL).",
+    show_default=True,
+)
+def seed(db_path: str, chunk_size: int, exchange: str) -> None:
     """Initial database seed (downloads master ticker list and runs chunked ingestion)."""
-    click.echo(f"Initializing database seed at '{db_path}'...")
+    exchange_upper = exchange.upper()
+    click.echo(f"Initializing database seed at '{db_path}' for exchange universe: {exchange_upper}...")
     db_manager = DatabaseManager(db_path=db_path, read_only=False)
 
-    click.echo("Fetching master symbol directory from NASDAQ/Other exchange lists...")
-    symbols = fetch_symbol_directory()
-    click.echo(f"Discovered {len(symbols)} common stock symbols.")
+    symbols: list[dict[str, Any]] = []
+    if exchange_upper in ("US", "ALL"):
+        click.echo("Fetching master symbol directory from NASDAQ/Other exchange lists...")
+        try:
+            us_symbols = fetch_symbol_directory()
+            click.echo(f"Discovered {len(us_symbols)} US common stock symbols.")
+            symbols.extend(us_symbols)
+        except Exception as err:
+            click.echo(f"Warning: Could not fetch US symbol directory: {err}", err=True)
+
+    if exchange_upper in ("TASE", "ALL"):
+        click.echo("Fetching TASE TA-125 symbol directory...")
+        try:
+            tase_symbols = get_tase_symbol_directory()
+            click.echo(f"Discovered {len(tase_symbols)} TASE constituent symbols.")
+            symbols.extend(tase_symbols)
+        except Exception as err:
+            click.echo(f"Warning: Could not fetch TASE symbol directory: {err}", err=True)
+
+    if not symbols:
+        click.echo("Error: No symbols discovered for requested exchange universe.", err=True)
+        sys.exit(1)
 
     sync_symbol_metadata(db_manager, symbols)
     click.echo("Symbol metadata synchronized to database.")
 
     ingestor = DataIngestor(db_manager=db_manager, chunk_size=chunk_size)
     click.echo("Starting historical bar ingestion...")
-    summary = ingestor.sync_universe(symbols)
+    summary = ingestor.sync_universe(symbols, exchange=exchange_upper)
 
     click.echo("\n--- Seed Complete ---")
     click.echo(f"Total Tickers: {summary['total_tickers']}")
@@ -75,13 +105,22 @@ def seed(db_path: str, chunk_size: int) -> None:
     help="Path to DuckDB database file.",
     show_default=True,
 )
-def update(db_path: str) -> None:
+@click.option(
+    "--exchange",
+    "-e",
+    type=click.Choice(["US", "TASE", "ALL"], case_sensitive=False),
+    default="ALL",
+    help="Target exchange universe to update (US, TASE, or ALL).",
+    show_default=True,
+)
+def update(db_path: str, exchange: str) -> None:
     """Daily delta sync (fetches newest EOD bar)."""
-    click.echo(f"Starting daily delta update for database '{db_path}'...")
+    exchange_upper = exchange.upper()
+    click.echo(f"Starting daily delta update for database '{db_path}' (exchange: {exchange_upper})...")
     db_manager = DatabaseManager(db_path=db_path, read_only=False)
 
     ingestor = DataIngestor(db_manager=db_manager)
-    summary = ingestor.sync_universe()
+    summary = ingestor.sync_universe(exchange=exchange_upper)
 
     click.echo("\n--- Update Complete ---")
     click.echo(f"Total Tickers: {summary['total_tickers']}")
@@ -144,9 +183,18 @@ def sync_delta(db_path: str, deltas_dir: str) -> None:
     help="Path to DuckDB database file.",
     show_default=True,
 )
-def scan(db_path: str) -> None:
-    """Runs T0, T-5, and T-22 scans and outputs summary report."""
-    click.echo(f"Executing scans against database '{db_path}'...")
+@click.option(
+    "--exchange",
+    "-e",
+    type=click.Choice(["US", "TASE", "ALL"], case_sensitive=False),
+    default="ALL",
+    help="Target exchange universe to scan (US, TASE, or ALL).",
+    show_default=True,
+)
+def scan(db_path: str, exchange: str = "ALL") -> None:
+    """Runs T0, T-5, and T-22 scans for US and/or TASE and outputs summary report."""
+    exchange_upper = exchange.upper()
+    click.echo(f"Executing scans against database '{db_path}' (exchange universe: {exchange_upper})...")
     db_manager = DatabaseManager(db_path=db_path, read_only=False)
 
     rows = db_manager.execute_read("SELECT MAX(trade_date) FROM daily_bars;")
@@ -157,57 +205,70 @@ def scan(db_path: str) -> None:
     latest_date = str(rows[0][0])
     click.echo(f"Latest Market Trade Date (T0): {latest_date}\n")
 
-    # 1. View A: Live T0 Screener Recommendations
+    if exchange_upper in ("US", "ALL"):
+        _run_market_scans(db_manager, latest_date, universe="US")
+
+    if exchange_upper in ("TASE", "ALL"):
+        _run_market_scans(db_manager, latest_date, universe="TASE")
+
+
+def _run_market_scans(db_manager: DatabaseManager, latest_date: str, universe: str = "US") -> None:
+    """Helper to run and display screener and backtest scans for a specific market universe."""
+    is_tase = universe == "TASE"
+    top_label = "TOP-5" if is_tase else "TOP-10"
+    bench_label = "^TA125.TA" if is_tase else "SPY"
+    market_header = "TASE (TEL AVIV)" if is_tase else "US EQUITIES"
+
     click.echo("=========================================================================")
-    click.echo(f" 1. LIVE TOP-10 RECOMMENDATIONS (T0 Cutoff: {latest_date})")
+    click.echo(f" [{market_header}] 1. LIVE {top_label} RECOMMENDATIONS (T0 Cutoff: {latest_date})")
     click.echo("=========================================================================")
-    t0_df = run_screener(db_manager, cutoff_date=latest_date)
+    t0_df = run_screener(db_manager, cutoff_date=latest_date, universe=universe)
 
     if t0_df.empty:
-        click.echo("No candidates passed screener filters for T0.")
+        click.echo(f"No {universe} candidates passed screener filters for T0.")
     else:
-        t0_df["pct_off_52w"] = ((t0_df["close"] / t0_df["high_52w"]) - 1.0) * 100.0
+        disp_df = t0_df.head(5 if is_tase else 10).copy()
+        disp_df["pct_off_52w"] = ((disp_df["close"] / disp_df["high_52w"]) - 1.0) * 100.0
         click.echo(
-            f"{'Rank':<5} {'Ticker':<8} {'Price':<10} {'ADV20($M)':<12} {'RS Score':<10} {'Tightness':<10} {'%Off 52W High':<14}"
+            f"{'Rank':<5} {'Ticker':<10} {'Price':<10} {'ADV20':<14} {'RS Score':<10} {'Tightness':<10} {'%Off 52W High':<14}"
         )
         click.echo("-" * 75)
-        for _, row in t0_df.iterrows():
+        for _, row in disp_df.iterrows():
             click.echo(
-                f"{int(row['rank']):<5} {row['ticker']:<8} ${row['close']:<9.2f} "
-                f"${row['adv_20']/1e6:<11.2f} {row['rs_score']:<10.4f} "
+                f"{int(row['rank']):<5} {row['ticker']:<10} {row['close']:<10.2f} "
+                f"{row['adv_20']/1e6:<13.2f}M {row['rs_score']:<10.4f} "
                 f"{row['tightness_ratio']:<10.2f} {row['pct_off_52w']:<+13.2f}%"
             )
 
-    # 2. View B: T-5 (1-Week) PIT Backtest
     click.echo("\n=========================================================================")
-    click.echo(" 2. 1-WEEK POINT-IN-TIME BACKTEST (T-5)")
+    click.echo(f" [{market_header}] 2. 1-WEEK POINT-IN-TIME BACKTEST (T-5, {bench_label})")
     click.echo("=========================================================================")
     try:
-        res_t5 = run_point_in_time_backtest(db_manager, cutoff_days_ago=5)
+        res_t5 = run_point_in_time_backtest(db_manager, cutoff_days_ago=5, universe=universe)
         click.echo(f"Cutoff Date: {res_t5['cutoff_date']}  -->  Evaluation Date: {res_t5['evaluation_date']}")
         click.echo(f"Basket Mean Return: {res_t5['mean_basket_return']*100:+.2f}%")
-        click.echo(f"SPY Benchmark Return: {res_t5['spy_return']*100:+.2f}%")
-        click.echo(f"Basket Alpha vs SPY: {res_t5['basket_alpha']*100:+.2f}%")
+        click.echo(f"{bench_label} Benchmark Return: {res_t5['benchmark_return']*100:+.2f}%")
+        click.echo(f"Basket Alpha vs {bench_label}: {res_t5['basket_alpha']*100:+.2f}%")
         click.echo(f"Win Rate: {res_t5['win_rate']:.1f}%")
         click.echo(f"Average Max Drawdown: {res_t5['avg_max_drawdown']:.2f}%")
     except Exception as e:
-        click.echo(f"T-5 Backtest error: {e}")
+        click.echo(f"T-5 Backtest error ({universe}): {e}")
 
-    # 3. View C: T-22 (1-Month) PIT Backtest
     click.echo("\n=========================================================================")
-    click.echo(" 3. 1-MONTH POINT-IN-TIME BACKTEST (T-22)")
+    click.echo(f" [{market_header}] 3. 1-MONTH POINT-IN-TIME BACKTEST (T-22, {bench_label})")
     click.echo("=========================================================================")
     try:
-        res_t22 = run_point_in_time_backtest(db_manager, cutoff_days_ago=22)
+        res_t22 = run_point_in_time_backtest(db_manager, cutoff_days_ago=22, universe=universe)
         click.echo(f"Cutoff Date: {res_t22['cutoff_date']}  -->  Evaluation Date: {res_t22['evaluation_date']}")
         click.echo(f"Basket Mean Return: {res_t22['mean_basket_return']*100:+.2f}%")
-        click.echo(f"SPY Benchmark Return: {res_t22['spy_return']*100:+.2f}%")
-        click.echo(f"Basket Alpha vs SPY: {res_t22['basket_alpha']*100:+.2f}%")
+        click.echo(f"{bench_label} Benchmark Return: {res_t22['benchmark_return']*100:+.2f}%")
+        click.echo(f"Basket Alpha vs {bench_label}: {res_t22['basket_alpha']*100:+.2f}%")
         click.echo(f"Win Rate: {res_t22['win_rate']:.1f}%")
         click.echo(f"Average Max Drawdown: {res_t22['avg_max_drawdown']:.2f}%")
     except Exception as e:
-        click.echo(f"T-22 Backtest error: {e}")
+        click.echo(f"T-22 Backtest error ({universe}): {e}")
 
 
 if __name__ == "__main__":
     main()
+
