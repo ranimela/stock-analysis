@@ -71,6 +71,20 @@ class DataIngestor:
                 max_dates[ticker.upper()] = max_date
         return max_dates
 
+    @staticmethod
+    def _pd_date_to_date(val: Any) -> datetime.date | None:
+        """Safely convert pandas timestamp or date string to datetime.date."""
+        if val is None or pd.isna(val):
+            return None
+        if isinstance(val, datetime.date) and not isinstance(val, datetime.datetime):
+            return val
+        if isinstance(val, datetime.datetime):
+            return val.date()
+        try:
+            return datetime.date.fromisoformat(str(val)[:10])
+        except Exception:
+            return None
+
     def download_benchmark(
         self,
         ticker: str,
@@ -501,6 +515,25 @@ class DataIngestor:
             df = self.fetch_ticker_chunk(chunk, start_date=chunk_min_start)
             bars_count = self.parse_and_store_bars(df, chunk, max_dates=max_dates)
             total_bars_inserted += bars_count
+
+            # Extract downloaded date range for console/log debug visibility
+            if df is not None and not df.empty:
+                try:
+                    df_dates = df.index.get_level_values(0) if isinstance(df.index, pd.MultiIndex) else df.index
+                    valid_dates = [self._pd_date_to_date(d) for d in df_dates]
+                    valid_dates = [d for d in valid_dates if d is not None]
+                    if valid_dates:
+                        min_d, max_d = min(valid_dates), max(valid_dates)
+                        logger.info(
+                            " -> Chunk %d/%d downloaded data spanning [%s to %s] (%d new bars stored)",
+                            i,
+                            len(chunks),
+                            min_d,
+                            max_d,
+                            bars_count,
+                        )
+                except Exception:
+                    pass
 
             if i < len(chunks) and self.delay_seconds > 0:
                 time.sleep(self.delay_seconds)
