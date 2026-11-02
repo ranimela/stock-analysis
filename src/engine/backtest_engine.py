@@ -7,8 +7,8 @@ basket alpha, win rate, and maximum drawdown without lookahead bias.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import logging
+from datetime import UTC, datetime
 
 import pandas as pd
 
@@ -218,12 +218,10 @@ def run_point_in_time_backtest(
         for b in bars:
             bar_close = float(b[1])
             bar_low = float(b[2])
-            if bar_close > running_peak:
-                running_peak = bar_close
+            running_peak = max(running_peak, bar_close)
             if running_peak > 0:
                 dd = (bar_low - running_peak) / running_peak
-                if dd < max_drawdown:
-                    max_drawdown = dd
+                max_drawdown = min(max_drawdown, dd)
         mdd = max_drawdown
 
         alpha = ret - bench_return
@@ -265,7 +263,7 @@ def run_point_in_time_backtest(
 
     # Persist run to point_in_time_runs if database is writable
     if not getattr(db_manager, "read_only", False):
-        now_iso = datetime.now(timezone.utc).isoformat()
+        now_iso = datetime.now(UTC).isoformat()
         if univ == "US":
             run_id = f"pit_T-{cutoff_days_ago}_{cutoff_date.replace('-', '')}"
             scan_type = f"T-{cutoff_days_ago}"

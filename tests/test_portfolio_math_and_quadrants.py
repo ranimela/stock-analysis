@@ -1,22 +1,11 @@
 """Empirical Stress Test Harness for Portfolio Math, 4-Quadrant Alpha, and Multi-Universe Separation."""
 
 import datetime
-from pathlib import Path
 import tempfile
-import numpy as np
-import pandas as pd
-import pytest
+from pathlib import Path
 
 from src.db.db_manager import DatabaseManager
 from src.engine.backtest_engine import run_point_in_time_backtest
-from src.engine.screener_queries import run_screener
-from src.ui.app import (
-    build_html_table,
-    format_company_name,
-    is_tase_ticker,
-    render_backtest_view,
-    render_live_recommendations,
-)
 
 
 def create_quadrant_scenario_db(

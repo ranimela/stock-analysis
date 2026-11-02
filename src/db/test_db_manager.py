@@ -1,9 +1,7 @@
 """Unit tests for DatabaseManager and DuckDB schema."""
 
-import os
-from pathlib import Path
 import tempfile
-import pytest
+from pathlib import Path
 
 from src.db.db_manager import DatabaseManager
 

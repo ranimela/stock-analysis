@@ -6,9 +6,6 @@ import datetime
 from pathlib import Path
 from unittest.mock import patch
 
-import pandas as pd
-import pytest
-
 from src.db.db_manager import DatabaseManager
 from src.ingestion.data_ingestor import DataIngestor
 

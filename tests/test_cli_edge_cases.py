@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import datetime
 from pathlib import Path
 from unittest.mock import patch
 
-from click.testing import CliRunner
 import pandas as pd
-import pytest
+from click.testing import CliRunner
 
 from src.cli import main
 from src.db.db_manager import DatabaseManager

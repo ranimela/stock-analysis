@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import datetime
 from pathlib import Path
-from click.testing import CliRunner
-import pytest
 
-from src.cli import main, scan, seed, update
+import pytest
+from click.testing import CliRunner
+
+from src.cli import main, scan
 from src.db.db_manager import DatabaseManager
-from src.ui.app import check_db_availability, get_db_manager
+from src.ui.app import check_db_availability
 
 
 @pytest.fixture
@@ -98,6 +99,7 @@ def test_ui_check_db_availability(populated_db: DatabaseManager, temp_db: Path) 
 def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View A render_live_recommendations executes cleanly and renders custom HTML table."""
     import streamlit as st
+
     from src.ui.app import render_live_recommendations
 
     read_only_mgr = DatabaseManager(db_path=populated_db.db_path, read_only=True)
@@ -119,6 +121,7 @@ def test_ui_render_live_recommendations(populated_db: DatabaseManager, monkeypat
 def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View B and View C render_backtest_view execute cleanly and render custom HTML table."""
     import streamlit as st
+
     from src.ui.app import render_backtest_view
 
     read_only_mgr = DatabaseManager(db_path=populated_db.db_path, read_only=True)
@@ -162,6 +165,7 @@ def test_ui_render_backtest_view(populated_db: DatabaseManager, monkeypatch: pyt
 def test_ui_view_d_manual_analysis(populated_db: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View D Manual Analysis rendering with custom tickers and HTML table."""
     import streamlit as st
+
     from src.engine.screener_queries import run_screener
     from src.ui.app import check_db_availability
 
@@ -236,6 +240,7 @@ def test_ui_is_tase_ticker_helper() -> None:
 def test_ui_build_html_table_tase() -> None:
     """Test build_html_table generates appropriate TASE table structures."""
     import pandas as pd
+
     from src.ui.app import build_html_table
 
     # Test Screener table with is_tase=True
@@ -284,6 +289,7 @@ def test_ui_build_html_table_tase() -> None:
 def test_ui_render_live_recommendations_with_tase(populated_db_with_tase: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View A render_live_recommendations renders both US and TASE sections."""
     import streamlit as st
+
     from src.ui.app import render_live_recommendations
 
     read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)
@@ -305,6 +311,7 @@ def test_ui_render_live_recommendations_with_tase(populated_db_with_tase: Databa
 def test_ui_render_backtest_view_with_tase(populated_db_with_tase: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View B, View C, and View E render dedicated TASE benchmark cards and tables."""
     import streamlit as st
+
     from src.ui.app import render_backtest_view
 
     read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)
@@ -348,6 +355,7 @@ def test_ui_render_backtest_view_with_tase(populated_db_with_tase: DatabaseManag
 def test_ui_custom_css_injection_palette(monkeypatch: pytest.MonkeyPatch) -> None:
     """Test inject_custom_css outputs expected CSS classes and high-contrast TASE color hexes."""
     import streamlit as st
+
     from src.ui.app import inject_custom_css
 
     markdown_calls = []
@@ -397,6 +405,7 @@ def test_ui_is_medical_pharma_classification() -> None:
 def test_ui_build_html_table_empty_dataframes() -> None:
     """Test build_html_table returns graceful placeholder for empty DataFrames."""
     import pandas as pd
+
     from src.ui.app import build_html_table
 
     empty_df = pd.DataFrame()
@@ -416,6 +425,7 @@ def test_ui_build_html_table_empty_dataframes() -> None:
 def test_ui_build_html_table_nan_and_missing_values() -> None:
     """Test build_html_table gracefully handles NaN and missing numeric values."""
     import pandas as pd
+
     from src.ui.app import build_html_table
 
     df_nan_screener = pd.DataFrame([
@@ -457,7 +467,6 @@ def test_ui_build_html_table_nan_and_missing_values() -> None:
 
 def test_ui_view_d_diagnostics_tase_and_us_checklist(populated_db_with_tase: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View D evaluates 8-point checklist with universe-specific price and liquidity floors."""
-    import streamlit as st
     from src.engine.screener_queries import run_screener
 
     read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)
@@ -480,7 +489,6 @@ def test_ui_view_d_diagnostics_tase_and_us_checklist(populated_db_with_tase: Dat
 
 def test_ui_view_d_missing_ticker_single_sync(populated_db_with_tase: DatabaseManager, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test View D single-ticker download helper syncs missing tickers."""
-    from src.ingestion.data_ingestor import DataIngestor
 
     class MockIngestor:
         def __init__(self, db_manager):
@@ -499,6 +507,7 @@ def test_ui_view_d_missing_ticker_single_sync(populated_db_with_tase: DatabaseMa
 def test_ui_render_backtest_view_empty_universe_resilience(temp_db: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """Test render_backtest_view handles empty database without throwing exceptions."""
     import streamlit as st
+
     from src.ui.app import render_backtest_view
 
     empty_mgr = DatabaseManager(db_path=temp_db, read_only=True)
@@ -521,6 +530,7 @@ def test_ui_render_backtest_view_empty_universe_resilience(temp_db: Path, monkey
 def test_ui_format_company_name_helper() -> None:
     """Test format_company_name handles NaNs, strings, and fallbacks robustly."""
     import numpy as np
+
     from src.ui.app import format_company_name
 
     assert format_company_name("Apple Inc.", "AAPL") == "Apple Inc."
@@ -540,6 +550,7 @@ def test_ui_render_live_recommendations_empty_us_decoupled_tase(
 ) -> None:
     """Test View A renders TASE section even when US screener returns 0 results."""
     import streamlit as st
+
     from src.ui.app import render_live_recommendations
 
     read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)
@@ -569,6 +580,7 @@ def test_ui_render_backtest_view_empty_us_positions_decoupled(
 ) -> None:
     """Test render_backtest_view executes cleanly without UnboundLocalError when US produces 0 positions."""
     import streamlit as st
+
     from src.ui.app import render_backtest_view
 
     read_only_mgr = DatabaseManager(db_path=populated_db_with_tase.db_path, read_only=True)

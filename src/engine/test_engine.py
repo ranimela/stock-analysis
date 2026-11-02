@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
+import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
-import tempfile
-from typing import Any
 
 import pandas as pd
 import pytest

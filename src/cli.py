@@ -31,7 +31,6 @@ logger = logging.getLogger(__name__)
 @click.group()
 def main() -> None:
     """Quantitative Stock Screener & PIT Backtest Orchestration CLI."""
-    pass
 
 
 @main.command()

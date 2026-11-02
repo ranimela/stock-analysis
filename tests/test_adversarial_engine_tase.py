@@ -6,14 +6,14 @@ ranking isolation, and robustness under extreme parameters.
 
 from __future__ import annotations
 
-import datetime
-from pathlib import Path
 import tempfile
-from click.testing import CliRunner
+from pathlib import Path
+
 import pandas as pd
 import pytest
+from click.testing import CliRunner
 
-from src.cli import main, scan
+from src.cli import scan
 from src.db.db_manager import DatabaseManager
 from src.engine.backtest_engine import run_point_in_time_backtest
 from src.engine.screener_queries import run_screener

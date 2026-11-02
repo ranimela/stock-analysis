@@ -6,20 +6,18 @@ Challenger M1_2 Test Suite.
 from __future__ import annotations
 
 import datetime
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Any, Sequence
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-from click.testing import CliRunner
 import pandas as pd
 import pytest
+from click.testing import CliRunner
 
-from src.cli import main, seed, update
+from src.cli import main
 from src.db.db_manager import DatabaseManager
 from src.ingestion.data_ingestor import DataIngestor
-from src.ingestion.symbol_directory import sync_symbol_metadata
-from src.ingestion.tase_directory import TASE_BENCHMARK_TICKER, fetch_tase_symbols
-
+from src.ingestion.tase_directory import fetch_tase_symbols
 
 # ============================================================================
 # TEST HELPERS

@@ -7,8 +7,9 @@ excluding ETFs, preferred stock, warrants, rights, units, test tickers, and SPAC
 from __future__ import annotations
 
 import logging
-from typing import Any, Sequence
 import urllib.request
+from collections.abc import Sequence
+from typing import Any
 
 from src.db.db_manager import DatabaseManager
 

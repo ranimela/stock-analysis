@@ -22,15 +22,13 @@ from __future__ import annotations
 
 import datetime
 from pathlib import Path
-import tempfile
-from typing import Any
 from unittest.mock import MagicMock, patch
 
-from click.testing import CliRunner
 import pandas as pd
 import pytest
+from click.testing import CliRunner
 
-from src.cli import export_delta, main, scan, seed, sync_delta, update
+from src.cli import export_delta, scan, seed, sync_delta, update
 from src.db.db_manager import DatabaseManager
 from src.engine.backtest_engine import run_point_in_time_backtest
 from src.engine.screener_queries import run_screener
@@ -38,28 +36,19 @@ from src.ingestion.data_ingestor import DataIngestor
 from src.ingestion.symbol_directory import (
     clean_company_name,
     is_common_stock,
-    parse_nasdaqlisted,
-    parse_otherlisted,
-    sync_symbol_metadata,
 )
 from src.ingestion.tase_directory import (
-    TASE_BENCHMARK,
-    fetch_tase_symbols,
-    get_tase_symbol_directory,
-    get_tase_symbols,
     is_tase_ticker,
     normalize_tase_ticker,
 )
 from src.ui.app import (
     build_html_table,
-    check_db_availability,
     format_company_name,
     inject_custom_css,
     is_medical_pharma,
     render_backtest_view,
     render_live_recommendations,
 )
-
 
 # ============================================================================
 # Shared Pytest Fixtures

@@ -10,7 +10,8 @@ from __future__ import annotations
 import datetime
 import logging
 import time
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 import pandas as pd
 import yfinance as yf
@@ -374,8 +375,8 @@ class DataIngestor:
                                     "UPDATE symbol_metadata SET name = ? WHERE ticker = ?;",
                                     [str(name), ticker_clean],
                                 )
-                except Exception:
-                    pass
+                except Exception as exc:
+                    logger.debug('Skipped non-fatal exception: %s', exc)
 
         return len(records)
 
@@ -532,8 +533,8 @@ class DataIngestor:
                             max_d,
                             bars_count,
                         )
-                except Exception:
-                    pass
+                except Exception as exc:
+                    logger.debug('Skipped non-fatal exception: %s', exc)
 
             if i < len(chunks) and self.delay_seconds > 0:
                 time.sleep(self.delay_seconds)
@@ -602,8 +603,8 @@ class DataIngestor:
                     market_cap = info.get("marketCap")
                 if not comp_name:
                     comp_name = info.get("shortName") or info.get("longName") or ticker_clean
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.debug('Skipped ticker info lookup: %s', exc)
 
         # Register metadata entry with inferred exchange and asset class
         self.db_manager.execute_write(

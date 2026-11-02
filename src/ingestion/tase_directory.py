@@ -7,7 +7,8 @@ benchmark identification (^TA125.TA), and database synchronization.
 from __future__ import annotations
 
 import logging
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 import pandas as pd
 

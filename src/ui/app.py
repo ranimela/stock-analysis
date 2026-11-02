@@ -8,10 +8,11 @@ Provides zero-write-access visualization for:
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
 import logging
-from pathlib import Path
 import sys
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any
 
 import pandas as pd
 import streamlit as st
@@ -1171,13 +1172,16 @@ When diagnosing stocks on `{v4_date_str}`, each checklist criterion measures his
                             reasons.append(f"Price ({close_val:.2f} Ag.) is below 100.0 Ag. floor" if is_tase_item else f"Price (${close_val:.2f}) is below $10.00 floor")
                         if not p_adv:
                             reasons.append(f"ADV20 ({adv_val/1e6:.2f}M Ag.) is below 20M Ag. liquidity floor" if is_tase_item else f"ADV20 (${adv_val/1e6:.2f}M) is below $20M liquidity floor")
-                        if not p_ma: reasons.append("Moving averages break Close > SMA50 > SMA150 > SMA200 alignment")
-                        if not p_slope: reasons.append("200D SMA is not trending upward vs 20 days ago")
+                        if not p_ma:
+                            reasons.append("Moving averages break Close > SMA50 > SMA150 > SMA200 alignment")
+                        if not p_slope:
+                            reasons.append("200D SMA is not trending upward vs 20 days ago")
                         if not p_low52:
                             reasons.append(f"Price ({close_val:,.2f} Ag.) is < +30% above 52W Low ({low52_val:,.2f} Ag.)" if is_tase_item else f"Price (${close_val:.2f}) is < +30% above 52W Low (${low52_val:.2f})")
                         if not p_high52:
                             reasons.append(f"Price ({close_val:,.2f} Ag.) exceeds 25% distance from 52W High ({high52_val:,.2f} Ag.)" if is_tase_item else f"Price (${close_val:.2f}) exceeds 25% distance from 52W High (${high52_val:.2f})")
-                        if not p_tight: reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 ceiling")
+                        if not p_tight:
+                            reasons.append(f"Tightness Ratio ({tight_val:.2f}) exceeds 3.5 ceiling")
                         if not p_rs:
                             reasons.append(f"Mansfield RS ({rs_val:.4f}) shows underperformance vs ^TA125.TA" if is_tase_item else f"Mansfield RS ({rs_val:.4f}) shows underperformance vs SPY")
 

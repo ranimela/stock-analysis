@@ -1,16 +1,11 @@
 """Deep Audit and Invariant Stress Tests for Portfolio Math and Multi-Universe Decoupling."""
 
 import datetime
-from pathlib import Path
 import tempfile
-import numpy as np
-import pandas as pd
-import pytest
+from pathlib import Path
 
 from src.db.db_manager import DatabaseManager
-from src.engine.backtest_engine import run_point_in_time_backtest
 from src.engine.screener_queries import run_screener
-from src.ui.app import build_html_table, format_company_name, is_tase_ticker
 
 
 def test_portfolio_math_invariants_exact_dollar_sizing():

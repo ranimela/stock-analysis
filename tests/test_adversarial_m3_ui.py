@@ -8,11 +8,10 @@ Target Modules:
 
 from __future__ import annotations
 
-import datetime
-import html
-from pathlib import Path
-from typing import Any
 import concurrent.futures
+import datetime
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -23,7 +22,6 @@ from src.ui.app import (
     build_html_table,
     check_db_availability,
     format_company_name,
-    get_db_manager,
     inject_custom_css,
     is_medical_pharma,
     is_tase_ticker,

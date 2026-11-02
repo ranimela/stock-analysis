@@ -6,10 +6,11 @@ and context managers for reading and writing to the DuckDB storage engine.
 
 from __future__ import annotations
 
+import threading
+from collections.abc import Generator, Sequence
 from contextlib import contextmanager
 from pathlib import Path
-import threading
-from typing import Any, Generator, Sequence
+from typing import Any
 
 import duckdb
 

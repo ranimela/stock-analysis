@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 import datetime
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-from click.testing import CliRunner
 import pandas as pd
 import pytest
+from click.testing import CliRunner
 
 from src.db.db_manager import DatabaseManager
 from src.ingestion.data_ingestor import DataIngestor
@@ -22,7 +22,6 @@ from src.ingestion.symbol_directory import (
 from src.ingestion.tase_directory import (
     TASE_BENCHMARK,
     TASE_BENCHMARK_TICKER,
-    fetch_tase_symbols,
     get_tase_symbol_directory,
     get_tase_symbols,
     get_tase_symbols_df,
