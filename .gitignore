@@ -13,4 +13,6 @@ test_fresh.duckdb
 # Temporary Data
 data/
 App rationale.txt
+*.log
+
 

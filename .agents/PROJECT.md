@@ -39,7 +39,7 @@
 | 1 | TASE Ingestion & Data Pipeline | `src/ingestion/tase_directory.py`, `src/ingestion/data_ingestor.py`, `src/cli.py`, `src/ingestion/test_ingestion.py` | none | DONE |
 | 2 | Quantitative Engine Adaptation | `src/engine/screener_queries.py`, `src/engine/backtest_engine.py`, `src/engine/test_engine.py` | M1 | DONE |
 | 3 | Streamlit UI Dedicated TASE Section | `src/ui/app.py`, `src/test_cli_ui.py` across Views A, B, C, D, E | M2 | DONE |
-| 4 | E2E Testing, Adversarial Verification & Audit | Opaque-box E2E test suite, Challenger stress testing, Forensic Audit | M3 | IN_PROGRESS |
+| 4 | E2E Testing, Adversarial Verification & Audit | Opaque-box E2E test suite, Challenger stress testing, Forensic Audit | M3 | DONE |
 
 ## Interface Contracts
 
