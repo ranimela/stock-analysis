@@ -8,7 +8,7 @@ basket alpha, win rate, and maximum drawdown without lookahead bias.
 from __future__ import annotations
 
 import logging
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 import pandas as pd
 
@@ -263,7 +263,7 @@ def run_point_in_time_backtest(
 
     # Persist run to point_in_time_runs if database is writable
     if not getattr(db_manager, "read_only", False):
-        now_iso = datetime.now(UTC).isoformat()
+        now_iso = datetime.now(timezone.utc).isoformat()
         if univ == "US":
             run_id = f"pit_T-{cutoff_days_ago}_{cutoff_date.replace('-', '')}"
             scan_type = f"T-{cutoff_days_ago}"
